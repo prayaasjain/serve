@@ -92,7 +92,7 @@ const CGFloat iconHeight = 25.0f;
     /////
     
     //myListButton
-    UIImage *myListImage = [UIImage imageNamed:@"add_list.png"];
+    UIImage *myListImage = [UIImage imageNamed:@"trash.png"];
     UIButton *myListButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [myListButton setImage:myListImage forState:UIControlStateNormal];
     [myListButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];

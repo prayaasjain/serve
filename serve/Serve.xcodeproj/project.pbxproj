@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		201B33051B075890000930F7 /* food1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 201B33041B075890000930F7 /* food1.jpg */; };
-		201B33121B076404000930F7 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B33101B076404000930F7 /* add.png */; };
-		201B33131B076404000930F7 /* subtract.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B33111B076404000930F7 /* subtract.png */; };
 		202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */; };
 		2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8D11B0925F100CA99B1 /* AddListingCell.m */; };
 		2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8E01B0935E700CA99B1 /* PickImageViewController.m */; };
@@ -32,17 +30,7 @@
 		20CA6B551B1410E5005FE7AA /* previous_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B511B1410E5005FE7AA /* previous_32.png */; };
 		20CA6B561B1410E5005FE7AA /* reduce_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B521B1410E5005FE7AA /* reduce_32.png */; };
 		20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */; };
-		20DE79061B0814E900E3F101 /* camera-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 20DE79051B0814E900E3F101 /* camera-gray.png */; };
-		20DE79081B0824C700E3F101 /* camera-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 20DE79071B0824C700E3F101 /* camera-2.png */; };
-		20DE790A1B0825B700E3F101 /* food1-gray.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 20DE79091B0825B700E3F101 /* food1-gray.jpg */; };
 		20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DE790C1B082AB000E3F101 /* MyListingsViewController.m */; };
-		20DE790F1B083BA000E3F101 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 20DE790E1B083BA000E3F101 /* user.png */; };
-		20DE79111B083C5700E3F101 /* add_list.png in Resources */ = {isa = PBXBuildFile; fileRef = 20DE79101B083C5700E3F101 /* add_list.png */; };
-		20DE79131B083D4100E3F101 /* message_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 20DE79121B083D4100E3F101 /* message_icon.png */; };
-		20DE79151B089F6600E3F101 /* add_serve.png in Resources */ = {isa = PBXBuildFile; fileRef = 20DE79141B089F6600E3F101 /* add_serve.png */; };
-		20DE79171B089F6C00E3F101 /* reduce_serve.png in Resources */ = {isa = PBXBuildFile; fileRef = 20DE79161B089F6C00E3F101 /* reduce_serve.png */; };
-		20DE79191B08A0D600E3F101 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 20DE79181B08A0D600E3F101 /* next.png */; };
-		20DE791B1B08A28600E3F101 /* previous.png in Resources */ = {isa = PBXBuildFile; fileRef = 20DE791A1B08A28600E3F101 /* previous.png */; };
 		20EE2B111B01502B00F80CAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B101B01502B00F80CAC /* main.m */; };
 		20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B131B01502B00F80CAC /* AppDelegate.m */; };
 		20EE2B171B01502B00F80CAC /* Serve.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B151B01502B00F80CAC /* Serve.xcdatamodeld */; };
@@ -67,8 +55,6 @@
 
 /* Begin PBXFileReference section */
 		201B33041B075890000930F7 /* food1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food1.jpg; sourceTree = "<group>"; };
-		201B33101B076404000930F7 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add.png; path = ../../../Downloads/add.png; sourceTree = "<group>"; };
-		201B33111B076404000930F7 /* subtract.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = subtract.png; path = ../../../Downloads/subtract.png; sourceTree = "<group>"; };
 		202CBF101B05AC49007DFB30 /* ReviewSubmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewSubmitViewController.h; sourceTree = "<group>"; };
 		202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewSubmitViewController.m; sourceTree = "<group>"; };
 		2040C8D01B0925F100CA99B1 /* AddListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddListingCell.h; sourceTree = "<group>"; };
@@ -95,18 +81,8 @@
 		20CA6B521B1410E5005FE7AA /* reduce_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reduce_32.png; path = assets_test/reduce_32.png; sourceTree = "<group>"; };
 		20CA6B571B141790005FE7AA /* NewPickUpInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPickUpInfoViewController.h; sourceTree = "<group>"; };
 		20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPickUpInfoViewController.m; sourceTree = "<group>"; };
-		20DE79051B0814E900E3F101 /* camera-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-gray.png"; path = "../../../Downloads/camera-gray.png"; sourceTree = "<group>"; };
-		20DE79071B0824C700E3F101 /* camera-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-2.png"; path = "../../../Downloads/camera-2.png"; sourceTree = "<group>"; };
-		20DE79091B0825B700E3F101 /* food1-gray.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "food1-gray.jpg"; path = "../../../Downloads/food1-gray.jpg"; sourceTree = "<group>"; };
 		20DE790B1B082AB000E3F101 /* MyListingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyListingsViewController.h; sourceTree = "<group>"; };
 		20DE790C1B082AB000E3F101 /* MyListingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyListingsViewController.m; sourceTree = "<group>"; };
-		20DE790E1B083BA000E3F101 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = user.png; path = ../../../Downloads/user.png; sourceTree = "<group>"; };
-		20DE79101B083C5700E3F101 /* add_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_list.png; path = ../../../Downloads/add_list.png; sourceTree = "<group>"; };
-		20DE79121B083D4100E3F101 /* message_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = message_icon.png; path = ../../../Downloads/message_icon.png; sourceTree = "<group>"; };
-		20DE79141B089F6600E3F101 /* add_serve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_serve.png; path = ../../../Downloads/add_serve.png; sourceTree = "<group>"; };
-		20DE79161B089F6C00E3F101 /* reduce_serve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reduce_serve.png; path = ../../../Downloads/reduce_serve.png; sourceTree = "<group>"; };
-		20DE79181B08A0D600E3F101 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = ../../../Downloads/next.png; sourceTree = "<group>"; };
-		20DE791A1B08A28600E3F101 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = previous.png; path = ../../../Downloads/previous.png; sourceTree = "<group>"; };
 		20EE2B0B1B01502B00F80CAC /* Serve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Serve.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20EE2B0F1B01502B00F80CAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20EE2B101B01502B00F80CAC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -259,18 +235,6 @@
 				20CA6B501B1410E5005FE7AA /* next_32.png */,
 				20CA6B511B1410E5005FE7AA /* previous_32.png */,
 				20CA6B521B1410E5005FE7AA /* reduce_32.png */,
-				20DE79181B08A0D600E3F101 /* next.png */,
-				20DE791A1B08A28600E3F101 /* previous.png */,
-				20DE79161B089F6C00E3F101 /* reduce_serve.png */,
-				20DE79141B089F6600E3F101 /* add_serve.png */,
-				20DE79121B083D4100E3F101 /* message_icon.png */,
-				20DE79101B083C5700E3F101 /* add_list.png */,
-				20DE790E1B083BA000E3F101 /* user.png */,
-				20DE79071B0824C700E3F101 /* camera-2.png */,
-				20DE79051B0814E900E3F101 /* camera-gray.png */,
-				20DE79091B0825B700E3F101 /* food1-gray.jpg */,
-				201B33101B076404000930F7 /* add.png */,
-				201B33111B076404000930F7 /* subtract.png */,
 				201B33041B075890000930F7 /* food1.jpg */,
 				20EE2B0F1B01502B00F80CAC /* Info.plist */,
 				20EE2B101B01502B00F80CAC /* main.m */,
@@ -376,26 +340,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				20CA6B561B1410E5005FE7AA /* reduce_32.png in Resources */,
-				20DE79111B083C5700E3F101 /* add_list.png in Resources */,
 				20CA6B541B1410E5005FE7AA /* next_32.png in Resources */,
 				20EE2B1D1B01502B00F80CAC /* Main.storyboard in Resources */,
-				201B33131B076404000930F7 /* subtract.png in Resources */,
-				20DE79171B089F6C00E3F101 /* reduce_serve.png in Resources */,
 				20B5A8C61B1570D500818741 /* GoogleMaps.bundle in Resources */,
 				201B33051B075890000930F7 /* food1.jpg in Resources */,
 				20CA6B551B1410E5005FE7AA /* previous_32.png in Resources */,
 				20EE2B221B01502B00F80CAC /* LaunchScreen.xib in Resources */,
-				201B33121B076404000930F7 /* add.png in Resources */,
-				20DE790A1B0825B700E3F101 /* food1-gray.jpg in Resources */,
-				20DE790F1B083BA000E3F101 /* user.png in Resources */,
-				20DE79131B083D4100E3F101 /* message_icon.png in Resources */,
-				20DE79061B0814E900E3F101 /* camera-gray.png in Resources */,
-				20DE79191B08A0D600E3F101 /* next.png in Resources */,
 				20CA6B531B1410E5005FE7AA /* add_32.png in Resources */,
-				20DE791B1B08A28600E3F101 /* previous.png in Resources */,
 				20EE2B1F1B01502B00F80CAC /* Images.xcassets in Resources */,
-				20DE79151B089F6600E3F101 /* add_serve.png in Resources */,
-				20DE79081B0824C700E3F101 /* camera-2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
