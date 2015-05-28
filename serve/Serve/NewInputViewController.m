@@ -35,6 +35,7 @@ static NSArray  * addPhotoActionSheetItems = nil;
 static NSArray  * cancelButtonActionSheetItems = nil;
 
 const CGFloat labelFontSize = 11.0f;
+const int allowedNumberOfCharactersInDesc = 16;
 const int allowedNumberOfCharactersInTitle = 4;
 const int allowedNumberOfCharactersInCuisine = allowedNumberOfCharactersInTitle;
 
@@ -57,12 +58,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 @property (nonatomic, strong) UILabel *cuisineLabel;
 @property (nonatomic, strong) UILabel *descLabel;
 @property (nonatomic, strong) UITextField *titleInput;
-@property (nonatomic, strong) UITextView *servesInput;
+@property (nonatomic, strong) UITextField *servesInput;
 @property (nonatomic, strong) UIButton *addServeButton;
 @property (nonatomic, strong) UIButton *reduceServeButton;
 @property (nonatomic, strong) UIButton *previousTypeButton;
 @property (nonatomic, strong) UIButton *nextTypeButton;
-@property (nonatomic, strong) UITextView *typeInput;
+@property (nonatomic, strong) UITextField *typeInput;
 @property (nonatomic, strong) UITextView *descInput;
 @property (nonatomic, strong) UITextField *cuisineInput;
 @property (nonatomic, readwrite,assign) NSInteger numberOfServes;
@@ -193,66 +194,22 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     self.descLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.titleInput = [[UITextField alloc]init];
-    self.titleInput.tag = TitleInputTag;
-    self.titleInput.delegate = self;
-    self.titleInput.textColor = [UIColor grayColor];
-    self.titleInput.font = [UIFont systemFontOfSize:labelFontSize];
-    self.titleInput.textAlignment = NSTextAlignmentCenter;
-    [self.titleInput setReturnKeyType:UIReturnKeyDone];
-    [self.titleInput setKeyboardAppearance:UIKeyboardAppearanceDark];
-    self.titleInput.text = titlePlaceholder;
-    //[self setTextFieldProperties:self.titleInput];
-    self.titleInput.translatesAutoresizingMaskIntoConstraints = NO;
-    self.titleInput.layer.borderWidth = labelBorderWidth;
-    self.titleInput.layer.borderColor = [[UIColor grayColor] CGColor];
-    self.titleInput.layer.cornerRadius = 5;//changed from 15
-    //self.titleInput.clipsToBounds = YES;
-    
-    self.numberOfServes = 1;
-    self.servesInput = [[UITextView alloc]init];
-    self.servesInput.text = [NSString stringWithFormat:@"%ld",self.numberOfServes];//this has to be a property counting serves
-    self.servesInput.textColor = [UIColor blackColor];
-    self.servesInput.font = [UIFont systemFontOfSize:labelFontSize];
-    self.servesInput.textAlignment = NSTextAlignmentCenter;
-    self.servesInput.editable = NO;
-    self.servesInput.translatesAutoresizingMaskIntoConstraints = NO;
-    self.servesInput.layer.borderWidth = labelBorderWidth;
-    self.servesInput.layer.borderColor = [[UIColor grayColor] CGColor];
-    self.servesInput.layer.cornerRadius = 5;//changed from 15
-    self.servesInput.clipsToBounds = YES;
-    self.servesInput.tag = ServesInputTag;
-    
-    
-    self.itemTypes = @[@"Vegetarian",@"Non-Vegetarian"];
-    self.typeInput = [[UITextView alloc]init];
-    self.typeInput.text = [self.itemTypes objectAtIndex:0];//default item type is veg
-    self.typeInput.textColor = [UIColor blackColor];
-    self.typeInput.font = [UIFont systemFontOfSize:labelFontSize];
-    self.typeInput.textAlignment = NSTextAlignmentCenter;
-    self.typeInput.editable = NO;
-    self.typeInput.translatesAutoresizingMaskIntoConstraints = NO;
-    self.typeInput.layer.borderWidth = labelBorderWidth;
-    self.typeInput.layer.borderColor = [[UIColor grayColor] CGColor];
-    self.typeInput.layer.cornerRadius = 5;//changed from 15
-    self.typeInput.clipsToBounds = YES;
-    self.typeInput.tag = TypeInputTag;
-    
-
+    [self setTextFieldProperties:self.titleInput withPlaceholder:titlePlaceholder withTag:TitleInputTag];
     
     self.cuisineInput = [[UITextField alloc]init];
-    self.cuisineInput.text = cuisinePlaceholder;//default item type is veg
-    self.cuisineInput.textColor = [UIColor grayColor];
-    self.cuisineInput.textAlignment = NSTextAlignmentCenter;
-    self.cuisineInput.font = [UIFont systemFontOfSize:labelFontSize];
-    self.cuisineInput.tag = CusineInputTag;
-    self.cuisineInput.delegate = self;
-    self.cuisineInput.translatesAutoresizingMaskIntoConstraints = NO;
-    self.cuisineInput.layer.borderWidth = labelBorderWidth;
-    self.cuisineInput.layer.borderColor = [[UIColor grayColor] CGColor];
-    self.cuisineInput.layer.cornerRadius = 5;//changed from 15
-    self.cuisineInput.clipsToBounds = YES;
-    [self.cuisineInput setReturnKeyType:UIReturnKeyDone];
-    self.cuisineInput.font = [UIFont systemFontOfSize:10];
+    [self setTextFieldProperties:self.cuisineInput withPlaceholder:cuisinePlaceholder withTag:CusineInputTag];
+
+    self.numberOfServes = 1;
+    self.servesInput = [[UITextField alloc]init];
+    [self setTextFieldProperties:self.servesInput withPlaceholder:[NSString stringWithFormat:@"%ld",self.numberOfServes] withTag:ServesInputTag];
+    self.servesInput.textColor = [UIColor blackColor];
+    self.servesInput.userInteractionEnabled = NO;
+    
+    self.itemTypes = @[@"Vegetarian",@"Non-Vegetarian"];
+    self.typeInput = [[UITextField alloc]init];
+    [self setTextFieldProperties:self.typeInput withPlaceholder:[self.itemTypes objectAtIndex:0] withTag:TypeInputTag];
+    self.typeInput.userInteractionEnabled = NO;
+    self.typeInput.textColor = [UIColor blackColor];
     
     self.descInput = [[UITextView alloc]init];
     self.descInput.text = descriptionPlaceholder;
@@ -266,6 +223,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     self.descInput.layer.cornerRadius = 5;//changed from 15
     self.descInput.clipsToBounds = YES;
     self.descInput.tag = DescInputTag;
+    [self.descInput setReturnKeyType:UIReturnKeyDone];
+    [self.descInput setKeyboardAppearance:UIKeyboardAppearanceDark];
 
 }
 
@@ -655,13 +614,21 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
 }
 
-- (void)setTextFieldProperties:(UITextField *)inputView {
-    
+- (void)setTextFieldProperties:(UITextField *)inputView withPlaceholder:(NSString*)placeholder withTag:(NSInteger)tag {
+    inputView.text = placeholder;
+    inputView.textColor = [UIColor grayColor];
+    inputView.font = [UIFont systemFontOfSize:labelFontSize];
+    inputView.textAlignment = NSTextAlignmentCenter;
     inputView.translatesAutoresizingMaskIntoConstraints = NO;
-    inputView.layer.borderWidth = .5f;
+    inputView.layer.borderWidth = labelBorderWidth;
     inputView.layer.borderColor = [[UIColor grayColor] CGColor];
-    inputView.layer.cornerRadius = 5;//changed from 15
+    inputView.layer.cornerRadius = 5;
     inputView.clipsToBounds = YES;
+    inputView.tag = tag;
+    inputView.delegate = self;
+    [inputView setReturnKeyType:UIReturnKeyDone];
+    [inputView setKeyboardAppearance:UIKeyboardAppearanceDark];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -800,10 +767,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     switch (textView.tag)
     {
         case DescInputTag:
-            return newLength <= allowedNumberOfCharactersInTitle;
+            return newLength <= allowedNumberOfCharactersInDesc;
             
         default:
-            return newLength <= allowedNumberOfCharactersInCuisine;
+            return newLength <= allowedNumberOfCharactersInDesc;
     }
     
 }
@@ -829,8 +796,6 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             return newLength <= allowedNumberOfCharactersInCuisine;
     }
 }
-
-
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
