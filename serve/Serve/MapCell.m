@@ -1,5 +1,5 @@
 //
-//  AddListingCell.m
+//  MapCell.m
 //  Serve
 //
 //  Created by Akhil Khemani on 5/17/15.
@@ -7,10 +7,12 @@
 //
 
 #import "MapCell.h"
+#import "GoogleMapApi.h"
 
 @implementation MapCell
 
-@synthesize descriptionLabel = _descriptionLabel;
+@synthesize addressLabel = _addressLabel;
+GMSMapView *cellMapView_;
 
 - (void)awakeFromNib {
     // Initialization code
@@ -27,24 +29,31 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // configure control(s)
+//        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+//        imageView.image = [UIImage imageNamed:@"food1.jpg"];
+//        [self.contentView addSubview:imageView];
         
         
-        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(500, 50, 20, 20)];
-        imageView.image = [UIImage imageNamed:@"food1.jpg"];
-        [self.contentView addSubview:imageView];
+        //self.mapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
         
-        self.Label = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width/2, 25, 300, 30)];
-        self.Label.textColor = [UIColor redColor];
-        self.Label.font = [UIFont fontWithName:@"Arial" size:22.0f];
-        self.Label.text = @"+";
-        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width/2-55, self.frame.size.height/2+30, 140, 30)];
-        self.descriptionLabel.textColor = [UIColor redColor];
-        self.descriptionLabel.font = [UIFont fontWithName:@"Arial" size:18.0f];
-        self.descriptionLabel.text = @"Add New Listing";
+//        UIView *MapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+//        [MapView addSubview:self.mapView];
         
-        //[self addSubview:imageView];
-        [self addSubview:self.Label];
-        [self addSubview:self.descriptionLabel];
+        
+
+        
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 105, self.bounds.size.width, 30)];
+        self.addressLabel.textColor = [UIColor blackColor];
+        self.addressLabel.font = [UIFont fontWithName:@"Arial" size:14.0f];
+        
+        CGRect frame = CGRectMake(0, 0, self.bounds.size.width, 100);
+        NSString *searchAddress = @"1235,WILDWOOD AVE,SUNNYVALE,CA 94089" ;
+        cellMapView_ = [GoogleMapApi displayMapwithAddress:searchAddress forFrame:frame];
+        [self addSubview:cellMapView_];
+    
+        [self addSubview:self.mapView];
+        [self addSubview:self.addressLabel];
+
     }
     return self;
     

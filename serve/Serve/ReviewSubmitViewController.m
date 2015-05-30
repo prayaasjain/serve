@@ -1,31 +1,20 @@
 //
 //  ReviewSubmitViewController.m
-//  Serve Akhil
+//  Serve 
 //
 //  Created by Akhil Khemani on 5/14/15.
 //  Copyright (c) 2015 Akhil Khemani. All rights reserved.
 //
 
 #import "ReviewSubmitViewController.h"
-#import <GoogleMaps/GoogleMaps.h>
-#import <QuartzCore/QuartzCore.h>
-//#import "MapCell.h"
+#import "MapCell.h"
+#import "GoogleMapApi.h"
 
 const CGFloat reviewProgressButtonSize = 19.0f;
 const CGFloat reviewProgressButtonY = 365.0f;
 const CGFloat reviewProgressButtonX = 80.0f;
 const CGFloat reviewProgressButtonInset = -2.0f;
 const CGFloat reviewProgressIndicatorTextSize = 9.0f;
-
-//const CGFloat imageViewHeight = 160.0f;
-//const CGFloat formRightMargin = -15.0f;
-//const CGFloat formLeftMargin = 15.0f;
-//const CGFloat formTopMargin = 160.0f;
-//const CGFloat formItemHeight = 30.0f;
-//const CGFloat formItemToItemOffset = 20.0f;
-//const CGFloat formLabelToFieldOffset = 10.0f;
-//const CGFloat formFieldHeight = 20.0f;
-//static NSString * const titlePlaceholder = @"Title";
 
 static NSArray *deleteButtonActionSheetItems = nil;
 const CGFloat reviewDeleteButtonTag = 1;
@@ -37,16 +26,6 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 
 //starting fresh
-@property (nonatomic, strong) UIImageView *addImageBackgroundView;
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UITextField *titleInput;
-@property (nonatomic, strong) UIButton *addPhotoActionSheetButton;
-@property (nonatomic, strong) UITextView *descriptionInput;
-@property (nonatomic, readwrite,assign) NSInteger numberOfServes;
-@property (nonatomic, strong) UITextField *servesInput;
-@property (nonatomic, strong) UITextField *typeInput;
-@property (nonatomic, strong) UITextField *cuisineInput;
-@property (nonatomic, retain) NSArray* itemTypes;
 @property (nonatomic ,strong) UITableView* homeTable;
 
 - (IBAction)submitButtonPressed:(id)sender;
@@ -62,26 +41,21 @@ const CGFloat reviewDeleteButtonTag = 1;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    CLLocationCoordinate2D center;
-    center=[self getLocationFromAddressString:@"1235,wildwood ave,sunnyvale,california"];
-    double  latitude=center.latitude;
-    double  longitude=center.longitude;
-    [self displayMapwithLatitude:latitude Longitude:longitude];
-    //NSMutableArray *array = [NSMutableArray arrayWithObjects:@"12.981902,80.266333",@"12.982902,80.266363", nil];
-    
+
+    //google map setUP
+//    NSString *searchAddress = @"1235,wildwood ave,sunnyvale,california" ;
+//    mapView_ = [GoogleMapApi displayMapwithAddress:searchAddress];
+    //[self.view addSubview:mapView_];
     
     [self setUpActionSheets];
     [self setUpNavigationController];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    //[self.view addSubview:mapView_];
     [self.view addSubview:self.homeTable];
     
     
-    ///table
+    ///table setup
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(10, 10, self.view.bounds.size.width-20, self.view.bounds.size.height)
                                                   style:UITableViewStylePlain];
-    
     
     self.homeTable.scrollsToTop = NO;
     self.homeTable.delegate = self;
@@ -90,67 +64,14 @@ const CGFloat reviewDeleteButtonTag = 1;
     //self.homeTable.separatorColor=[UIColor grayColor];
     self.homeTable.tableFooterView = [UIView new];
     //[self.homeTable registerClass:[UITableViewCellStyleDefault class] forCellReuseIdentifier:@"addListingCell"];
-    //[self.homeTable registerClass:[MapCell class] forCellReuseIdentifier:@"MapCell"];
+    [self.homeTable registerClass:[MapCell class] forCellReuseIdentifier:@"MapCell"];
     self.homeTable.tableFooterView = [UIView new];
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    
 
 }
 
-- (void)displayMapwithLatitude:(double)latitude Longitude:(double)longitude {
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude
-                                                            longitude:longitude
-                                                                 zoom:17];
-    CGRect frame = CGRectMake(50, 200, 300, 300);
-    
-    mapView_ = [GMSMapView mapWithFrame:frame camera:camera];
-    mapView_.myLocationEnabled = YES;
-    //self.view = mapView_;
-    
-    // Creates a marker in the center of the map.
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(latitude+.001, longitude+.001);
-    marker.title = @"My";
-    marker.snippet = @"Location";
-    marker.map = mapView_;
-    marker.appearAnimation = kGMSMarkerAnimationPop;
-    
-    ///
-    GMSMarker *marker2 = [[GMSMarker alloc] init];
-    marker2.position = CLLocationCoordinate2DMake(latitude, longitude);
-    marker2.title = @"Your Listing";
-    marker2.snippet = @"Location";
-    marker2.map = mapView_;
-    
-    marker2.appearAnimation = kGMSMarkerAnimationPop;
-    //marker2.icon = [UIImage imageNamed:@"trash.png"];
-
-}
-
-- (CLLocationCoordinate2D) getLocationFromAddressString: (NSString*) addressStr {
-    double latitude = 0, longitude = 0;
-    NSString *esc_addr =  [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
-    NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:req] encoding:NSUTF8StringEncoding error:NULL];
-    if (result) {
-        NSScanner *scanner = [NSScanner scannerWithString:result];
-        if ([scanner scanUpToString:@"\"lat\" :" intoString:nil] && [scanner scanString:@"\"lat\" :" intoString:nil]) {
-            [scanner scanDouble:&latitude];
-            if ([scanner scanUpToString:@"\"lng\" :" intoString:nil] && [scanner scanString:@"\"lng\" :" intoString:nil]) {
-                [scanner scanDouble:&longitude];
-            }
-        }
-    }
-    CLLocationCoordinate2D center;
-    center.latitude=latitude;
-    center.longitude = longitude;
-    NSLog(@"View Controller get Location Logitute : %f",center.latitude);
-    NSLog(@"View Controller get Location Latitute : %f",center.longitude);
-    return center;
-    
-}
 
 - (UIView *)progressIndicator {
     
@@ -332,7 +253,7 @@ const CGFloat reviewDeleteButtonTag = 1;
     
     if(section==1)
     {
-        return 2;
+        return 1;
     }
     
     return 2;
@@ -368,40 +289,37 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 140.0f;
+
+    if(indexPath.section == 0)
+    {
+        return 140.0f;
+    }
+    
+    if(indexPath.section==1)
+    {
+        return 200.0f;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-//        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-//
-//        //Friend *friend = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    
-//        cell.textLabel.text = @"AkhilAkhilAkhilAKhilAkhilAKhilAKhilAKhilAKHilAKHilAKHALAKHILAKHLAKHILAKHILAKHILAKHIL";
-//        cell.textLabel.font = [cell.textLabel.font fontWithSize:10];
-//        cell.imageView.image = [UIImage imageNamed:@"food-1.jpg"];
-//    
-//        cell.detailTextLabel.text = @"Raju";
-//        cell.detailTextLabel.font = [cell.textLabel.font fontWithSize:10];
-//        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-//    
-//        [cell.contentView.layer setBorderColor:[UIColor grayColor].CGColor];
-//        [cell.contentView.layer setBorderWidth:1.0f];
-    
-    
-        static NSString *CellIdentifier = @"MapCell";
+        static NSString *MapCellIdentifier = @"MapCell";
+        static NSString *CellIdentifier =@"PhotoCell";
     
         ///
         // Similar to UITableViewCell, but
-//        MapCell *cell1 = (MapCell *)[self.homeTable dequeueReusableCellWithIdentifier:CellIdentifier];
-//        if (cell1 == nil) {
-//            cell1 = [[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//        }
-//    
-//    
-//        cell1.selectionStyle = UITableViewCellSelectionStyleNone;
     
+
+        MapCell *cell1 = (MapCell *)[self.homeTable dequeueReusableCellWithIdentifier:MapCellIdentifier];
+    
+        NSString *searchAddress = @"1235,WILDWOOD AVE,SUNNYVALE,CA 94089";
+        cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell1.addressLabel.text = searchAddress;
+    
+        if (cell1 == nil) {
+            cell1 = [[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MapCellIdentifier];
+        }
     
     
         UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -413,8 +331,29 @@ const CGFloat reviewDeleteButtonTag = 1;
         [[cell2 textLabel] setText: @"Burger"];
         [[cell2 detailTextLabel] setText: @"Serves -2"];
     
-        
-    return cell2;
+    
+    
+//    switch (indexPath.section)
+//    {
+//        case 0:
+//            break;
+//        case 1:
+////            customCell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
+////            customCell.detailTextLabel.numberOfLines = 0;
+//            break;
+//    }
+    
+    if(indexPath.section == 0)
+    {
+        return cell2;
+    }
+    
+    if(indexPath.section==1)
+    {
+        return cell1;
+    }
+    
+    return nil;
     
 }
 
@@ -439,3 +378,63 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 
 @end
+
+
+/*
+ - (void)displayMapwithLatitude:(double)latitude Longitude:(double)longitude {
+ GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude
+ longitude:longitude
+ zoom:17];
+ CGRect frame = CGRectMake(50, 200, 300, 300);
+ 
+ //CGRect frame = CGRectMake(0, 0, 50, 50);
+ 
+ mapView_ = [GMSMapView mapWithFrame:frame camera:camera];
+ mapView_.myLocationEnabled = YES;
+ //self.view = mapView_;
+ 
+ // Creates a marker in the center of the map.
+ GMSMarker *marker = [[GMSMarker alloc] init];
+ marker.position = CLLocationCoordinate2DMake(latitude+.001, longitude+.001);
+ marker.title = @"My";
+ marker.snippet = @"Location";
+ marker.map = mapView_;
+ marker.appearAnimation = kGMSMarkerAnimationPop;
+ 
+ ///
+ GMSMarker *marker2 = [[GMSMarker alloc] init];
+ marker2.position = CLLocationCoordinate2DMake(latitude, longitude);
+ marker2.title = @"Your Listing";
+ marker2.snippet = @"Location";
+ marker2.map = mapView_;
+ 
+ marker2.appearAnimation = kGMSMarkerAnimationPop;
+ //marker2.icon = [UIImage imageNamed:@"trash.png"];
+ 
+ }
+ 
+ 
+ - (CLLocationCoordinate2D) getLocationFromAddressString: (NSString*) addressStr {
+ double latitude = 0, longitude = 0;
+ NSString *esc_addr =  [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+ NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
+ NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:req] encoding:NSUTF8StringEncoding error:NULL];
+ if (result) {
+ NSScanner *scanner = [NSScanner scannerWithString:result];
+ if ([scanner scanUpToString:@"\"lat\" :" intoString:nil] && [scanner scanString:@"\"lat\" :" intoString:nil]) {
+ [scanner scanDouble:&latitude];
+ if ([scanner scanUpToString:@"\"lng\" :" intoString:nil] && [scanner scanString:@"\"lng\" :" intoString:nil]) {
+ [scanner scanDouble:&longitude];
+ }
+ }
+ }
+ CLLocationCoordinate2D center;
+ center.latitude=latitude;
+ center.longitude = longitude;
+ NSLog(@"View Controller get Location Logitute : %f",center.latitude);
+ NSLog(@"View Controller get Location Latitute : %f",center.longitude);
+ return center;
+ 
+ }
+
+*/

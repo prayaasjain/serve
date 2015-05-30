@@ -10,8 +10,8 @@
 
 @interface MapCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *descriptionLabel;
-@property (nonatomic, strong) UILabel *Label;
-@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *addressLabel;
+@property (atomic, strong) UIView  *mapView;
+@property (nonatomic, retain) NSString* searchAddress;
 
 @end
