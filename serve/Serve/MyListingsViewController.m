@@ -44,7 +44,6 @@ const CGFloat iconHeight = 25.0f;
     self.homeTable.tableFooterView = [UIView new];
     [self.homeTable registerClass:[AddListingCell class] forCellReuseIdentifier:@"addListingCell"];
     self.homeTable.tableFooterView = [UIView new];
-    
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
 

@@ -13,6 +13,7 @@
 		202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */; };
 		2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8D11B0925F100CA99B1 /* AddListingCell.m */; };
 		2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8E01B0935E700CA99B1 /* PickImageViewController.m */; };
+		2091910E1B19901B008CCAA9 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091910D1B19901B008CCAA9 /* MapCell.m */; };
 		20B5A8C41B15708C00818741 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C31B15708C00818741 /* GoogleMaps.framework */; };
 		20B5A8C61B1570D500818741 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B5A8C51B1570D500818741 /* GoogleMaps.bundle */; };
 		20B5A8C81B15710100818741 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C71B15710100818741 /* AVFoundation.framework */; };
@@ -65,6 +66,8 @@
 		2040C8D11B0925F100CA99B1 /* AddListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddListingCell.m; sourceTree = "<group>"; };
 		2040C8DF1B0935E700CA99B1 /* PickImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickImageViewController.h; sourceTree = "<group>"; };
 		2040C8E01B0935E700CA99B1 /* PickImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickImageViewController.m; sourceTree = "<group>"; };
+		2091910C1B19901B008CCAA9 /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
+		2091910D1B19901B008CCAA9 /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		20B5A8C31B15708C00818741 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		20B5A8C51B1570D500818741 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		20B5A8C71B15710100818741 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -162,6 +165,8 @@
 		203592191B044ADE00850472 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				2091910C1B19901B008CCAA9 /* MapCell.h */,
+				2091910D1B19901B008CCAA9 /* MapCell.m */,
 				2040C8D01B0925F100CA99B1 /* AddListingCell.h */,
 				2040C8D11B0925F100CA99B1 /* AddListingCell.m */,
 			);
@@ -383,6 +388,7 @@
 				20EE2B111B01502B00F80CAC /* main.m in Sources */,
 				20EF27941B0C24FC0082A828 /* NewInputViewController.m in Sources */,
 				20EE2B171B01502B00F80CAC /* Serve.xcdatamodeld in Sources */,
+				2091910E1B19901B008CCAA9 /* MapCell.m in Sources */,
 				20EE2B3F1B01511700F80CAC /* InputViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,6 +8,8 @@
 
 #import "ReviewSubmitViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import <QuartzCore/QuartzCore.h>
+//#import "MapCell.h"
 
 const CGFloat reviewProgressButtonSize = 19.0f;
 const CGFloat reviewProgressButtonY = 365.0f;
@@ -45,6 +47,7 @@ const CGFloat reviewDeleteButtonTag = 1;
 @property (nonatomic, strong) UITextField *typeInput;
 @property (nonatomic, strong) UITextField *cuisineInput;
 @property (nonatomic, retain) NSArray* itemTypes;
+@property (nonatomic ,strong) UITableView* homeTable;
 
 - (IBAction)submitButtonPressed:(id)sender;
 - (IBAction)backButtonPressed:(id)sender;
@@ -71,7 +74,28 @@ const CGFloat reviewDeleteButtonTag = 1;
     [self setUpActionSheets];
     [self setUpNavigationController];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:mapView_];
+    //[self.view addSubview:mapView_];
+    [self.view addSubview:self.homeTable];
+    
+    
+    ///table
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(10, 10, self.view.bounds.size.width-20, self.view.bounds.size.height)
+                                                  style:UITableViewStylePlain];
+    
+    
+    self.homeTable.scrollsToTop = NO;
+    self.homeTable.delegate = self;
+    self.homeTable.dataSource = self;
+    //self.homeTable.separatorInset = UIEdgeInsetsMake(-20, -10, 10, 20);
+    //self.homeTable.separatorColor=[UIColor grayColor];
+    self.homeTable.tableFooterView = [UIView new];
+    //[self.homeTable registerClass:[UITableViewCellStyleDefault class] forCellReuseIdentifier:@"addListingCell"];
+    //[self.homeTable registerClass:[MapCell class] forCellReuseIdentifier:@"MapCell"];
+    self.homeTable.tableFooterView = [UIView new];
+    [self.view addSubview:self.homeTable];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    
 
 }
 
@@ -297,6 +321,116 @@ const CGFloat reviewDeleteButtonTag = 1;
         NSLog(@"Cancel pressed --> Cancel ActionSheet");
     }
 }
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    if(section==0)
+    {
+        return 1;
+    }
+    
+    if(section==1)
+    {
+        return 2;
+    }
+    
+    return 2;
+}
+
+
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+//    /* Create custom view to display section header... */
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
+//    [label setFont:[UIFont boldSystemFontOfSize:12]];
+//    NSString *string = @"Heading";
+//    /* Section header is in 0th index... */
+//    [label setText:string];
+//    [view addSubview:label];
+//    [view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
+//    return view;
+//}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if(section==0)
+    {
+        return @"ITEM DETAILS";
+    }
+    
+    else
+    {
+        return @"PICKUP INFORMATION";
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 140.0f;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+//        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+//
+//        //Friend *friend = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//    
+//        cell.textLabel.text = @"AkhilAkhilAkhilAKhilAkhilAKhilAKhilAKhilAKHilAKHilAKHALAKHILAKHLAKHILAKHILAKHILAKHIL";
+//        cell.textLabel.font = [cell.textLabel.font fontWithSize:10];
+//        cell.imageView.image = [UIImage imageNamed:@"food-1.jpg"];
+//    
+//        cell.detailTextLabel.text = @"Raju";
+//        cell.detailTextLabel.font = [cell.textLabel.font fontWithSize:10];
+//        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+//    
+//        [cell.contentView.layer setBorderColor:[UIColor grayColor].CGColor];
+//        [cell.contentView.layer setBorderWidth:1.0f];
+    
+    
+        static NSString *CellIdentifier = @"MapCell";
+    
+        ///
+        // Similar to UITableViewCell, but
+//        MapCell *cell1 = (MapCell *)[self.homeTable dequeueReusableCellWithIdentifier:CellIdentifier];
+//        if (cell1 == nil) {
+//            cell1 = [[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//        }
+//    
+//    
+//        cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    
+    
+        UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell2 == nil) {
+            cell2 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        }
+        
+        [[cell2 imageView] setImage:[UIImage imageNamed:@"food1.jpg"]];
+        [[cell2 textLabel] setText: @"Burger"];
+        [[cell2 detailTextLabel] setText: @"Serves -2"];
+    
+        
+    return cell2;
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 20.0f;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 2;
+}
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

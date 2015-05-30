@@ -8,6 +8,7 @@
 
 #import "NewInputViewController.h"
 #import "NewPickUpInfoViewController.h"
+#import "PickUpInfoViewController.h"
 #import "PickImageViewController.h"
 
 #define MAIN_SCREEN_HEIGHT [[UIScreen mainScreen].bounds.size.height]
@@ -202,14 +203,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     self.numberOfServes = 1;
     self.servesInput = [[UITextField alloc]init];
     [self setTextFieldProperties:self.servesInput withPlaceholder:[NSString stringWithFormat:@"%ld",self.numberOfServes] withTag:ServesInputTag];
-    self.servesInput.textColor = [UIColor blackColor];
+    self.servesInput.textColor = [UIColor redColor];
     self.servesInput.userInteractionEnabled = NO;
     
     self.itemTypes = @[@"Vegetarian",@"Non-Vegetarian"];
     self.typeInput = [[UITextField alloc]init];
     [self setTextFieldProperties:self.typeInput withPlaceholder:[self.itemTypes objectAtIndex:0] withTag:TypeInputTag];
     self.typeInput.userInteractionEnabled = NO;
-    self.typeInput.textColor = [UIColor blackColor];
+    self.typeInput.textColor = [UIColor redColor];
     
     self.descInput = [[UITextView alloc]init];
     self.descInput.text = descriptionPlaceholder;
@@ -223,20 +224,61 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     self.descInput.layer.cornerRadius = 5;//changed from 15
     self.descInput.clipsToBounds = YES;
     self.descInput.tag = DescInputTag;
-    [self.descInput setReturnKeyType:UIReturnKeyDone];
+    [self.descInput setReturnKeyType:UIReturnKeyDefault];
     [self.descInput setKeyboardAppearance:UIKeyboardAppearanceDark];
+    
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f,
+                                                                     0.0f,
+                                                                     self.view.window.frame.size.width,
+                                                                     44.0f)];
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//    {
+//        toolBar.tintColor = [UIColor colorWithRed:0.6f
+//                                            green:0.6f
+//                                             blue:0.64f
+//                                            alpha:1.0f];
+//    }
+//    else
+//    {
+//        toolBar.tintColor = [UIColor colorWithRed:0.56f
+//                                            green:0.59f
+//                                             blue:0.63f
+//                                            alpha:1.0f];
+//    }
+//    toolBar.translucent = NO;
+    toolBar.items =   @[
+                        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                      target:nil
+                                                                      action:nil],
+                        
+                        [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                          style:UIBarButtonItemStyleDone
+                                                         target:self
+                                                         action:@selector(keyboardDoneButtonPressed:)]
+                         ,
+                         ];
+    
+    toolBar.backgroundColor = [UIColor blackColor];
 
+    toolBar.alpha = 0.5;
+    toolBar.tintColor = [UIColor blackColor];
+    toolBar.translucent = YES;
+    
+    self.descInput.inputAccessoryView = toolBar;
+    
+    
 }
 
 - (UIButton *)addServeButton {
     
     if (!_addServeButton) {
         
-        _addServeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *image = [[UIImage imageNamed:@"trash.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _addServeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIImage *image = [[UIImage imageNamed:@"add_32.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [_addServeButton addTarget:self action:@selector(incrementServeCount:) forControlEvents:UIControlEventTouchUpInside];
-        [_addServeButton setImage:image forState:UIControlStateNormal];
-        _addServeButton.tintColor = [UIColor grayColor];
+        //[_addServeButton setImage:image forState:UIControlStateNormal];
+        [_addServeButton setTitle:@"+" forState:UIControlStateNormal];
+        _addServeButton.tintColor = [UIColor redColor];
          self.addServeButton.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
@@ -247,11 +289,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     if (!_reduceServeButton) {
         
-        _reduceServeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *image = [[UIImage imageNamed:@"trash.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        //_reduceServeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _reduceServeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+ 
+        [_reduceServeButton setTitle:@"-" forState:UIControlStateNormal];
+        //UIImage *image = [[UIImage imageNamed:@"reduce_32.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [_reduceServeButton addTarget:self action:@selector(decrementServeCount:) forControlEvents:UIControlEventTouchUpInside];
-        [_reduceServeButton setImage:image forState:UIControlStateNormal];
-        _reduceServeButton.tintColor = [UIColor grayColor];
+        //[_reduceServeButton setImage:image forState:UIControlStateNormal];
+        _reduceServeButton.tintColor = [UIColor redColor];
         self.reduceServeButton.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
@@ -262,11 +307,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     if (!_nextTypeButton) {
         
-        _nextTypeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *image = [[UIImage imageNamed:@"trash.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _nextTypeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        //UIImage *image = [[UIImage imageNamed:@"previous_32.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [_nextTypeButton addTarget:self action:@selector(toggleItemType:) forControlEvents:UIControlEventTouchUpInside];
-        [_nextTypeButton setImage:image forState:UIControlStateNormal];
-        _nextTypeButton.tintColor = [UIColor grayColor];
+        //[_nextTypeButton setImage:image forState:UIControlStateNormal];
+        [_nextTypeButton setTitle:@">" forState:UIControlStateNormal];
+        _nextTypeButton.tintColor = [UIColor redColor];
         self.nextTypeButton.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
@@ -276,11 +322,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 - (UIButton *)previousTypeButton {
     
     if (!_previousTypeButton) {
-        _previousTypeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *image = [[UIImage imageNamed:@"trash.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _previousTypeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        //UIImage *image = [[UIImage imageNamed:@"trash.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [_previousTypeButton addTarget:self action:@selector(toggleItemType:) forControlEvents:UIControlEventTouchUpInside];
-        [_previousTypeButton setImage:image forState:UIControlStateNormal];
-        _previousTypeButton.tintColor = [UIColor grayColor];
+        //[_previousTypeButton setImage:image forState:UIControlStateNormal];
+        [_previousTypeButton setTitle:@"<" forState:UIControlStateNormal];
+        _previousTypeButton.tintColor = [UIColor redColor];
         self.previousTypeButton.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
@@ -517,6 +564,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self.navigationController pushViewController:self.pickUpInfoViewController animated:YES];
 }
 
+- (IBAction)keyboardDoneButtonPressed:(id)sender {
+    [self.descInput resignFirstResponder];
+}
+
 //this is to present uimage picker on tapping the backround image
 - (IBAction) didTapButton:(id)sender {
     UIImagePickerController *pickerController = [[UIImagePickerController alloc]
@@ -648,15 +699,20 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
     [self textViewAnimationStart:textView];
 }
+
 - (void)textViewDidEndEditing:(UITextView *)textView {
+    
     [self textViewAnimationEnd];
-    if([textView.text isEqualToString:@""])
+    [self.descInput resignFirstResponder];
+    
+    if([self.descInput.text isEqualToString:@""])
         {
-            textView.text = descriptionPlaceholder;
-            textView.textColor = [UIColor grayColor];
+            self.descInput.text = descriptionPlaceholder;
+            self.descInput.textColor = [UIColor grayColor];
         }
-    [textView resignFirstResponder];
+
 }
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     [self textViewAnimationStart:textField];
     
@@ -671,6 +727,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         textField.textColor = [UIColor blackColor];
     }
 }
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     [self textViewAnimationEnd];
     
@@ -689,10 +746,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
          [textField resignFirstResponder];
     }
 }
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
+
 - (void)textViewAnimationStart:(UITextField *)textField {
     CGRect textFieldRect =
     [self.view.window convertRect:textField.bounds fromView:textField];
@@ -741,6 +800,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [UIView commitAnimations];
 
 }
+
 - (void)textViewAnimationEnd {
     CGRect viewFrame = self.view.frame;
     viewFrame.origin.y += animatedDistance;
