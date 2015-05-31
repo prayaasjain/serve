@@ -10,6 +10,7 @@
 #import "NewPickUpInfoViewController.h"
 #import "PickUpInfoViewController.h"
 #import "PickImageViewController.h"
+#import "Listing.h"
 
 #define MAIN_SCREEN_HEIGHT [[UIScreen mainScreen].bounds.size.height]
 
@@ -72,9 +73,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 @property (strong, nonatomic) NewPickUpInfoViewController *pickUpInfoViewController;
 @property (strong, nonatomic) PickImageViewController *pickImageViewController;
+@property (strong, nonatomic) Listing *currentListing;
 @property (nonatomic, strong) UIActionSheet *addPhotoActionSheet;
 @property (nonatomic, strong) UIActionSheet *cancelButtonActionSheet;
 
+- (id)initWithListing:(Listing *)listing;
 - (IBAction)continueButtonPressed:(id)sender;
 - (void) showActionSheet:(id)sender;
 - (IBAction) didTapButton:(id)sender;
@@ -82,6 +85,15 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 @end
 
 @implementation NewInputViewController
+
+- (id)initWithListing:(Listing *)_listing {
+    
+    if(self = [super init]) {
+        self.currentListing = _listing;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     

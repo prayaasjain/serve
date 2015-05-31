@@ -200,6 +200,7 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 - (IBAction)submitButtonPressed:(id)sender {
     NSLog(@"Trying to submit");
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void) setUpActionSheets {

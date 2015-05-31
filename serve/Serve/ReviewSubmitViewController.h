@@ -8,5 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ReviewSubmitViewController : UIViewController<UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface ReviewSubmitViewController : UIViewController<UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate>
 @end
