@@ -12,6 +12,7 @@
 @implementation MapCell
 
 @synthesize addressLabel = _addressLabel;
+@synthesize searchAddress = _searchAddress;
 GMSMapView *cellMapView_;
 
 - (void)awakeFromNib {
@@ -27,36 +28,42 @@ GMSMapView *cellMapView_;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // configure control(s)
-//        UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-//        imageView.image = [UIImage imageNamed:@"food1.jpg"];
-//        [self.contentView addSubview:imageView];
-        
-        
-        //self.mapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-        
-//        UIView *MapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
-//        [MapView addSubview:self.mapView];
-        
-        
+    return self;
+}
 
-        
-        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 105, self.bounds.size.width, 30)];
-        self.addressLabel.textColor = [UIColor blackColor];
-        self.addressLabel.font = [UIFont fontWithName:@"Arial" size:14.0f];
-        
-        CGRect frame = CGRectMake(0, 0, self.bounds.size.width, 100);
-        NSString *searchAddress = @"1235,WILDWOOD AVE,SUNNYVALE,CA 94089" ;
-        cellMapView_ = [GoogleMapApi displayMapwithAddress:searchAddress forFrame:frame];
-        [self addSubview:cellMapView_];
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withAddress:(NSString *)searchAddress
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
-        [self addSubview:self.mapView];
+    if (self) {
+        
+        UIView *titleOverlay = [[UIView alloc]initWithFrame:CGRectMake(0, 170, self.contentView.frame.size.width+40, 100)];
+        titleOverlay.backgroundColor = [UIColor blackColor];
+        titleOverlay.alpha = 0.3;
+        
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 170, self.bounds.size.width, 30)];
+        self.addressLabel.text = searchAddress;
+        self.addressLabel.textColor = [UIColor whiteColor];
+        self.addressLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:12.0f];
+
+        CGRect mapFrame = CGRectMake(0, 10, self.bounds.size.width+35, 185);
+        //NSString *searchAddress = @"1235,WILDWOOD AVE,SUNNYVALE,CA 94089" ;
+        cellMapView_ = [GoogleMapApi displayMapwithAddress:searchAddress forFrame:mapFrame];
+        cellMapView_.layer.borderColor = [UIColor grayColor].CGColor;
+        cellMapView_.layer.borderWidth = 1.0f;
+        
+        UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(self.bounds.size.width-20,
+                                                                        self.bounds.size.height-20,
+                                                                         28,28)];
+        
+        
+        [self addSubview:cellMapView_];
+        [self addSubview:titleOverlay];
         [self addSubview:self.addressLabel];
+        
 
     }
     return self;
-    
 }
 
 @end

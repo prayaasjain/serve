@@ -10,9 +10,11 @@
 		2014A1FB1B16D2B800AA5351 /* food1-gray.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1F91B16D2B800AA5351 /* food1-gray.jpg */; };
 		2014A1FC1B16D2B800AA5351 /* camera-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1FA1B16D2B800AA5351 /* camera-2.png */; };
 		201B33051B075890000930F7 /* food1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 201B33041B075890000930F7 /* food1.jpg */; };
+		202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202AF3731B1AF12600531369 /* ListingItemDetailCell.m */; };
 		202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */; };
 		2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8D11B0925F100CA99B1 /* AddListingCell.m */; };
 		2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8E01B0935E700CA99B1 /* PickImageViewController.m */; };
+		20913C371B1B0B8600EA4A10 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 20913C361B1B0B8600EA4A10 /* edit.png */; };
 		2091910E1B19901B008CCAA9 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091910D1B19901B008CCAA9 /* MapCell.m */; };
 		2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */; };
 		20B5A8C41B15708C00818741 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C31B15708C00818741 /* GoogleMaps.framework */; };
@@ -61,12 +63,15 @@
 		2014A1F91B16D2B800AA5351 /* food1-gray.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "food1-gray.jpg"; path = "Resources/food1-gray.jpg"; sourceTree = SOURCE_ROOT; };
 		2014A1FA1B16D2B800AA5351 /* camera-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-2.png"; path = "Resources/camera-2.png"; sourceTree = SOURCE_ROOT; };
 		201B33041B075890000930F7 /* food1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food1.jpg; sourceTree = "<group>"; };
+		202AF3721B1AF12600531369 /* ListingItemDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingItemDetailCell.h; sourceTree = "<group>"; };
+		202AF3731B1AF12600531369 /* ListingItemDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingItemDetailCell.m; sourceTree = "<group>"; };
 		202CBF101B05AC49007DFB30 /* ReviewSubmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewSubmitViewController.h; sourceTree = "<group>"; };
 		202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewSubmitViewController.m; sourceTree = "<group>"; };
 		2040C8D01B0925F100CA99B1 /* AddListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddListingCell.h; sourceTree = "<group>"; };
 		2040C8D11B0925F100CA99B1 /* AddListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddListingCell.m; sourceTree = "<group>"; };
 		2040C8DF1B0935E700CA99B1 /* PickImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickImageViewController.h; sourceTree = "<group>"; };
 		2040C8E01B0935E700CA99B1 /* PickImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickImageViewController.m; sourceTree = "<group>"; };
+		20913C361B1B0B8600EA4A10 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		2091910C1B19901B008CCAA9 /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
 		2091910D1B19901B008CCAA9 /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		2091911B1B1A4E83008CCAA9 /* GoogleMapApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapApi.h; sourceTree = "<group>"; };
@@ -168,6 +173,8 @@
 		203592191B044ADE00850472 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				202AF3721B1AF12600531369 /* ListingItemDetailCell.h */,
+				202AF3731B1AF12600531369 /* ListingItemDetailCell.m */,
 				2091910C1B19901B008CCAA9 /* MapCell.h */,
 				2091910D1B19901B008CCAA9 /* MapCell.m */,
 				2040C8D01B0925F100CA99B1 /* AddListingCell.h */,
@@ -245,6 +252,7 @@
 		20EE2B0E1B01502B00F80CAC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				20913C361B1B0B8600EA4A10 /* edit.png */,
 				2014A1F91B16D2B800AA5351 /* food1-gray.jpg */,
 				2014A1FA1B16D2B800AA5351 /* camera-2.png */,
 				20CA6B4F1B1410E5005FE7AA /* add_32.png */,
@@ -360,6 +368,7 @@
 				2014A1FC1B16D2B800AA5351 /* camera-2.png in Resources */,
 				20EE2B1D1B01502B00F80CAC /* Main.storyboard in Resources */,
 				20B5A8C61B1570D500818741 /* GoogleMaps.bundle in Resources */,
+				20913C371B1B0B8600EA4A10 /* edit.png in Resources */,
 				2014A1FB1B16D2B800AA5351 /* food1-gray.jpg in Resources */,
 				201B33051B075890000930F7 /* food1.jpg in Resources */,
 				20CA6B551B1410E5005FE7AA /* previous_32.png in Resources */,
@@ -395,6 +404,7 @@
 				20EF27941B0C24FC0082A828 /* NewInputViewController.m in Sources */,
 				20EE2B171B01502B00F80CAC /* Serve.xcdatamodeld in Sources */,
 				2091910E1B19901B008CCAA9 /* MapCell.m in Sources */,
+				202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */,
 				20EE2B3F1B01511700F80CAC /* InputViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

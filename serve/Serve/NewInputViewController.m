@@ -70,7 +70,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 @property (nonatomic, readwrite,assign) NSInteger numberOfServes;
 @property (nonatomic, retain) NSArray* itemTypes;
 
-@property (strong, nonatomic) NewPickUpInfoViewController *pickUpInfoViewController;
+@property (strong, nonatomic) PickUpInfoViewController *pickUpInfoViewController;
 @property (strong, nonatomic) PickImageViewController *pickImageViewController;
 @property (nonatomic, strong) UIActionSheet *addPhotoActionSheet;
 @property (nonatomic, strong) UIActionSheet *cancelButtonActionSheet;
@@ -558,7 +558,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 - (IBAction)continueButtonPressed:(id)sender {
     
     if(self.pickUpInfoViewController == nil){
-        NewPickUpInfoViewController *secondView = [[NewPickUpInfoViewController alloc] init];
+        PickUpInfoViewController *secondView = [[PickUpInfoViewController alloc] init];
         self.pickUpInfoViewController= secondView;
     }
     [self.navigationController pushViewController:self.pickUpInfoViewController animated:YES];
