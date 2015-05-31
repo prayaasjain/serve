@@ -9,6 +9,7 @@
 #import "ReviewSubmitViewController.h"
 #import "MapCell.h"
 #import "GoogleMapApi.h"
+#import "ListingItemDetailCell.h"
 
 const CGFloat reviewProgressButtonSize = 19.0f;
 const CGFloat reviewProgressButtonY = 365.0f;
@@ -49,7 +50,7 @@ const CGFloat reviewDeleteButtonTag = 1;
     
     [self setUpActionSheets];
     [self setUpNavigationController];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view setBackgroundColor:[UIColor blackColor]];
     [self.view addSubview:self.homeTable];
     
     
@@ -65,6 +66,7 @@ const CGFloat reviewDeleteButtonTag = 1;
     self.homeTable.tableFooterView = [UIView new];
     //[self.homeTable registerClass:[UITableViewCellStyleDefault class] forCellReuseIdentifier:@"addListingCell"];
     [self.homeTable registerClass:[MapCell class] forCellReuseIdentifier:@"MapCell"];
+    [self.homeTable registerClass:[ListingItemDetailCell class] forCellReuseIdentifier:@"ListingItemDetailCell"];
     self.homeTable.tableFooterView = [UIView new];
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -277,15 +279,17 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if(section==0)
-    {
-        return @"ITEM DETAILS";
-    }
+//    if(section==0)
+//    {
+//        return @"ITEM DETAILS";
+//    }
     
-    else
-    {
-        return @"PICKUP INFORMATION";
-    }
+//    if(section==1)
+//    {
+//        return @"PICKUP INFORMATION";
+//    }
+//    
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -293,12 +297,12 @@ const CGFloat reviewDeleteButtonTag = 1;
 
     if(indexPath.section == 0)
     {
-        return 140.0f;
+        return 260.0f;
     }
     
     if(indexPath.section==1)
     {
-        return 200.0f;
+        return 260.0f;
     }
     return 0;
 }
@@ -306,31 +310,36 @@ const CGFloat reviewDeleteButtonTag = 1;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
         static NSString *MapCellIdentifier = @"MapCell";
-        static NSString *CellIdentifier =@"PhotoCell";
+        static NSString *CellIdentifier =@"ListingItemDetailCell";
     
         ///
         // Similar to UITableViewCell, but
     
-
-        MapCell *cell1 = (MapCell *)[self.homeTable dequeueReusableCellWithIdentifier:MapCellIdentifier];
-    
         NSString *searchAddress = @"1235,WILDWOOD AVE,SUNNYVALE,CA 94089";
-        cell1.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell1.addressLabel.text = searchAddress;
+        //NSString *searchAddress = @"19,CHACHAN MANSION, LADENLA ROAD, DARJEELING,INDIA 734101";
+        //[MapCell initMapForCellWithAddress:searchAddress];
     
-        if (cell1 == nil) {
-            cell1 = [[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MapCellIdentifier];
-        }
+        MapCell *cell1 = (MapCell *)[self.homeTable dequeueReusableCellWithIdentifier:MapCellIdentifier];
+        //cell1 = [[MapCell alloc]];
+        cell1 = [[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MapCellIdentifier withAddress:searchAddress];
+        cell1.selectionStyle = UITableViewCellSelectionStyleNone;    
+
     
-    
-        UITableViewCell *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+        ListingItemDetailCell  *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell2 == nil) {
-            cell2 = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            cell2 = [[ListingItemDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         }
+    
+        cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
+        cell2.Label.text = @"BURGER WITH FRIES";
+        cell2.descriptionLabel.text = @"Description :We are trying to fit in a long description over here lets see till where does it fit and if the second line appears as we want or not and theres actually more text";
+        cell2.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        [[cell2 imageView] setImage:[UIImage imageNamed:@"food1.jpg"]];
-        [[cell2 textLabel] setText: @"Burger"];
-        [[cell2 detailTextLabel] setText: @"Serves -2"];
+        //[[cell2 imageView] setImage:[UIImage imageNamed:@"food1.jpg"]];
+//        [[cell2 textLabel] setText: @"Burger"];
+//        [[cell2 detailTextLabel] setText: @"Serves -2"];
+
     
     
     
@@ -354,13 +363,13 @@ const CGFloat reviewDeleteButtonTag = 1;
         return cell1;
     }
     
-    return nil;
+    return cell1;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 20.0f;
+    return 10.0f;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

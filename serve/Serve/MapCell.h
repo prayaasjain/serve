@@ -14,4 +14,6 @@
 @property (atomic, strong) UIView  *mapView;
 @property (nonatomic, retain) NSString* searchAddress;
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withAddress:(NSString *)searchAddress;
+
 @end

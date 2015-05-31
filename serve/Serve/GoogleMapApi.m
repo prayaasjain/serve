@@ -12,7 +12,7 @@
 
  GMSMapView *localMapView_;
 
-+ (CLLocationCoordinate2D) getLocationFromAddressString: (NSString*) addressStr {
++ (CLLocationCoordinate2D) getLatLongFromAddressString: (NSString*) addressStr {
     double latitude = 0, longitude = 0;
     NSString *esc_addr =  [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
@@ -29,8 +29,10 @@
     CLLocationCoordinate2D center;
     center.latitude=latitude;
     center.longitude = longitude;
-    NSLog(@"View Controller get Location Logitute : %f",center.latitude);
-    NSLog(@"View Controller get Location Latitute : %f",center.longitude);
+    
+    //to get address from latlong make a call to
+    [self getAddressFromLatLong:center];
+    
     return center;
     
 }
@@ -39,40 +41,62 @@
 {
     
     CLLocationCoordinate2D center;
-    center=[self getLocationFromAddressString:address];
+    center=[self getLatLongFromAddressString:address];
     double  latitude=center.latitude;
     double  longitude=center.longitude;
 
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude
                                                             longitude:longitude
                                                                  zoom:17];
-    //CGRect frame = CGRectMake(50, 200, 300, 300);
-    
-//    CGRect frame = CGRectMake(0, 0, 100, 100);
     
     localMapView_ = [GMSMapView mapWithFrame:frame camera:camera];
     localMapView_.myLocationEnabled = YES;
-    //self.view = localMapView;
     
     // Creates a marker in the center of the map.
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(latitude+.001, longitude+.001);
-    marker.title = @"My";
-    marker.snippet = @"Location";
-    marker.map = localMapView_;
-    marker.appearAnimation = kGMSMarkerAnimationPop;
+//    GMSMarker *marker = [[GMSMarker alloc] init];
+//    marker.position = CLLocationCoordinate2DMake(latitude+.001, longitude+.001);
+//    marker.title = @"My";
+//    marker.snippet = @"Location";
+//    marker.map = localMapView_;
+//    marker.appearAnimation = kGMSMarkerAnimationPop;
     
-    ///
     GMSMarker *marker2 = [[GMSMarker alloc] init];
     marker2.position = CLLocationCoordinate2DMake(latitude, longitude);
     marker2.title = @"Your Listing";
     marker2.snippet = @"Location";
     marker2.map = localMapView_;
-    
     marker2.appearAnimation = kGMSMarkerAnimationPop;
     //marker2.icon = [UIImage imageNamed:@"trash.png"];
     
     return localMapView_;
+}
+
++ (void)getAddressFromLatLong:(CLLocationCoordinate2D)center
+{
+    CLGeocoder *ceo = [[CLGeocoder alloc]init];
+    CLLocation *loc = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];
+    
+    [ceo reverseGeocodeLocation: loc completionHandler:
+     ^(NSArray *placemarks, NSError *error) {
+         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+         NSLog(@"placemark %@",placemark);
+         //String to hold address
+         NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+         NSLog(@"addressDictionary %@", placemark.addressDictionary);
+         
+         NSLog(@"placemark %@",placemark.region);
+         NSLog(@"placemark %@",placemark.country);  // Give Country Name
+         NSLog(@"placemark %@",placemark.locality); // Extract the city name
+         NSLog(@"location %@",placemark.name);
+         NSLog(@"location %@",placemark.ocean);
+         NSLog(@"location %@",placemark.postalCode);
+         NSLog(@"location %@",placemark.subLocality);
+         
+         NSLog(@"location %@",placemark.location);
+         //Print the location to console
+         NSLog(@"I am currently at %@",locatedAt);
+         
+     }];
 }
 
 @end
