@@ -45,20 +45,40 @@
         self.descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.descriptionLabel.numberOfLines = 0;
         
+        self.servesLabel = [[UILabel alloc]init];
+        self.servesLabel.textColor = [UIColor whiteColor];
+        self.servesLabel.font = [UIFont fontWithName:@"Arial" size:12.0f];
+        self.servesLabel.text = @"SERVES : 1";
+        
+    
         [self addSubview:titleOverlay];
         [self addSubview:self.Label];
         [self addSubview:self.descriptionLabel];
+        [self addSubview:self.servesLabel];
     }
     return self;
     
 }
 
-
 - (void) layoutSubviews {
     [super layoutSubviews];
     self.Label.frame = CGRectMake(5, 0, self.contentView.frame.size.width+40, 30);
     self.imageView.frame= CGRectMake(0,0, self.contentView.frame.size.width+40, 180);
-    self.descriptionLabel.frame = CGRectMake(5, 170, self.contentView.frame.size.width-30, 70);
+    self.descriptionLabel.frame = CGRectMake(5, 190, self.contentView.frame.size.width-30, 70);
+    self.servesLabel.frame = CGRectMake(5, 180, 90, 20);
+    
+    if(self.isEditModeEnabled)
+    {
+        UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(self.bounds.size.width-30,
+                                                                         self.bounds.size.height-40,
+                                                                         25,25)];
+        
+        [editButton setImage:[UIImage imageNamed:@"edit.png"] forState:UIControlStateNormal];
+        
+        [self addSubview:editButton];
+    }
+    
+    
 
 
 }

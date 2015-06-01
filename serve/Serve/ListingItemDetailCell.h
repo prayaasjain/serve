@@ -13,5 +13,7 @@
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) UILabel *Label;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, assign) BOOL *isEditModeEnabled;
+@property (nonatomic, strong) UILabel *servesLabel;
 
 @end

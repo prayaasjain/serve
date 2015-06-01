@@ -330,10 +330,12 @@ const CGFloat reviewDeleteButtonTag = 1;
             cell2 = [[ListingItemDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         }
     
+        cell2.isEditModeEnabled = YES;
         cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
         cell2.Label.text = @"BURGER WITH FRIES";
-        cell2.descriptionLabel.text = @"Description :We are trying to fit in a long description over here lets see till where does it fit and if the second line appears as we want or not and theres actually more text";
+        cell2.descriptionLabel.text = @"thisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthi160";
         cell2.selectionStyle = UITableViewCellSelectionStyleNone;
+    
         
         //[[cell2 imageView] setImage:[UIImage imageNamed:@"food1.jpg"]];
 //        [[cell2 textLabel] setText: @"Burger"];
