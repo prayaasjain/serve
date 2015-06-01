@@ -41,20 +41,28 @@
         
         self.descriptionLabel = [[UILabel alloc]init];
         self.descriptionLabel.textColor = [UIColor whiteColor];
-        self.descriptionLabel.font = [UIFont fontWithName:@"Arial" size:12.0f];
+        self.descriptionLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
         self.descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.descriptionLabel.numberOfLines = 0;
         
         self.servesLabel = [[UILabel alloc]init];
         self.servesLabel.textColor = [UIColor whiteColor];
         self.servesLabel.font = [UIFont fontWithName:@"Arial" size:12.0f];
-        self.servesLabel.text = @"SERVES : 1";
         
-    
+        self.cuisineLabel = [[UILabel alloc]init];
+        self.cuisineLabel.textColor = [UIColor whiteColor];
+        self.cuisineLabel.font = [UIFont fontWithName:@"Arial" size:12.0f];
+        
+        self.typeLabel = [[UILabel alloc]init];
+        self.typeLabel.textColor = [UIColor whiteColor];
+        self.typeLabel.font = [UIFont fontWithName:@"Arial" size:12.0f];
+        
         [self addSubview:titleOverlay];
         [self addSubview:self.Label];
         [self addSubview:self.descriptionLabel];
         [self addSubview:self.servesLabel];
+        [self addSubview:self.cuisineLabel];
+        [self addSubview:self.typeLabel];
     }
     return self;
     
@@ -64,8 +72,11 @@
     [super layoutSubviews];
     self.Label.frame = CGRectMake(5, 0, self.contentView.frame.size.width+40, 30);
     self.imageView.frame= CGRectMake(0,0, self.contentView.frame.size.width+40, 180);
-    self.descriptionLabel.frame = CGRectMake(5, 190, self.contentView.frame.size.width-30, 70);
+    self.descriptionLabel.frame = CGRectMake(5, 190, self.contentView.frame.size.width-50, 70);
     self.servesLabel.frame = CGRectMake(5, 180, 90, 20);
+    self.cuisineLabel.frame = CGRectMake(235, 180, 90, 20);
+    self.typeLabel.frame = CGRectMake(295, 180, 90, 20);
+    
     
     if(self.isEditModeEnabled)
     {
@@ -78,8 +89,19 @@
         [self addSubview:editButton];
     }
     
+    self.servesLabel.text = [NSString stringWithFormat:@"SERVES: %d",self.servesCount];
+    self.typeLabel.text = [NSString stringWithFormat:@"%@",self.typeInput];
+    
+    if(self.cuisineInput)
+    {
+        self.cuisineLabel.text = [NSString stringWithFormat:@"%@",self.cuisineInput];
+    }
     
 
+    self.descriptionLabel.text = [NSString stringWithFormat:@"Description: %@,",self.descInput];
+    
+    
+    
 
 }
 

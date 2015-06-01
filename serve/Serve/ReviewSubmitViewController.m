@@ -85,6 +85,11 @@ GMSMapView *mapView_;
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self.homeTable reloadData];
+    
+}
 
 - (UIView *)progressIndicator {
     
@@ -336,45 +341,27 @@ GMSMapView *mapView_;
     cell1.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
-        cell2.isEditModeEnabled = YES;
-        cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
-        cell2.Label.text = @"BURGER WITH FRIES";
-        cell2.descriptionLabel.text = @"thisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthisisatestdescriptionthi160";
-        cell2.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-        
-        //[[cell2 imageView] setImage:[UIImage imageNamed:@"food1.jpg"]];
-//        [[cell2 textLabel] setText: @"Burger"];
-//        [[cell2 detailTextLabel] setText: @"Serves -2"];
-
-    
     ListingItemDetailCell  *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell2 == nil) {
         cell2 = [[ListingItemDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
-//    cell2.Label.text = @"BURGER WITH FRIES";
-    cell2.Label.text = self.currentListing.title;
-    cell2.descriptionLabel.text = @"Description :We are trying to fit in a long description over here lets see till where does it fit and if the second line appears as we want or not and theres actually more text";
+    
+    cell2.Label.text = @"BURGER WITH FRIES";
+    cell2.descInput = @"This is a test description string with a count of 160 This is a test description string with a count of 160 This is a test description string with a count of160";
+    cell2.servesCount = 10;
+    cell2.cuisineInput = @"Chinese";
+    cell2.typeInput =@"Non-Veg";
+    
+//    cell2.Label.text = self.currentListing.title;
+//    cell2.descInput = self.currentListing.desc;
+//    cell2.servesCount = self.currentListing.serves;
+//    cell2.cuisineInput = self.currentListing.cuisine;
+//    cell2.typeInput = self.currentListing.type;
+    
     cell2.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    //[[cell2 imageView] setImage:[UIImage imageNamed:@"food1.jpg"]];
-    //        [[cell2 textLabel] setText: @"Burger"];
-    //        [[cell2 detailTextLabel] setText: @"Serves -2"];
-    
-    
-    
-    
-    //    switch (indexPath.section)
-    //    {
-    //        case 0:
-    //            break;
-    //        case 1:
-    ////            customCell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    ////            customCell.detailTextLabel.numberOfLines = 0;
-    //            break;
-    //    }
+    cell2.isEditModeEnabled = YES;
     
     if(indexPath.section == 0)
     {
