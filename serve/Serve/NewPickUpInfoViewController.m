@@ -42,6 +42,8 @@ static NSArray *deleteButtonActionSheetItems = nil;
 
 @property (nonatomic, strong) UIActionSheet *deleteButtonActionSheet;
 
+@property (nonatomic, strong) Listing *currentListing;
+
 - (IBAction)continueButtonPressed:(id)sender;
 - (IBAction)backButtonPressed:(id)sender;
 - (void)showActionSheet:(id)sender;
@@ -50,6 +52,15 @@ static NSArray *deleteButtonActionSheetItems = nil;
 @end
 
 @implementation NewPickUpInfoViewController
+
+- (id)initWithListing:(Listing *)_listing {
+    
+    if(self = [super init]) {
+        self.currentListing = _listing;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -441,7 +452,8 @@ static NSArray *deleteButtonActionSheetItems = nil;
 - (IBAction)continueButtonPressed:(id)sender {
     
     if(self.reviewSubmitViewController == nil){
-        ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] init];
+//        ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] init];
+        ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] initWithListing:self.currentListing];
         self.reviewSubmitViewController= secondView;
     }
     
@@ -449,6 +461,13 @@ static NSArray *deleteButtonActionSheetItems = nil;
     [self.navigationController pushViewController:self.reviewSubmitViewController animated:YES];
 }
 
+- (void)writeDataToListing {
+    [self.currentListing setAddressLine1:self.addressinput1.text];
+    [self.currentListing setAddressLine2:self.addressinput2.text];
+    [self.currentListing setCity:self.cityInput.text];
+    [self.currentListing setState:self.stateInput.text];
+    [self.currentListing setZipCode:self.zipCodeInput.text];
+}
 
 //- (void)autoFillTextFields {
 //    

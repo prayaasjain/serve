@@ -72,6 +72,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 @property (strong, nonatomic) PickUpInfoViewController *pickUpInfoViewController;
 @property (strong, nonatomic) PickImageViewController *pickImageViewController;
+@property (strong, nonatomic) Listing *currentListing;
 @property (nonatomic, strong) UIActionSheet *addPhotoActionSheet;
 @property (nonatomic, strong) UIActionSheet *cancelButtonActionSheet;
 
@@ -82,6 +83,15 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 @end
 
 @implementation NewInputViewController
+
+- (id)initWithListing:(Listing *)_listing {
+    
+    if(self = [super init]) {
+        self.currentListing = _listing;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     
@@ -119,27 +129,27 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 - (void)setUpViewControllerObjects {
-
+    
     self.progressIndicator = [[UIView alloc]init];
     self.progressIndicator.translatesAutoresizingMaskIntoConstraints=NO;
     self.progressIndicator.layer.borderColor = [UIColor blackColor].CGColor;
     self.progressIndicator.layer.borderWidth = 0.5f;
     //self.progressIndicator.layer.cornerRadius = 120;
     [self.progressIndicator setBackgroundColor:[UIColor lightGrayColor]];
-//    UIButton *step1Button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    
-//    //[step1Button setFrame:CGRectMake(_progressIndicator.frame.origin.x+16,_progressIndicator.frame.origin.y,serveButtonSize, serveButtonSize)];
-//    [step1Button setTitle:@"1" forState:UIControlStateNormal];
-//    [step1Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        //[step1Button addTarget:self action:@selector(toggleItemType:) forControlEvents:UIControlEventTouchUpInside];
-//    step1Button.layer.borderWidth=1.0f;
-//    step1Button.layer.borderColor=[[UIColor blackColor] CGColor];
-//    step1Button.layer.backgroundColor = [[UIColor blackColor] CGColor];
-//    step1Button.layer.cornerRadius = 10;
-//    step1Button.contentEdgeInsets = UIEdgeInsetsMake(1.0, 0.0, 0.0, 0.0);
-//    [self.progressIndicator addSubview:step1Button];
+    //    UIButton *step1Button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    //
+    //    //[step1Button setFrame:CGRectMake(_progressIndicator.frame.origin.x+16,_progressIndicator.frame.origin.y,serveButtonSize, serveButtonSize)];
+    //    [step1Button setTitle:@"1" forState:UIControlStateNormal];
+    //    [step1Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //        //[step1Button addTarget:self action:@selector(toggleItemType:) forControlEvents:UIControlEventTouchUpInside];
+    //    step1Button.layer.borderWidth=1.0f;
+    //    step1Button.layer.borderColor=[[UIColor blackColor] CGColor];
+    //    step1Button.layer.backgroundColor = [[UIColor blackColor] CGColor];
+    //    step1Button.layer.cornerRadius = 10;
+    //    step1Button.contentEdgeInsets = UIEdgeInsetsMake(1.0, 0.0, 0.0, 0.0);
+    //    [self.progressIndicator addSubview:step1Button];
     
-
+    
     //ADD PHOTO BIG BACKGROUND IMAGE
     self.addImageBackgroundView = [[UIImageView alloc]init];
     self.addImageBackgroundView.image = [UIImage imageNamed:@"food1-gray.jpg"];
@@ -199,7 +209,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     self.cuisineInput = [[UITextField alloc]init];
     [self setTextFieldProperties:self.cuisineInput withPlaceholder:cuisinePlaceholder withTag:CusineInputTag];
-
+    
     self.numberOfServes = 1;
     self.servesInput = [[UITextField alloc]init];
     [self setTextFieldProperties:self.servesInput withPlaceholder:[NSString stringWithFormat:@"%ld",self.numberOfServes] withTag:ServesInputTag];
@@ -231,35 +241,35 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                                      0.0f,
                                                                      self.view.window.frame.size.width,
                                                                      44.0f)];
-//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//    {
-//        toolBar.tintColor = [UIColor colorWithRed:0.6f
-//                                            green:0.6f
-//                                             blue:0.64f
-//                                            alpha:1.0f];
-//    }
-//    else
-//    {
-//        toolBar.tintColor = [UIColor colorWithRed:0.56f
-//                                            green:0.59f
-//                                             blue:0.63f
-//                                            alpha:1.0f];
-//    }
-//    toolBar.translucent = NO;
+    //    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    //    {
+    //        toolBar.tintColor = [UIColor colorWithRed:0.6f
+    //                                            green:0.6f
+    //                                             blue:0.64f
+    //                                            alpha:1.0f];
+    //    }
+    //    else
+    //    {
+    //        toolBar.tintColor = [UIColor colorWithRed:0.56f
+    //                                            green:0.59f
+    //                                             blue:0.63f
+    //                                            alpha:1.0f];
+    //    }
+    //    toolBar.translucent = NO;
     toolBar.items =   @[
                         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                       target:nil
                                                                       action:nil],
                         
                         [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                                          style:UIBarButtonItemStyleDone
-                                                         target:self
-                                                         action:@selector(keyboardDoneButtonPressed:)]
-                         ,
-                         ];
+                                                         style:UIBarButtonItemStyleDone
+                                                        target:self
+                                                        action:@selector(keyboardDoneButtonPressed:)]
+                        ,
+                        ];
     
     toolBar.backgroundColor = [UIColor blackColor];
-
+    
     toolBar.alpha = 0.5;
     toolBar.tintColor = [UIColor blackColor];
     toolBar.translucent = YES;
@@ -279,7 +289,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         //[_addServeButton setImage:image forState:UIControlStateNormal];
         [_addServeButton setTitle:@"+" forState:UIControlStateNormal];
         _addServeButton.tintColor = [UIColor redColor];
-         self.addServeButton.translatesAutoresizingMaskIntoConstraints = NO;
+        self.addServeButton.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
     return _addServeButton;
@@ -291,7 +301,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         
         //_reduceServeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _reduceServeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
- 
+        
         [_reduceServeButton setTitle:@"-" forState:UIControlStateNormal];
         //UIImage *image = [[UIImage imageNamed:@"reduce_32.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [_reduceServeButton addTarget:self action:@selector(decrementServeCount:) forControlEvents:UIControlEventTouchUpInside];
@@ -401,39 +411,39 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     
     NSLayoutConstraint *titleInputWidthConstraint = [NSLayoutConstraint
-                                                   constraintWithItem:self.titleInput attribute:NSLayoutAttributeWidth
-                                                   relatedBy:NSLayoutRelationEqual toItem:self.cuisineInput
-                                                   attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
+                                                     constraintWithItem:self.titleInput attribute:NSLayoutAttributeWidth
+                                                     relatedBy:NSLayoutRelationEqual toItem:self.cuisineInput
+                                                     attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
     
     NSLayoutConstraint *servesInputWidthConstraint = [NSLayoutConstraint
-                                                    constraintWithItem:self.servesInput attribute:NSLayoutAttributeWidth
+                                                      constraintWithItem:self.servesInput attribute:NSLayoutAttributeWidth
+                                                      relatedBy:NSLayoutRelationEqual toItem:self.cuisineInput
+                                                      attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint *typeInputWidthConstraint = [NSLayoutConstraint
+                                                    constraintWithItem:self.typeInput attribute:NSLayoutAttributeWidth
                                                     relatedBy:NSLayoutRelationEqual toItem:self.cuisineInput
                                                     attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
     
-    NSLayoutConstraint *typeInputWidthConstraint = [NSLayoutConstraint
-                                                     constraintWithItem:self.typeInput attribute:NSLayoutAttributeWidth
-                                                     relatedBy:NSLayoutRelationEqual toItem:self.cuisineInput
-                                                     attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
-    
     NSLayoutConstraint *descInputWidthConstraint = [NSLayoutConstraint
-                                                     constraintWithItem:self.descInput attribute:NSLayoutAttributeWidth
-                                                     relatedBy:NSLayoutRelationEqual toItem:self.cuisineInput
-                                                     attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
+                                                    constraintWithItem:self.descInput attribute:NSLayoutAttributeWidth
+                                                    relatedBy:NSLayoutRelationEqual toItem:self.cuisineInput
+                                                    attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
     
     NSLayoutConstraint *progressViewHeightConstraint = [NSLayoutConstraint
-                                                    constraintWithItem:self.progressIndicator attribute:NSLayoutAttributeHeight
-                                                    relatedBy:NSLayoutRelationEqual toItem:superview
-                                                    attribute:NSLayoutAttributeHeight multiplier:.10 constant:0];
+                                                        constraintWithItem:self.progressIndicator attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual toItem:superview
+                                                        attribute:NSLayoutAttributeHeight multiplier:.10 constant:0];
     
-//    NSLayoutConstraint *imageViewHeightConstraint = [NSLayoutConstraint
-//                                                        constraintWithItem:self.addImageBackgroundView attribute:NSLayoutAttributeHeight
-//                                                        relatedBy:NSLayoutRelationEqual toItem:self.addImageBackgroundView
-//                                                        attribute:NSLayoutAttributeWidth multiplier:4.0/3.0 constant:0];
+    //    NSLayoutConstraint *imageViewHeightConstraint = [NSLayoutConstraint
+    //                                                        constraintWithItem:self.addImageBackgroundView attribute:NSLayoutAttributeHeight
+    //                                                        relatedBy:NSLayoutRelationEqual toItem:self.addImageBackgroundView
+    //                                                        attribute:NSLayoutAttributeWidth multiplier:4.0/3.0 constant:0];
     
     NSLayoutConstraint *addPhotoButtonCenterXConstraint = [NSLayoutConstraint
-                                                  constraintWithItem:self.addPhotoActionSheetButton attribute:NSLayoutAttributeCenterX
-                                                  relatedBy:NSLayoutRelationEqual toItem:self.addImageBackgroundView attribute:
-                                                  NSLayoutAttributeCenterX multiplier:1 constant:0];
+                                                           constraintWithItem:self.addPhotoActionSheetButton attribute:NSLayoutAttributeCenterX
+                                                           relatedBy:NSLayoutRelationEqual toItem:self.addImageBackgroundView attribute:
+                                                           NSLayoutAttributeCenterX multiplier:1 constant:0];
     
     NSLayoutConstraint *addPhotoButtonCenterYConstraint = [NSLayoutConstraint
                                                            constraintWithItem:self.addPhotoActionSheetButton attribute:NSLayoutAttributeCenterY
@@ -451,19 +461,19 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                            relatedBy:NSLayoutRelationEqual toItem:self.servesInput attribute:
                                                            NSLayoutAttributeCenterY multiplier:1 constant:0];
     NSLayoutConstraint *reduceServeButtonCenterXConstraint = [NSLayoutConstraint
-                                                           constraintWithItem:self.reduceServeButton attribute:NSLayoutAttributeCenterX
-                                                           relatedBy:NSLayoutRelationEqual toItem:self.servesInput attribute:
-                                                           NSLayoutAttributeLeftMargin multiplier:1 constant:0];
+                                                              constraintWithItem:self.reduceServeButton attribute:NSLayoutAttributeCenterX
+                                                              relatedBy:NSLayoutRelationEqual toItem:self.servesInput attribute:
+                                                              NSLayoutAttributeLeftMargin multiplier:1 constant:0];
     
     NSLayoutConstraint *reduceServeButtonCenterYConstraint = [NSLayoutConstraint
-                                                           constraintWithItem:self.reduceServeButton attribute:NSLayoutAttributeCenterY
-                                                           relatedBy:NSLayoutRelationEqual toItem:self.servesInput attribute:
-                                                           NSLayoutAttributeCenterY multiplier:1 constant:0];
+                                                              constraintWithItem:self.reduceServeButton attribute:NSLayoutAttributeCenterY
+                                                              relatedBy:NSLayoutRelationEqual toItem:self.servesInput attribute:
+                                                              NSLayoutAttributeCenterY multiplier:1 constant:0];
     
     NSLayoutConstraint *previousTypeButtonCenterYConstraint = [NSLayoutConstraint
-                                                              constraintWithItem:self.previousTypeButton attribute:NSLayoutAttributeCenterY
-                                                              relatedBy:NSLayoutRelationEqual toItem:self.typeInput attribute:
-                                                              NSLayoutAttributeCenterY multiplier:1 constant:0];
+                                                               constraintWithItem:self.previousTypeButton attribute:NSLayoutAttributeCenterY
+                                                               relatedBy:NSLayoutRelationEqual toItem:self.typeInput attribute:
+                                                               NSLayoutAttributeCenterY multiplier:1 constant:0];
     
     NSLayoutConstraint *previousTypeButtonCenterXConstraint = [NSLayoutConstraint
                                                                constraintWithItem:self.previousTypeButton attribute:NSLayoutAttributeCenterX
@@ -472,13 +482,13 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     
     NSLayoutConstraint *nextTypeButtonCenterXConstraint = [NSLayoutConstraint
-                                                               constraintWithItem:self.nextTypeButton attribute:NSLayoutAttributeCenterY
-                                                               relatedBy:NSLayoutRelationEqual toItem:self.typeInput attribute:
-                                                               NSLayoutAttributeCenterY multiplier:1 constant:0];
+                                                           constraintWithItem:self.nextTypeButton attribute:NSLayoutAttributeCenterY
+                                                           relatedBy:NSLayoutRelationEqual toItem:self.typeInput attribute:
+                                                           NSLayoutAttributeCenterY multiplier:1 constant:0];
     NSLayoutConstraint *nextTypeButtonCenterYConstraint = [NSLayoutConstraint
-                                                               constraintWithItem:self.nextTypeButton attribute:NSLayoutAttributeCenterX
-                                                               relatedBy:NSLayoutRelationEqual toItem:self.typeInput attribute:
-                                                               NSLayoutAttributeRightMargin multiplier:1 constant:0];
+                                                           constraintWithItem:self.nextTypeButton attribute:NSLayoutAttributeCenterX
+                                                           relatedBy:NSLayoutRelationEqual toItem:self.typeInput attribute:
+                                                           NSLayoutAttributeRightMargin multiplier:1 constant:0];
     
     
     
@@ -557,11 +567,19 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 - (IBAction)continueButtonPressed:(id)sender {
     
-    if(self.pickUpInfoViewController == nil){
-        PickUpInfoViewController *secondView = [[PickUpInfoViewController alloc] init];
-        self.pickUpInfoViewController= secondView;
+    if([self writeDataToListing]) {
+        if(self.pickUpInfoViewController == nil){
+            //        PickUpInfoViewController *secondView = [[PickUpInfoViewController alloc] init];
+            PickUpInfoViewController *secondView = [[PickUpInfoViewController alloc] initWithListing:self.currentListing];
+            self.pickUpInfoViewController= secondView;
+        }
+        [self.navigationController pushViewController:self.pickUpInfoViewController animated:YES];
     }
-    [self.navigationController pushViewController:self.pickUpInfoViewController animated:YES];
+    else {
+        NSLog(@"Problem in writing data to listing object.");
+    }
+    
+    
 }
 
 - (IBAction)keyboardDoneButtonPressed:(id)sender {
@@ -679,7 +697,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     inputView.delegate = self;
     [inputView setReturnKeyType:UIReturnKeyDone];
     [inputView setKeyboardAppearance:UIKeyboardAppearanceDark];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -692,11 +710,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     if([textView.text isEqualToString:descriptionPlaceholder])
-        {
+    {
         textView.text = @"";
         textView.textColor = [UIColor blackColor];
     }
-
+    
     [self textViewAnimationStart:textView];
 }
 
@@ -706,11 +724,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self.descInput resignFirstResponder];
     
     if([self.descInput.text isEqualToString:@""])
-        {
-            self.descInput.text = descriptionPlaceholder;
-            self.descInput.textColor = [UIColor grayColor];
-        }
-
+    {
+        self.descInput.text = descriptionPlaceholder;
+        self.descInput.textColor = [UIColor grayColor];
+    }
+    
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -733,17 +751,17 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     if ([textField.text isEqualToString:@""]) {
         
-         if(textField.tag == TitleInputTag){
-             textField.text = titlePlaceholder;
-             textField.textColor = [UIColor grayColor];
-         }
-    
-         else if(textField.tag == CusineInputTag){
-             textField.text = cuisinePlaceholder;
-             textField.textColor = [UIColor grayColor];
-         }
-    
-         [textField resignFirstResponder];
+        if(textField.tag == TitleInputTag){
+            textField.text = titlePlaceholder;
+            textField.textColor = [UIColor grayColor];
+        }
+        
+        else if(textField.tag == CusineInputTag){
+            textField.text = cuisinePlaceholder;
+            textField.textColor = [UIColor grayColor];
+        }
+        
+        [textField resignFirstResponder];
     }
 }
 
@@ -798,7 +816,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self.view setFrame:viewFrame];
     
     [UIView commitAnimations];
-
+    
 }
 
 - (void)textViewAnimationEnd {
@@ -848,7 +866,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     {
         case TitleInputTag:
             return newLength <= allowedNumberOfCharactersInTitle;
-        
+            
         case CusineInputTag:
             return newLength <= allowedNumberOfCharactersInCuisine;
             
@@ -863,7 +881,39 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self.titleInput resignFirstResponder];
     [self.descInput resignFirstResponder];
     [self.cuisineInput resignFirstResponder];
+    
+}
 
+#pragma mark Alert View for Errors
+
+- (void)showErrorWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancel {
+    UIAlertView *error = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:cancel
+                                          otherButtonTitles:nil];
+    [error show];
+}
+
+#pragma mark Listing Object Methods
+
+- (BOOL)writeDataToListing {
+    self.currentListing = [[Listing alloc] init];
+    
+    if(self.titleInput.text.length == 0 || [self.titleInput.text isEqualToString:titlePlaceholder]) {
+        [self showErrorWithTitle:@"Incomplete Info" message:@"Please enter a title for your listing." cancelButtonTitle:@"OK"];
+        
+        return FALSE;
+    }
+    else {
+        [self.currentListing setTitle:self.titleInput.text];
+        [self.currentListing setServes:self.numberOfServes];
+        [self.currentListing setType:self.typeInput.text];
+        [self.currentListing setCuisine:self.cuisineInput.text];
+        [self.currentListing setDesc:self.descInput.text];
+        
+        return TRUE;
+    }
 }
 
 @end
