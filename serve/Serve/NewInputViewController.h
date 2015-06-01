@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Listing.h"
 
 @interface NewInputViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
+
+- (id)initWithListing:(Listing *)listing;
 
 @end

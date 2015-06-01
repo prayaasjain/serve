@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "ReviewSubmitViewController.h"
+#import "Listing.h"
 
 @interface PickUpInfoViewController : UIViewController<UIActionSheetDelegate>
 
 @property (strong, nonatomic) ReviewSubmitViewController *reviewSubmitViewController;
+
+- (id)initWithListing:(Listing *)listing;
 
 @end

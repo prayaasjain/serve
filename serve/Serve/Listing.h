@@ -12,7 +12,7 @@
 @interface Listing : NSObject
 
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, assign) NSInteger *serves;
+@property (nonatomic, assign) NSInteger serves;
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *cuisine;
 @property (nonatomic, strong) NSString *desc;

@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Akhil Khemani. All rights reserved.
 //
 
-#import "PickUpInfoViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "PickUpInfoViewController.h"
 //#import "AppDelegate.h"
 
 const CGFloat progressButtonSize = 19.0f;
@@ -53,9 +53,19 @@ static NSString * const descriptionPlaceholder = @"Description Text (Optional)";
 - (void)showActionSheet:(id)sender;
 
 @property (strong, nonatomic) PickUpInfoViewController *pickUpInfoViewController;
+@property (strong, nonatomic) Listing *currentListing;
 @end
 
 @implementation PickUpInfoViewController
+
+- (id)initWithListing:(Listing *)_listing {
+    
+    if(self = [super init]) {
+        self.currentListing = _listing;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -414,7 +424,8 @@ static NSString * const descriptionPlaceholder = @"Description Text (Optional)";
 - (IBAction)continueButtonPressed:(id)sender {
     
     if(self.reviewSubmitViewController == nil){
-        ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] init];
+//        ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] init];
+        ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] initWithListing:self.currentListing];
         self.reviewSubmitViewController= secondView;
     }
     

@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Listing.h"
 
 @interface ReviewSubmitViewController : UIViewController<UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate>
+
+- (id)initWithListing:(Listing *)listing;
+
 @end

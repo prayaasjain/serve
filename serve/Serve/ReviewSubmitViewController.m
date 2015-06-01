@@ -1,6 +1,6 @@
 //
 //  ReviewSubmitViewController.m
-//  Serve 
+//  Serve
 //
 //  Created by Akhil Khemani on 5/14/15.
 //  Copyright (c) 2015 Akhil Khemani. All rights reserved.
@@ -29,6 +29,8 @@ const CGFloat reviewDeleteButtonTag = 1;
 //starting fresh
 @property (nonatomic ,strong) UITableView* homeTable;
 
+@property (nonatomic, strong) Listing *currentListing;
+
 - (IBAction)submitButtonPressed:(id)sender;
 - (IBAction)backButtonPressed:(id)sender;
 - (void)showActionSheet:(id)sender;
@@ -37,15 +39,24 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 @implementation ReviewSubmitViewController
 
- GMSMapView *mapView_;
+GMSMapView *mapView_;
+
+- (id)initWithListing:(Listing *)_listing {
+    
+    if(self = [super init]) {
+        self.currentListing = _listing;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-
+    
     //google map setUP
-//    NSString *searchAddress = @"1235,wildwood ave,sunnyvale,california" ;
-//    mapView_ = [GoogleMapApi displayMapwithAddress:searchAddress];
+    //    NSString *searchAddress = @"1235,wildwood ave,sunnyvale,california" ;
+    //    mapView_ = [GoogleMapApi displayMapwithAddress:searchAddress];
     //[self.view addSubview:mapView_];
     
     [self setUpActionSheets];
@@ -71,7 +82,7 @@ const CGFloat reviewDeleteButtonTag = 1;
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-
+    
 }
 
 
@@ -111,7 +122,7 @@ const CGFloat reviewDeleteButtonTag = 1;
     UILabel *step2Label = [[UILabel alloc]initWithFrame:CGRectMake(step1Label.frame.origin.x+lineView1.frame.size.width+8, _progressIndicator.frame.origin.y+reviewProgressButtonSize, 80, 20)];
     [step2Label setText:@"Pickup Information"];
     [step2Label setFont:[UIFont systemFontOfSize:reviewProgressIndicatorTextSize]];
-   
+    
     
     UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(lineView1.frame.origin.x+lineView1.frame.size.width+reviewProgressButtonSize, _progressIndicator.frame.origin.y+reviewProgressButtonSize/2, 75, 2.0f)];
     lineView2.backgroundColor = [UIColor blackColor];
@@ -279,22 +290,22 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-//    if(section==0)
-//    {
-//        return @"ITEM DETAILS";
-//    }
+    //    if(section==0)
+    //    {
+    //        return @"ITEM DETAILS";
+    //    }
     
-//    if(section==1)
-//    {
-//        return @"PICKUP INFORMATION";
-//    }
-//    
+    //    if(section==1)
+    //    {
+    //        return @"PICKUP INFORMATION";
+    //    }
+    //
     return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     if(indexPath.section == 0)
     {
         return 260.0f;
@@ -309,49 +320,50 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        static NSString *MapCellIdentifier = @"MapCell";
-        static NSString *CellIdentifier =@"ListingItemDetailCell";
+    static NSString *MapCellIdentifier = @"MapCell";
+    static NSString *CellIdentifier =@"ListingItemDetailCell";
     
-        ///
-        // Similar to UITableViewCell, but
+    ///
+    // Similar to UITableViewCell, but
     
-        NSString *searchAddress = @"1235,WILDWOOD AVE,SUNNYVALE,CA 94089";
-        //NSString *searchAddress = @"19,CHACHAN MANSION, LADENLA ROAD, DARJEELING,INDIA 734101";
-        //[MapCell initMapForCellWithAddress:searchAddress];
+    NSString *searchAddress = @"1235,WILDWOOD AVE,SUNNYVALE,CA 94089";
+    //NSString *searchAddress = @"19,CHACHAN MANSION, LADENLA ROAD, DARJEELING,INDIA 734101";
+    //[MapCell initMapForCellWithAddress:searchAddress];
     
-        MapCell *cell1 = (MapCell *)[self.homeTable dequeueReusableCellWithIdentifier:MapCellIdentifier];
-        //cell1 = [[MapCell alloc]];
-        cell1 = [[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MapCellIdentifier withAddress:searchAddress];
-        cell1.selectionStyle = UITableViewCellSelectionStyleNone;    
-
-    
-
-        ListingItemDetailCell  *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell2 == nil) {
-            cell2 = [[ListingItemDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        }
-    
-        cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
-        cell2.Label.text = @"BURGER WITH FRIES";
-        cell2.descriptionLabel.text = @"Description :We are trying to fit in a long description over here lets see till where does it fit and if the second line appears as we want or not and theres actually more text";
-        cell2.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        //[[cell2 imageView] setImage:[UIImage imageNamed:@"food1.jpg"]];
-//        [[cell2 textLabel] setText: @"Burger"];
-//        [[cell2 detailTextLabel] setText: @"Serves -2"];
-
+    MapCell *cell1 = (MapCell *)[self.homeTable dequeueReusableCellWithIdentifier:MapCellIdentifier];
+    //cell1 = [[MapCell alloc]];
+    cell1 = [[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MapCellIdentifier withAddress:searchAddress];
+    cell1.selectionStyle = UITableViewCellSelectionStyleNone;
     
     
     
-//    switch (indexPath.section)
-//    {
-//        case 0:
-//            break;
-//        case 1:
-////            customCell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
-////            customCell.detailTextLabel.numberOfLines = 0;
-//            break;
-//    }
+    ListingItemDetailCell  *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell2 == nil) {
+        cell2 = [[ListingItemDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    
+    cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
+//    cell2.Label.text = @"BURGER WITH FRIES";
+    cell2.Label.text = self.currentListing.title;
+    cell2.descriptionLabel.text = @"Description :We are trying to fit in a long description over here lets see till where does it fit and if the second line appears as we want or not and theres actually more text";
+    cell2.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    //[[cell2 imageView] setImage:[UIImage imageNamed:@"food1.jpg"]];
+    //        [[cell2 textLabel] setText: @"Burger"];
+    //        [[cell2 detailTextLabel] setText: @"Serves -2"];
+    
+    
+    
+    
+    //    switch (indexPath.section)
+    //    {
+    //        case 0:
+    //            break;
+    //        case 1:
+    ////            customCell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    ////            customCell.detailTextLabel.numberOfLines = 0;
+    //            break;
+    //    }
     
     if(indexPath.section == 0)
     {
@@ -446,5 +458,5 @@ const CGFloat reviewDeleteButtonTag = 1;
  return center;
  
  }
-
-*/
+ 
+ */
