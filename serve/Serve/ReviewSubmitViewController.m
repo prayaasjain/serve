@@ -8,8 +8,8 @@
 
 #import "ReviewSubmitViewController.h"
 #import "MapCell.h"
-#import "GoogleMapApi.h"
 #import "ListingItemDetailCell.h"
+#import "ServeCoreDataController.h"
 
 const CGFloat reviewProgressButtonSize = 19.0f;
 const CGFloat reviewProgressButtonY = 365.0f;
@@ -22,13 +22,16 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 @interface ReviewSubmitViewController ()
 
+///core data
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSManagedObject *listingItem;
+@property (strong, nonatomic) NSString *entityName;
+
 @property (nonatomic, strong) UIView *progressIndicator;
 @property (nonatomic, strong) UIActionSheet *deleteButtonActionSheet;
 
-
 //starting fresh
 @property (nonatomic ,strong) UITableView* homeTable;
-
 @property (nonatomic, strong) Listing *currentListing;
 
 - (IBAction)submitButtonPressed:(id)sender;
@@ -54,21 +57,18 @@ GMSMapView *mapView_;
     
     [super viewDidLoad];
     
-    //google map setUP
-    //    NSString *searchAddress = @"1235,wildwood ave,sunnyvale,california" ;
-    //    mapView_ = [GoogleMapApi displayMapwithAddress:searchAddress];
-    //[self.view addSubview:mapView_];
+    self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
+    self.listingItem = [NSEntityDescription insertNewObjectForEntityForName:@"ListingItem" inManagedObjectContext:self.managedObjectContext];
     
     [self setUpActionSheets];
     [self setUpNavigationController];
-    [self.view setBackgroundColor:[UIColor blackColor]];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:self.homeTable];
     
     
     ///table setup
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(10, 10, self.view.bounds.size.width-20, self.view.bounds.size.height)
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, self.view.bounds.size.width, self.view.bounds.size.height)
                                                   style:UITableViewStylePlain];
-    
     self.homeTable.scrollsToTop = NO;
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
@@ -79,8 +79,10 @@ GMSMapView *mapView_;
     [self.homeTable registerClass:[MapCell class] forCellReuseIdentifier:@"MapCell"];
     [self.homeTable registerClass:[ListingItemDetailCell class] forCellReuseIdentifier:@"ListingItemDetailCell"];
     self.homeTable.tableFooterView = [UIView new];
+    //[self.homeTable setBackgroundColor:[UIColor blackColor]];
+    
     [self.view addSubview:self.homeTable];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view setBackgroundColor:[UIColor redColor]];
     
     
 }
@@ -213,12 +215,63 @@ GMSMapView *mapView_;
 }
 
 - (IBAction)backButtonPressed:(id)sender {
+    
+//    NSError *error;
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:@"ListingItem" inManagedObjectContext:self.managedObjectContext];
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    for (NSManagedObject *info in fetchedObjects) {
+//        NSLog(@"Name: %@", [info valueForKey:@"name"]);
+//        NSLog(@"Zip: %@", [info valueForKey:@"cuisine"]);
+//    }
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)submitButtonPressed:(id)sender {
+    
     NSLog(@"Trying to submit");
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    //save to core data
+    
+    //test
+    [self.listingItem setValue:@"pan" forKey:@"name"];
+    [self.listingItem setValue:@"ian" forKey:@"cuisine"];
+    [self.listingItem setValue:@"This is a long desc" forKey:@"desc"];
+
+//    [self.listingItem setValue:self.currentListing.title forKey:@"name"];
+//    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.serves] forKey:@"serveCount"];
+//    [self.listingItem setValue:self.currentListing.type forKey:@"type"];
+//    [self.listingItem setValue:self.currentListing.cuisine forKey:@"cuisine"];
+//    [self.listingItem setValue:self.currentListing.desc forKey:@"desc"];
+//    [self.listingItem setValue:self.currentListing.addressLine1 forKey:@"address1"];
+//    [self.listingItem setValue:self.currentListing.addressLine2 forKey:@"address2"];
+//    [self.listingItem setValue:self.currentListing.city forKey:@"city"];
+//    [self.listingItem setValue:self.currentListing.state forKey:@"state"];
+//    [self.listingItem setValue:self.currentListing.zipCode forKey:@"zip"];
+//    [self.listingItem setValue:self.currentListing.phoneNumber forKey:@"phone"];
+    
+    //[self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.latitude]forKey:@"latitude"];
+    //[self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.longitude]forKey:@"longitude"];
+    
+//phoneNumber;
+//pickupDate;
+
+    
+    [self.managedObjectContext performBlockAndWait:^
+    {
+        NSError *error = nil;
+        BOOL saved = [self.managedObjectContext save:&error];
+        if (!saved) {
+            // do some real error handling
+            NSLog(@"Could not save Date due to %@", error);
+        }
+        [[ServeCoreDataController sharedInstance] saveMasterContext];
+    }
+     ];
+
 }
 
 - (void) setUpActionSheets {
@@ -279,20 +332,6 @@ GMSMapView *mapView_;
 }
 
 
-//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
-//    /* Create custom view to display section header... */
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, tableView.frame.size.width, 18)];
-//    [label setFont:[UIFont boldSystemFontOfSize:12]];
-//    NSString *string = @"Heading";
-//    /* Section header is in 0th index... */
-//    [label setText:string];
-//    [view addSubview:label];
-//    [view setBackgroundColor:[UIColor colorWithRed:166/255.0 green:177/255.0 blue:186/255.0 alpha:1.0]]; //your background color...
-//    return view;
-//}
-
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     //    if(section==0)
@@ -339,12 +378,14 @@ GMSMapView *mapView_;
     //cell1 = [[MapCell alloc]];
     cell1 = [[MapCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MapCellIdentifier withAddress:searchAddress];
     cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+    //cell1.backgroundColor = [UIColor darkGrayColor];
     
     
     ListingItemDetailCell  *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell2 == nil) {
         cell2 = [[ListingItemDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
+    
     
     cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
     
@@ -353,6 +394,7 @@ GMSMapView *mapView_;
     cell2.servesCount = 10;
     cell2.cuisineInput = @"Chinese";
     cell2.typeInput =@"Non-Veg";
+    //cell2.backgroundColor = [UIColor darkGrayColor];
     
 //    cell2.Label.text = self.currentListing.title;
 //    cell2.descInput = self.currentListing.desc;
@@ -389,8 +431,6 @@ GMSMapView *mapView_;
 }
 
 
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -400,61 +440,27 @@ GMSMapView *mapView_;
 @end
 
 
+
 /*
- - (void)displayMapwithLatitude:(double)latitude Longitude:(double)longitude {
- GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:latitude
- longitude:longitude
- zoom:17];
- CGRect frame = CGRectMake(50, 200, 300, 300);
  
- //CGRect frame = CGRectMake(0, 0, 50, 50);
- 
- mapView_ = [GMSMapView mapWithFrame:frame camera:camera];
- mapView_.myLocationEnabled = YES;
- //self.view = mapView_;
- 
- // Creates a marker in the center of the map.
- GMSMarker *marker = [[GMSMarker alloc] init];
- marker.position = CLLocationCoordinate2DMake(latitude+.001, longitude+.001);
- marker.title = @"My";
- marker.snippet = @"Location";
- marker.map = mapView_;
- marker.appearAnimation = kGMSMarkerAnimationPop;
- 
- ///
- GMSMarker *marker2 = [[GMSMarker alloc] init];
- marker2.position = CLLocationCoordinate2DMake(latitude, longitude);
- marker2.title = @"Your Listing";
- marker2.snippet = @"Location";
- marker2.map = mapView_;
- 
- marker2.appearAnimation = kGMSMarkerAnimationPop;
- //marker2.icon = [UIImage imageNamed:@"trash.png"];
- 
- }
- 
- 
- - (CLLocationCoordinate2D) getLocationFromAddressString: (NSString*) addressStr {
- double latitude = 0, longitude = 0;
- NSString *esc_addr =  [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
- NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
- NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:req] encoding:NSUTF8StringEncoding error:NULL];
- if (result) {
- NSScanner *scanner = [NSScanner scannerWithString:result];
- if ([scanner scanUpToString:@"\"lat\" :" intoString:nil] && [scanner scanString:@"\"lat\" :" intoString:nil]) {
- [scanner scanDouble:&latitude];
- if ([scanner scanUpToString:@"\"lng\" :" intoString:nil] && [scanner scanString:@"\"lng\" :" intoString:nil]) {
- [scanner scanDouble:&longitude];
- }
- }
- }
- CLLocationCoordinate2D center;
- center.latitude=latitude;
- center.longitude = longitude;
- NSLog(@"View Controller get Location Logitute : %f",center.latitude);
- NSLog(@"View Controller get Location Latitute : %f",center.longitude);
- return center;
- 
+ NSManagedObjectContext *context = [self managedObjectContext];
+ NSManagedObject *failedBankInfo = [NSEntityDescription
+ insertNewObjectForEntityForName:@"FailedBankInfo"
+ inManagedObjectContext:context];
+ [failedBankInfo setValue:@"Test Bank" forKey:@"name"];
+ [failedBankInfo setValue:@"Testville" forKey:@"city"];
+ [failedBankInfo setValue:@"Testland" forKey:@"state"];
+ NSManagedObject *failedBankDetails = [NSEntityDescription
+ insertNewObjectForEntityForName:@"FailedBankDetails"
+ inManagedObjectContext:context];
+ [failedBankDetails setValue:[NSDate date] forKey:@"closeDate"];
+ [failedBankDetails setValue:[NSDate date] forKey:@"updateDate"];
+ [failedBankDetails setValue:[NSNumber numberWithInt:12345] forKey:@"zip"];
+ [failedBankDetails setValue:failedBankInfo forKey:@"info"];
+ [failedBankInfo setValue:failedBankDetails forKey:@"details"];
+ NSError *error;
+ if (![context save:&error]) {
+ NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
  }
  
  */

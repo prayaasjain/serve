@@ -31,7 +31,7 @@
     center.longitude = longitude;
     
     //to get address from latlong make a call to
-    [self getAddressFromLatLong:center];
+    //[self getAddressFromLatLong:center];
     
     return center;
     

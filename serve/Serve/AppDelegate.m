@@ -44,9 +44,9 @@
 
     //self.window.rootViewController = pickUpViewController;
     //self.window.rootViewController = inputViewController;
-    self.window.rootViewController = myListingsViewController;
+    //self.window.rootViewController = myListingsViewController;
     //self.window.rootViewController = imageViewController;
-    //self.window.rootViewController = reviewSubmitViewController;
+    self.window.rootViewController = reviewSubmitViewController;
     //self.window.rootViewController = newInputViewController;
     //self.window.rootViewController = newPickUpinfoViewController;
     
@@ -56,7 +56,7 @@
                                                 nil];
 
     navigationController = [[UINavigationController alloc]
-                            initWithRootViewController:myListingsViewController];
+                            initWithRootViewController:reviewSubmitViewController];
     
     navigationController.navigationBar.barTintColor = [UIColor blackColor];
     navigationController.navigationBar.titleTextAttributes = navbarTitleTextAttributes;

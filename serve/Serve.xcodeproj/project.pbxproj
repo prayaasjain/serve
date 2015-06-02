@@ -17,6 +17,7 @@
 		20913C371B1B0B8600EA4A10 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 20913C361B1B0B8600EA4A10 /* edit.png */; };
 		2091910E1B19901B008CCAA9 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091910D1B19901B008CCAA9 /* MapCell.m */; };
 		2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */; };
+		20A4FD8E1B1C101100B92927 /* chicken.png in Resources */ = {isa = PBXBuildFile; fileRef = 20A4FD8D1B1C101100B92927 /* chicken.png */; };
 		20B5A8C41B15708C00818741 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C31B15708C00818741 /* GoogleMaps.framework */; };
 		20B5A8C61B1570D500818741 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B5A8C51B1570D500818741 /* GoogleMaps.bundle */; };
 		20B5A8C81B15710100818741 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C71B15710100818741 /* AVFoundation.framework */; };
@@ -36,6 +37,8 @@
 		20CA6B551B1410E5005FE7AA /* previous_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B511B1410E5005FE7AA /* previous_32.png */; };
 		20CA6B561B1410E5005FE7AA /* reduce_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B521B1410E5005FE7AA /* reduce_32.png */; };
 		20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */; };
+		20D8E74E1B1D486300AA5241 /* ListingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E74D1B1D486300AA5241 /* ListingItem.m */; };
+		20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */; };
 		20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DE790C1B082AB000E3F101 /* MyListingsViewController.m */; };
 		20EE2B111B01502B00F80CAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B101B01502B00F80CAC /* main.m */; };
 		20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B131B01502B00F80CAC /* AppDelegate.m */; };
@@ -77,6 +80,7 @@
 		2091910D1B19901B008CCAA9 /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		2091911B1B1A4E83008CCAA9 /* GoogleMapApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapApi.h; sourceTree = "<group>"; };
 		2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapApi.m; sourceTree = "<group>"; };
+		20A4FD8D1B1C101100B92927 /* chicken.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chicken.png; sourceTree = "<group>"; };
 		20B5A8C31B15708C00818741 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		20B5A8C51B1570D500818741 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		20B5A8C71B15710100818741 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -97,6 +101,10 @@
 		20CA6B521B1410E5005FE7AA /* reduce_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reduce_32.png; path = assets_test/reduce_32.png; sourceTree = "<group>"; };
 		20CA6B571B141790005FE7AA /* NewPickUpInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPickUpInfoViewController.h; sourceTree = "<group>"; };
 		20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPickUpInfoViewController.m; sourceTree = "<group>"; };
+		20D8E74C1B1D486300AA5241 /* ListingItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingItem.h; sourceTree = "<group>"; };
+		20D8E74D1B1D486300AA5241 /* ListingItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingItem.m; sourceTree = "<group>"; };
+		20D8E7501B1D4A9100AA5241 /* ServeCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeCoreDataController.h; sourceTree = "<group>"; };
+		20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeCoreDataController.m; sourceTree = "<group>"; };
 		20DE790B1B082AB000E3F101 /* MyListingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyListingsViewController.h; sourceTree = "<group>"; };
 		20DE790C1B082AB000E3F101 /* MyListingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyListingsViewController.m; sourceTree = "<group>"; };
 		20EE2B0B1B01502B00F80CAC /* Serve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Serve.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,9 +224,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		20D8E74F1B1D4A5B00AA5241 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				20D8E7501B1D4A9100AA5241 /* ServeCoreDataController.h */,
+				20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
 		20EE2B021B01502B00F80CAC = {
 			isa = PBXGroup;
 			children = (
+				20D8E74C1B1D486300AA5241 /* ListingItem.h */,
+				20D8E74D1B1D486300AA5241 /* ListingItem.m */,
 				20EE2B0D1B01502B00F80CAC /* Serve */,
 				20EE2B0C1B01502B00F80CAC /* Products */,
 				20EE2B2A1B01502B00F80CAC /* ServeTests */,
@@ -238,6 +257,7 @@
 		20EE2B0D1B01502B00F80CAC /* Serve */ = {
 			isa = PBXGroup;
 			children = (
+				20D8E74F1B1D4A5B00AA5241 /* CoreData */,
 				D8130E211B1B9CE90081E825 /* Models */,
 				20B5A8BE1B156FB300818741 /* GoogleMaps */,
 				203592191B044ADE00850472 /* CustomCells */,
@@ -256,6 +276,7 @@
 		20EE2B0E1B01502B00F80CAC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				20A4FD8D1B1C101100B92927 /* chicken.png */,
 				20913C361B1B0B8600EA4A10 /* edit.png */,
 				2014A1F91B16D2B800AA5351 /* food1-gray.jpg */,
 				2014A1FA1B16D2B800AA5351 /* camera-2.png */,
@@ -378,6 +399,7 @@
 			files = (
 				20CA6B561B1410E5005FE7AA /* reduce_32.png in Resources */,
 				20CA6B541B1410E5005FE7AA /* next_32.png in Resources */,
+				20A4FD8E1B1C101100B92927 /* chicken.png in Resources */,
 				2014A1FC1B16D2B800AA5351 /* camera-2.png in Resources */,
 				20EE2B1D1B01502B00F80CAC /* Main.storyboard in Resources */,
 				20B5A8C61B1570D500818741 /* GoogleMaps.bundle in Resources */,
@@ -406,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				20FD2FC91B054D600024D090 /* PickUpInfoViewController.m in Sources */,
+				20D8E74E1B1D486300AA5241 /* ListingItem.m in Sources */,
 				20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */,
 				2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */,
 				2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */,
@@ -420,6 +443,7 @@
 				2091910E1B19901B008CCAA9 /* MapCell.m in Sources */,
 				202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */,
 				20EE2B3F1B01511700F80CAC /* InputViewController.m in Sources */,
+				20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,7 +27,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        UIView *titleOverlay = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width+40, 250)];
+        UIView *titleOverlay = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width+60, 270)];
         titleOverlay.backgroundColor = [UIColor blackColor];
         titleOverlay.alpha = 0.3;
     
@@ -57,12 +57,17 @@
         self.typeLabel.textColor = [UIColor whiteColor];
         self.typeLabel.font = [UIFont fontWithName:@"Arial" size:12.0f];
         
+        UIButton *typeIcon = [[UIButton alloc]init];
+        [typeIcon setImage:[UIImage imageNamed:@"chicken.png"] forState:UIControlStateNormal];
+        typeIcon.frame = CGRectMake(350, 180, 20, 20);
+
         [self addSubview:titleOverlay];
         [self addSubview:self.Label];
         [self addSubview:self.descriptionLabel];
         [self addSubview:self.servesLabel];
         [self addSubview:self.cuisineLabel];
         [self addSubview:self.typeLabel];
+        [self addSubview:typeIcon];
     }
     return self;
     
@@ -74,10 +79,10 @@
     self.imageView.frame= CGRectMake(0,0, self.contentView.frame.size.width+40, 180);
     self.descriptionLabel.frame = CGRectMake(5, 190, self.contentView.frame.size.width-50, 70);
     self.servesLabel.frame = CGRectMake(5, 180, 90, 20);
-    self.cuisineLabel.frame = CGRectMake(235, 180, 90, 20);
-    self.typeLabel.frame = CGRectMake(295, 180, 90, 20);
+    self.cuisineLabel.frame = CGRectMake(240, 180, 90, 20);
+    self.typeLabel.frame = CGRectMake(300, 180, 90, 20);
     
-    
+
     if(self.isEditModeEnabled)
     {
         UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(self.bounds.size.width-30,
@@ -89,7 +94,7 @@
         [self addSubview:editButton];
     }
     
-    self.servesLabel.text = [NSString stringWithFormat:@"SERVES: %d",self.servesCount];
+    self.servesLabel.text = [NSString stringWithFormat:@"SERVES: %ld",(long)self.servesCount];
     self.typeLabel.text = [NSString stringWithFormat:@"%@",self.typeInput];
     
     if(self.cuisineInput)
@@ -98,7 +103,7 @@
     }
     
 
-    self.descriptionLabel.text = [NSString stringWithFormat:@"Description: %@,",self.descInput];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"Description: %@",self.descInput];
     
     
     

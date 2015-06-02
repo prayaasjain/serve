@@ -13,11 +13,11 @@
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) UILabel *Label;
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, assign) BOOL *isEditModeEnabled;
+@property (nonatomic, assign) BOOL isEditModeEnabled;
 @property (nonatomic, strong) UILabel *servesLabel;
 @property (nonatomic, strong) UILabel *cuisineLabel;
 @property (nonatomic, strong) UILabel *typeLabel;
-@property (nonatomic, assign) NSInteger *servesCount;
+@property (nonatomic, assign) NSInteger servesCount;
 @property (nonatomic, assign) NSString *cuisineInput;
 @property (nonatomic, assign) NSString *typeInput;
 @property (nonatomic, assign) NSString *descInput;
