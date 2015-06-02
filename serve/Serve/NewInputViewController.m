@@ -70,7 +70,7 @@ static const BOOL showtitleCheckError = TRUE;
 @property (nonatomic, strong) UITextField *typeInput;
 @property (nonatomic, strong) UITextView *descInput;
 @property (nonatomic, strong) UITextField *cuisineInput;
-@property (nonatomic, readwrite,assign) NSInteger numberOfServes;
+@property (nonatomic, readwrite,assign) NSNumber *numberOfServes;
 @property (nonatomic, retain) NSArray* itemTypes;
 
 @property (strong, nonatomic) PickUpInfoViewController *pickUpInfoViewController;
@@ -220,9 +220,9 @@ static const BOOL showtitleCheckError = TRUE;
     self.cuisineInput = [[UITextField alloc]init];
     [self setTextFieldProperties:self.cuisineInput withPlaceholder:cuisinePlaceholder withTag:CusineInputTag];
     
-    self.numberOfServes = 1;
+    self.numberOfServes = [NSNumber numberWithInt:1];
     self.servesInput = [[UITextField alloc]init];
-    [self setTextFieldProperties:self.servesInput withPlaceholder:[NSString stringWithFormat:@"%ld",self.numberOfServes] withTag:ServesInputTag];
+    [self setTextFieldProperties:self.servesInput withPlaceholder:[NSString stringWithFormat:@"%@",self.numberOfServes] withTag:ServesInputTag];
     self.servesInput.textColor = [UIColor redColor];
     self.servesInput.userInteractionEnabled = NO;
     
@@ -552,15 +552,19 @@ static const BOOL showtitleCheckError = TRUE;
 }
 
 - (IBAction)incrementServeCount:(id)sender {
-    self.numberOfServes++;
-    self.servesInput.text = [NSString stringWithFormat:@"%ld",self.numberOfServes];
+    int currentServes = [self.numberOfServes intValue];
+    currentServes++;
+    self.numberOfServes = [NSNumber numberWithInt:currentServes];
+    self.servesInput.text = [NSString stringWithFormat:@"%@",self.numberOfServes];
 }
 
 - (IBAction)decrementServeCount:(id)sender {
-    if(self.numberOfServes!=1)
+    if([self.numberOfServes intValue]!=1)
     {
-        self.numberOfServes--;
-        self.servesInput.text = [NSString stringWithFormat:@"%ld",self.numberOfServes];
+        int currentServes = [self.numberOfServes intValue];
+        currentServes--;
+        self.numberOfServes = [NSNumber numberWithInt:currentServes];
+        self.servesInput.text = [NSString stringWithFormat:@"%@",self.numberOfServes];
     }
 }
 

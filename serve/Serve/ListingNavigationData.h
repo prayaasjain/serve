@@ -12,7 +12,7 @@
 @interface ListingNavigationData : NSObject
 
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, assign) NSInteger serveCount;
+@property (nonatomic, assign) NSNumber *serveCount;
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *cuisine;
 @property (nonatomic, strong) NSString *desc;
