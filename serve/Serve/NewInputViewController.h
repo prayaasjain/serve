@@ -12,5 +12,6 @@
 @interface NewInputViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
 
 - (id)initWithListing:(Listing *)listing;
+- (void)updateListingWith:(Listing *)newListing;
 
 @end

@@ -93,6 +93,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     return self;
 }
 
+- (void)updateListingWith:(Listing *)_newListing {
+    self.currentListing = _newListing;
+}
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -126,6 +130,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    
+    self.currentListing = [[Listing alloc] init];
 }
 
 - (void)setUpViewControllerObjects {
@@ -573,6 +580,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             PickUpInfoViewController *secondView = [[PickUpInfoViewController alloc] initWithListing:self.currentListing];
             self.pickUpInfoViewController= secondView;
         }
+        else {
+            [self.pickUpInfoViewController updateListingWith:self.currentListing];
+            //self.pickUpInfoViewController.currentListing = self.currentListing;
+        }
         [self.navigationController pushViewController:self.pickUpInfoViewController animated:YES];
     }
     else {
@@ -898,22 +909,35 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 #pragma mark Listing Object Methods
 
 - (BOOL)writeDataToListing {
-    self.currentListing = [[Listing alloc] init];
+    
     
     if(self.titleInput.text.length == 0 || [self.titleInput.text isEqualToString:titlePlaceholder]) {
         [self showErrorWithTitle:@"Incomplete Info" message:@"Please enter a title for your listing." cancelButtonTitle:@"OK"];
         
         return FALSE;
     }
-    else {
-        [self.currentListing setTitle:self.titleInput.text];
-        [self.currentListing setServes:self.numberOfServes];
-        [self.currentListing setType:self.typeInput.text];
-        [self.currentListing setCuisine:self.cuisineInput.text];
-        [self.currentListing setDesc:self.descInput.text];
-        
-        return TRUE;
+    
+    [self.currentListing setTitle:self.titleInput.text];
+    [self.currentListing setServes:self.numberOfServes];
+    [self.currentListing setType:self.typeInput.text];
+    
+    if(self.cuisineInput.text.length == 0 || [self.cuisineInput.text isEqualToString:cuisinePlaceholder]) {
+        [self.currentListing setCuisine:@""];
     }
+    else {
+        [self.currentListing setCuisine:self.cuisineInput.text];
+    }
+    
+    if(self.descInput.text.length == 0 || [self.descInput.text isEqualToString:descriptionPlaceholder]) {
+        [self.currentListing setDesc:@""];
+    }
+    else {
+        [self.currentListing setDesc:self.descInput.text];
+    }
+    
+    [self.currentListing setImage:self.addImageBackgroundView.image];
+    
+    return TRUE;
 }
 
 @end

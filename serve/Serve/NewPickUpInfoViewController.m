@@ -62,6 +62,10 @@ static NSArray *deleteButtonActionSheetItems = nil;
     return self;
 }
 
+- (void)updateListingWith:(Listing *)_newListing {
+    self.currentListing = _newListing;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

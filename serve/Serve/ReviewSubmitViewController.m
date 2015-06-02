@@ -25,7 +25,6 @@ const CGFloat reviewDeleteButtonTag = 1;
 @property (nonatomic, strong) UIView *progressIndicator;
 @property (nonatomic, strong) UIActionSheet *deleteButtonActionSheet;
 
-
 //starting fresh
 @property (nonatomic ,strong) UITableView* homeTable;
 
@@ -49,6 +48,11 @@ GMSMapView *mapView_;
     
     return self;
 }
+
+- (void)updateListingWith:(Listing *)_newListing {
+    self.currentListing = _newListing;
+}
+
 
 - (void)viewDidLoad {
     
@@ -82,7 +86,10 @@ GMSMapView *mapView_;
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.homeTable reloadData];
 }
 
 
