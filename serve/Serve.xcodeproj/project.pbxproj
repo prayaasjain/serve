@@ -37,8 +37,8 @@
 		20CA6B551B1410E5005FE7AA /* previous_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B511B1410E5005FE7AA /* previous_32.png */; };
 		20CA6B561B1410E5005FE7AA /* reduce_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B521B1410E5005FE7AA /* reduce_32.png */; };
 		20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */; };
-		20D8E74E1B1D486300AA5241 /* ListingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E74D1B1D486300AA5241 /* ListingItem.m */; };
 		20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */; };
+		20D8E7551B1D6CF600AA5241 /* ListingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7541B1D6CF600AA5241 /* ListingItem.m */; };
 		20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DE790C1B082AB000E3F101 /* MyListingsViewController.m */; };
 		20EE2B111B01502B00F80CAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B101B01502B00F80CAC /* main.m */; };
 		20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B131B01502B00F80CAC /* AppDelegate.m */; };
@@ -101,10 +101,10 @@
 		20CA6B521B1410E5005FE7AA /* reduce_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reduce_32.png; path = assets_test/reduce_32.png; sourceTree = "<group>"; };
 		20CA6B571B141790005FE7AA /* NewPickUpInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPickUpInfoViewController.h; sourceTree = "<group>"; };
 		20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPickUpInfoViewController.m; sourceTree = "<group>"; };
-		20D8E74C1B1D486300AA5241 /* ListingItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingItem.h; sourceTree = "<group>"; };
-		20D8E74D1B1D486300AA5241 /* ListingItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingItem.m; sourceTree = "<group>"; };
 		20D8E7501B1D4A9100AA5241 /* ServeCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeCoreDataController.h; sourceTree = "<group>"; };
 		20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeCoreDataController.m; sourceTree = "<group>"; };
+		20D8E7531B1D6CF600AA5241 /* ListingItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingItem.h; sourceTree = "<group>"; };
+		20D8E7541B1D6CF600AA5241 /* ListingItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingItem.m; sourceTree = "<group>"; };
 		20DE790B1B082AB000E3F101 /* MyListingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyListingsViewController.h; sourceTree = "<group>"; };
 		20DE790C1B082AB000E3F101 /* MyListingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyListingsViewController.m; sourceTree = "<group>"; };
 		20EE2B0B1B01502B00F80CAC /* Serve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Serve.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -236,8 +236,8 @@
 		20EE2B021B01502B00F80CAC = {
 			isa = PBXGroup;
 			children = (
-				20D8E74C1B1D486300AA5241 /* ListingItem.h */,
-				20D8E74D1B1D486300AA5241 /* ListingItem.m */,
+				20D8E7531B1D6CF600AA5241 /* ListingItem.h */,
+				20D8E7541B1D6CF600AA5241 /* ListingItem.m */,
 				20EE2B0D1B01502B00F80CAC /* Serve */,
 				20EE2B0C1B01502B00F80CAC /* Products */,
 				20EE2B2A1B01502B00F80CAC /* ServeTests */,
@@ -428,11 +428,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				20FD2FC91B054D600024D090 /* PickUpInfoViewController.m in Sources */,
-				20D8E74E1B1D486300AA5241 /* ListingItem.m in Sources */,
 				20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */,
 				2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */,
 				2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */,
 				20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */,
+				20D8E7551B1D6CF600AA5241 /* ListingItem.m in Sources */,
 				20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */,
 				202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */,
 				20EE2B111B01502B00F80CAC /* main.m in Sources */,

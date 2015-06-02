@@ -11,10 +11,22 @@
 
 @implementation ListingItem
 
-@dynamic name;
-@dynamic type;
-@dynamic serveCount;
+@dynamic address1;
+@dynamic address2;
+@dynamic city;
 @dynamic cuisine;
+@dynamic deleteFromServer;
 @dynamic desc;
+@dynamic image;
+@dynamic name;
+@dynamic phone;
+@dynamic serveCount;
+@dynamic state;
+@dynamic type;
+@dynamic uploadedToServer;
+@dynamic zip;
+@dynamic pickUp;
+@dynamic latitude;
+@dynamic longitude;
 
 @end
