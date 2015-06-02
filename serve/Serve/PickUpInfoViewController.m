@@ -48,23 +48,29 @@ static NSString * const descriptionPlaceholder = @"Description Text (Optional)";
 @property (nonatomic, retain) NSArray* itemTypes;
 @property (nonatomic, strong) UIActionSheet *deleteButtonActionSheet;
 
+@property (strong, nonatomic) ListingNavigationData *currentListing;
+
 - (IBAction)continueButtonPressed:(id)sender;
 - (IBAction)backButtonPressed:(id)sender;
 - (void)showActionSheet:(id)sender;
 
 @property (strong, nonatomic) PickUpInfoViewController *pickUpInfoViewController;
-@property (strong, nonatomic) Listing *currentListing;
+
 @end
 
 @implementation PickUpInfoViewController
 
-- (id)initWithListing:(Listing *)_listing {
+- (id)initWithListing:(ListingNavigationData *)_listing {
     
     if(self = [super init]) {
         self.currentListing = _listing;
     }
     
     return self;
+}
+
+- (void)updateListingWith:(ListingNavigationData *)_newListing {
+    self.currentListing = _newListing;
 }
 
 - (void)viewDidLoad {
@@ -427,6 +433,9 @@ static NSString * const descriptionPlaceholder = @"Description Text (Optional)";
 //        ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] init];
         ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] initWithListing:self.currentListing];
         self.reviewSubmitViewController= secondView;
+    }
+    else {
+        [self.reviewSubmitViewController updateListingWith:self.currentListing];
     }
     
     //tell the navigation controller to push a new view into the stack

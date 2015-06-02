@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Akhil Khemani. All rights reserved.
 //
 
-#import "Listing.h"
+#import "ListingNavigationData.h"
 
-@implementation Listing
+@implementation ListingNavigationData
 
 @end

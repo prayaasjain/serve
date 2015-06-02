@@ -32,7 +32,7 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 //starting fresh
 @property (nonatomic ,strong) UITableView* homeTable;
-@property (nonatomic, strong) Listing *currentListing;
+@property (nonatomic, strong) ListingNavigationData *currentListing;
 
 - (IBAction)submitButtonPressed:(id)sender;
 - (IBAction)backButtonPressed:(id)sender;
@@ -44,7 +44,7 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 GMSMapView *mapView_;
 
-- (id)initWithListing:(Listing *)_listing {
+- (id)initWithListing:(ListingNavigationData *)_listing {
     
     if(self = [super init]) {
         self.currentListing = _listing;
@@ -52,6 +52,11 @@ GMSMapView *mapView_;
     
     return self;
 }
+
+- (void)updateListingWith:(ListingNavigationData *)_newListing {
+    self.currentListing = _newListing;
+}
+
 
 - (void)viewDidLoad {
     
@@ -84,13 +89,10 @@ GMSMapView *mapView_;
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor redColor]];
     
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
     [self.homeTable reloadData];
-    
 }
 
 - (UIView *)progressIndicator {
@@ -242,7 +244,7 @@ GMSMapView *mapView_;
     [self.listingItem setValue:@"This is a long desc" forKey:@"desc"];
 
 //    [self.listingItem setValue:self.currentListing.title forKey:@"name"];
-//    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.serves] forKey:@"serveCount"];
+//    [self.listingItem setValue:self.currentListing.serveCount forKey:@"serveCount"];
 //    [self.listingItem setValue:self.currentListing.type forKey:@"type"];
 //    [self.listingItem setValue:self.currentListing.cuisine forKey:@"cuisine"];
 //    [self.listingItem setValue:self.currentListing.desc forKey:@"desc"];
@@ -250,11 +252,12 @@ GMSMapView *mapView_;
 //    [self.listingItem setValue:self.currentListing.addressLine2 forKey:@"address2"];
 //    [self.listingItem setValue:self.currentListing.city forKey:@"city"];
 //    [self.listingItem setValue:self.currentListing.state forKey:@"state"];
-//    [self.listingItem setValue:self.currentListing.zipCode forKey:@"zip"];
+//    [self.listingItem setValue:self.currentListing.zip forKey:@"zip"];
 //    [self.listingItem setValue:self.currentListing.phoneNumber forKey:@"phone"];
+//    [self.listingItem setValue:self.currentListing.image forKey:@"image"];
     
-    //[self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.latitude]forKey:@"latitude"];
-    //[self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.longitude]forKey:@"longitude"];
+//    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.latitude]forKey:@"latitude"];
+//    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.longitude]forKey:@"longitude"];
     
 //phoneNumber;
 //pickupDate;
@@ -387,9 +390,11 @@ GMSMapView *mapView_;
     }
     
     
-    cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
+//    cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
+    cell2.imageView.image = self.currentListing.image;
     
-    cell2.Label.text = @"BURGER WITH FRIES";
+//    cell2.Label.text = @"BURGER WITH FRIES";
+    cell2.Label.text = self.currentListing.title;
     cell2.descInput = @"This is a test description string with a count of 160 This is a test description string with a count of 160 This is a test description string with a count of160";
     cell2.servesCount = 10;
     cell2.cuisineInput = @"Chinese";

@@ -48,6 +48,9 @@ static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
 static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216;
 static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
+//flag for Title Error Message
+static const BOOL showtitleCheckError = TRUE;
+
 @interface NewInputViewController ()
 
 @property (nonatomic, strong) UIView *progressIndicator;
@@ -67,12 +70,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 @property (nonatomic, strong) UITextField *typeInput;
 @property (nonatomic, strong) UITextView *descInput;
 @property (nonatomic, strong) UITextField *cuisineInput;
-@property (nonatomic, readwrite,assign) NSInteger numberOfServes;
+@property (nonatomic, readwrite,assign) NSNumber *numberOfServes;
 @property (nonatomic, retain) NSArray* itemTypes;
 
 @property (strong, nonatomic) PickUpInfoViewController *pickUpInfoViewController;
 @property (strong, nonatomic) PickImageViewController *pickImageViewController;
-@property (strong, nonatomic) Listing *currentListing;
+@property (strong, nonatomic) ListingNavigationData *currentListing;
 @property (nonatomic, strong) UIActionSheet *addPhotoActionSheet;
 @property (nonatomic, strong) UIActionSheet *cancelButtonActionSheet;
 
@@ -84,13 +87,17 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 @implementation NewInputViewController
 
-- (id)initWithListing:(Listing *)_listing {
+- (id)initWithListing:(ListingNavigationData *)_listing {
     
     if(self = [super init]) {
         self.currentListing = _listing;
     }
     
     return self;
+}
+
+- (void)updateListingWith:(ListingNavigationData *)_newListing {
+    self.currentListing = _newListing;
 }
 
 - (void)viewDidLoad {
@@ -126,6 +133,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    
+    self.currentListing = [[ListingNavigationData alloc] init];
 }
 
 - (void)setUpViewControllerObjects {
@@ -210,9 +220,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     self.cuisineInput = [[UITextField alloc]init];
     [self setTextFieldProperties:self.cuisineInput withPlaceholder:cuisinePlaceholder withTag:CusineInputTag];
     
-    self.numberOfServes = 1;
+    self.numberOfServes = [NSNumber numberWithInt:1];
     self.servesInput = [[UITextField alloc]init];
-    [self setTextFieldProperties:self.servesInput withPlaceholder:[NSString stringWithFormat:@"%ld",self.numberOfServes] withTag:ServesInputTag];
+    [self setTextFieldProperties:self.servesInput withPlaceholder:[NSString stringWithFormat:@"%@",self.numberOfServes] withTag:ServesInputTag];
     self.servesInput.textColor = [UIColor redColor];
     self.servesInput.userInteractionEnabled = NO;
     
@@ -542,15 +552,19 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 - (IBAction)incrementServeCount:(id)sender {
-    self.numberOfServes++;
-    self.servesInput.text = [NSString stringWithFormat:@"%ld",self.numberOfServes];
+    int currentServes = [self.numberOfServes intValue];
+    currentServes++;
+    self.numberOfServes = [NSNumber numberWithInt:currentServes];
+    self.servesInput.text = [NSString stringWithFormat:@"%@",self.numberOfServes];
 }
 
 - (IBAction)decrementServeCount:(id)sender {
-    if(self.numberOfServes!=1)
+    if([self.numberOfServes intValue]!=1)
     {
-        self.numberOfServes--;
-        self.servesInput.text = [NSString stringWithFormat:@"%ld",self.numberOfServes];
+        int currentServes = [self.numberOfServes intValue];
+        currentServes--;
+        self.numberOfServes = [NSNumber numberWithInt:currentServes];
+        self.servesInput.text = [NSString stringWithFormat:@"%@",self.numberOfServes];
     }
 }
 
@@ -572,6 +586,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             //        PickUpInfoViewController *secondView = [[PickUpInfoViewController alloc] init];
             PickUpInfoViewController *secondView = [[PickUpInfoViewController alloc] initWithListing:self.currentListing];
             self.pickUpInfoViewController= secondView;
+        }
+        else {
+            [self.pickUpInfoViewController updateListingWith:self.currentListing];
+            //self.pickUpInfoViewController.currentListing = self.currentListing;
         }
         [self.navigationController pushViewController:self.pickUpInfoViewController animated:YES];
     }
@@ -898,22 +916,35 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 #pragma mark Listing Object Methods
 
 - (BOOL)writeDataToListing {
-    self.currentListing = [[Listing alloc] init];
     
-    if(self.titleInput.text.length == 0 || [self.titleInput.text isEqualToString:titlePlaceholder]) {
+    
+    if(showtitleCheckError && (self.titleInput.text.length == 0 || [self.titleInput.text isEqualToString:titlePlaceholder])) {
         [self showErrorWithTitle:@"Incomplete Info" message:@"Please enter a title for your listing." cancelButtonTitle:@"OK"];
         
         return FALSE;
     }
-    else {
-        [self.currentListing setTitle:self.titleInput.text];
-        [self.currentListing setServes:self.numberOfServes];
-        [self.currentListing setType:self.typeInput.text];
-        [self.currentListing setCuisine:self.cuisineInput.text];
-        [self.currentListing setDesc:self.descInput.text];
-        
-        return TRUE;
+    
+    [self.currentListing setTitle:self.titleInput.text];
+    [self.currentListing setServeCount:self.numberOfServes];
+    [self.currentListing setType:self.typeInput.text];
+    
+    if(self.cuisineInput.text.length == 0 || [self.cuisineInput.text isEqualToString:cuisinePlaceholder]) {
+        [self.currentListing setCuisine:@""];
     }
+    else {
+        [self.currentListing setCuisine:self.cuisineInput.text];
+    }
+    
+    if(self.descInput.text.length == 0 || [self.descInput.text isEqualToString:descriptionPlaceholder]) {
+        [self.currentListing setDesc:@""];
+    }
+    else {
+        [self.currentListing setDesc:self.descInput.text];
+    }
+    
+    [self.currentListing setImage:self.addImageBackgroundView.image];
+    
+    return TRUE;
 }
 
 @end
