@@ -50,7 +50,7 @@
 		20EE2B3F1B01511700F80CAC /* InputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B3E1B01511700F80CAC /* InputViewController.m */; };
 		20EF27941B0C24FC0082A828 /* NewInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EF27931B0C24FC0082A828 /* NewInputViewController.m */; };
 		20FD2FC91B054D600024D090 /* PickUpInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FD2FC81B054D600024D090 /* PickUpInfoViewController.m */; };
-		D8130E241B1B9D040081E825 /* Listing.m in Sources */ = {isa = PBXBuildFile; fileRef = D8130E231B1B9D040081E825 /* Listing.m */; };
+		D8130E241B1B9D040081E825 /* ListingNavigationData.m in Sources */ = {isa = PBXBuildFile; fileRef = D8130E231B1B9D040081E825 /* ListingNavigationData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,8 +125,8 @@
 		20EF27931B0C24FC0082A828 /* NewInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewInputViewController.m; sourceTree = "<group>"; };
 		20FD2FC71B054D600024D090 /* PickUpInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickUpInfoViewController.h; sourceTree = "<group>"; };
 		20FD2FC81B054D600024D090 /* PickUpInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickUpInfoViewController.m; sourceTree = "<group>"; };
-		D8130E221B1B9D040081E825 /* Listing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Listing.h; sourceTree = "<group>"; };
-		D8130E231B1B9D040081E825 /* Listing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Listing.m; sourceTree = "<group>"; };
+		D8130E221B1B9D040081E825 /* ListingNavigationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingNavigationData.h; sourceTree = "<group>"; };
+		D8130E231B1B9D040081E825 /* ListingNavigationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingNavigationData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,8 +311,8 @@
 		D8130E211B1B9CE90081E825 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D8130E221B1B9D040081E825 /* Listing.h */,
-				D8130E231B1B9D040081E825 /* Listing.m */,
+				D8130E221B1B9D040081E825 /* ListingNavigationData.h */,
+				D8130E231B1B9D040081E825 /* ListingNavigationData.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -436,7 +436,7 @@
 				20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */,
 				202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */,
 				20EE2B111B01502B00F80CAC /* main.m in Sources */,
-				D8130E241B1B9D040081E825 /* Listing.m in Sources */,
+				D8130E241B1B9D040081E825 /* ListingNavigationData.m in Sources */,
 				2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */,
 				20EF27941B0C24FC0082A828 /* NewInputViewController.m in Sources */,
 				20EE2B171B01502B00F80CAC /* Serve.xcdatamodeld in Sources */,

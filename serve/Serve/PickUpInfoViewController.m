@@ -48,7 +48,7 @@ static NSString * const descriptionPlaceholder = @"Description Text (Optional)";
 @property (nonatomic, retain) NSArray* itemTypes;
 @property (nonatomic, strong) UIActionSheet *deleteButtonActionSheet;
 
-@property (strong, nonatomic) Listing *currentListing;
+@property (strong, nonatomic) ListingNavigationData *currentListing;
 
 - (IBAction)continueButtonPressed:(id)sender;
 - (IBAction)backButtonPressed:(id)sender;
@@ -60,7 +60,7 @@ static NSString * const descriptionPlaceholder = @"Description Text (Optional)";
 
 @implementation PickUpInfoViewController
 
-- (id)initWithListing:(Listing *)_listing {
+- (id)initWithListing:(ListingNavigationData *)_listing {
     
     if(self = [super init]) {
         self.currentListing = _listing;
@@ -69,7 +69,7 @@ static NSString * const descriptionPlaceholder = @"Description Text (Optional)";
     return self;
 }
 
-- (void)updateListingWith:(Listing *)_newListing {
+- (void)updateListingWith:(ListingNavigationData *)_newListing {
     self.currentListing = _newListing;
 }
 

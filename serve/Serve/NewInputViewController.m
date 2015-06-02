@@ -48,6 +48,9 @@ static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
 static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216;
 static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
+//flag for Title Error Message
+static const BOOL showtitleCheckError = TRUE;
+
 @interface NewInputViewController ()
 
 @property (nonatomic, strong) UIView *progressIndicator;
@@ -72,7 +75,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 @property (strong, nonatomic) PickUpInfoViewController *pickUpInfoViewController;
 @property (strong, nonatomic) PickImageViewController *pickImageViewController;
-@property (strong, nonatomic) Listing *currentListing;
+@property (strong, nonatomic) ListingNavigationData *currentListing;
 @property (nonatomic, strong) UIActionSheet *addPhotoActionSheet;
 @property (nonatomic, strong) UIActionSheet *cancelButtonActionSheet;
 
@@ -84,7 +87,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 @implementation NewInputViewController
 
-- (id)initWithListing:(Listing *)_listing {
+- (id)initWithListing:(ListingNavigationData *)_listing {
     
     if(self = [super init]) {
         self.currentListing = _listing;
@@ -93,7 +96,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     return self;
 }
 
-- (void)updateListingWith:(Listing *)_newListing {
+- (void)updateListingWith:(ListingNavigationData *)_newListing {
     self.currentListing = _newListing;
 }
 
@@ -132,7 +135,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     
-    self.currentListing = [[Listing alloc] init];
+    self.currentListing = [[ListingNavigationData alloc] init];
 }
 
 - (void)setUpViewControllerObjects {
@@ -911,14 +914,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 - (BOOL)writeDataToListing {
     
     
-    if(self.titleInput.text.length == 0 || [self.titleInput.text isEqualToString:titlePlaceholder]) {
+    if(showtitleCheckError && (self.titleInput.text.length == 0 || [self.titleInput.text isEqualToString:titlePlaceholder])) {
         [self showErrorWithTitle:@"Incomplete Info" message:@"Please enter a title for your listing." cancelButtonTitle:@"OK"];
         
         return FALSE;
     }
     
     [self.currentListing setTitle:self.titleInput.text];
-    [self.currentListing setServes:self.numberOfServes];
+    [self.currentListing setServeCount:self.numberOfServes];
     [self.currentListing setType:self.typeInput.text];
     
     if(self.cuisineInput.text.length == 0 || [self.cuisineInput.text isEqualToString:cuisinePlaceholder]) {

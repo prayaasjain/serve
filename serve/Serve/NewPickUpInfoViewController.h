@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "ReviewSubmitViewController.h"
-#import "Listing.h"
+#import "ListingNavigationData.h"
 
 @interface NewPickUpInfoViewController :  UIViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
 
 @property (strong, nonatomic) ReviewSubmitViewController *reviewSubmitViewController;
 
-- (id)initWithListing:(Listing *)listing;
-- (void)updateListingWith:(Listing *)newListing;
+- (id)initWithListing:(ListingNavigationData *)listing;
+- (void)updateListingWith:(ListingNavigationData *)newListing;
 
 @end
 

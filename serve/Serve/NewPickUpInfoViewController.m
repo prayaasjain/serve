@@ -42,7 +42,7 @@ static NSArray *deleteButtonActionSheetItems = nil;
 
 @property (nonatomic, strong) UIActionSheet *deleteButtonActionSheet;
 
-@property (nonatomic, strong) Listing *currentListing;
+@property (nonatomic, strong) ListingNavigationData *currentListing;
 
 - (IBAction)continueButtonPressed:(id)sender;
 - (IBAction)backButtonPressed:(id)sender;
@@ -53,7 +53,7 @@ static NSArray *deleteButtonActionSheetItems = nil;
 
 @implementation NewPickUpInfoViewController
 
-- (id)initWithListing:(Listing *)_listing {
+- (id)initWithListing:(ListingNavigationData *)_listing {
     
     if(self = [super init]) {
         self.currentListing = _listing;
@@ -62,7 +62,7 @@ static NSArray *deleteButtonActionSheetItems = nil;
     return self;
 }
 
-- (void)updateListingWith:(Listing *)_newListing {
+- (void)updateListingWith:(ListingNavigationData *)_newListing {
     self.currentListing = _newListing;
 }
 
@@ -470,7 +470,7 @@ static NSArray *deleteButtonActionSheetItems = nil;
     [self.currentListing setAddressLine2:self.addressinput2.text];
     [self.currentListing setCity:self.cityInput.text];
     [self.currentListing setState:self.stateInput.text];
-    [self.currentListing setZipCode:self.zipCodeInput.text];
+    [self.currentListing setZip:self.zipCodeInput.text];
 }
 
 //- (void)autoFillTextFields {

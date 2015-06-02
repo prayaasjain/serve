@@ -32,7 +32,7 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 //starting fresh
 @property (nonatomic ,strong) UITableView* homeTable;
-@property (nonatomic, strong) Listing *currentListing;
+@property (nonatomic, strong) ListingNavigationData *currentListing;
 
 - (IBAction)submitButtonPressed:(id)sender;
 - (IBAction)backButtonPressed:(id)sender;
@@ -44,7 +44,7 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 GMSMapView *mapView_;
 
-- (id)initWithListing:(Listing *)_listing {
+- (id)initWithListing:(ListingNavigationData *)_listing {
     
     if(self = [super init]) {
         self.currentListing = _listing;
@@ -53,7 +53,7 @@ GMSMapView *mapView_;
     return self;
 }
 
-- (void)updateListingWith:(Listing *)_newListing {
+- (void)updateListingWith:(ListingNavigationData *)_newListing {
     self.currentListing = _newListing;
 }
 
@@ -93,12 +93,6 @@ GMSMapView *mapView_;
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.homeTable reloadData];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    
-    [self.homeTable reloadData];
-    
 }
 
 - (UIView *)progressIndicator {
@@ -397,7 +391,8 @@ GMSMapView *mapView_;
     
     cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
     
-    cell2.Label.text = @"BURGER WITH FRIES";
+//    cell2.Label.text = @"BURGER WITH FRIES";
+    cell2.Label.text = self.currentListing.title;
     cell2.descInput = @"This is a test description string with a count of 160 This is a test description string with a count of 160 This is a test description string with a count of160";
     cell2.servesCount = 10;
     cell2.cuisineInput = @"Chinese";
