@@ -37,16 +37,16 @@ GMSMapView *cellMapView_;
     
     if (self) {
         
-        UIView *titleOverlay = [[UIView alloc]initWithFrame:CGRectMake(0, 170, self.contentView.frame.size.width+40, 100)];
+        UIView *titleOverlay = [[UIView alloc]initWithFrame:CGRectMake(0, 160, self.contentView.frame.size.width+55, 100)];
         titleOverlay.backgroundColor = [UIColor blackColor];
         titleOverlay.alpha = 0.3;
         
-        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 170, self.bounds.size.width, 30)];
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, self.bounds.size.width, 30)];
         self.addressLabel.text = searchAddress;
         self.addressLabel.textColor = [UIColor whiteColor];
         self.addressLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:12.0f];
 
-        CGRect mapFrame = CGRectMake(0, 10, self.bounds.size.width+35, 185);
+        CGRect mapFrame = CGRectMake(0, 0, self.bounds.size.width+55, 185);
         //NSString *searchAddress = @"1235,WILDWOOD AVE,SUNNYVALE,CA 94089" ;
         cellMapView_ = [GoogleMapApi displayMapwithAddress:searchAddress forFrame:mapFrame];
         cellMapView_.layer.borderColor = [UIColor grayColor].CGColor;

@@ -36,8 +36,8 @@ static NSArray  * addPhotoActionSheetItems = nil;
 static NSArray  * cancelButtonActionSheetItems = nil;
 
 const CGFloat labelFontSize = 11.0f;
-const int allowedNumberOfCharactersInDesc = 16;
-const int allowedNumberOfCharactersInTitle = 4;
+const int allowedNumberOfCharactersInDesc = 160;
+const int allowedNumberOfCharactersInTitle = 10;
 const int allowedNumberOfCharactersInCuisine = allowedNumberOfCharactersInTitle;
 
 //for animation
