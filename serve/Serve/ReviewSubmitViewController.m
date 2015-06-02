@@ -216,18 +216,18 @@ GMSMapView *mapView_;
 
 - (IBAction)backButtonPressed:(id)sender {
     
-//    NSError *error;
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//    NSEntityDescription *entity = [NSEntityDescription
-//                                   entityForName:@"ListingItem" inManagedObjectContext:self.managedObjectContext];
-//    [fetchRequest setEntity:entity];
-//    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-//    for (NSManagedObject *info in fetchedObjects) {
-//        NSLog(@"Name: %@", [info valueForKey:@"name"]);
-//        NSLog(@"Zip: %@", [info valueForKey:@"cuisine"]);
-//    }
+    NSError *error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"ListingItem" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *info in fetchedObjects) {
+        NSLog(@"Name: %@", [info valueForKey:@"name"]);
+        NSLog(@"Zip: %@", [info valueForKey:@"cuisine"]);
+    }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)submitButtonPressed:(id)sender {
