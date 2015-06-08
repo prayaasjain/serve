@@ -84,37 +84,38 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     
     
     //add button
-    UIImage *addImage = [UIImage imageNamed:@"add.png"];
+    UIImage *image = [UIImage imageNamed:@"plus.png"];
     UIButton *addButton =  [UIButton buttonWithType:UIButtonTypeCustom];
-    [addButton setImage:addImage forState:UIControlStateNormal];
+    [addButton setImage:image forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addNewListingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [addButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
+    [addButton setFrame:CGRectMake(0, -40, iconWidth*3, iconHeight*3)];
     UIBarButtonItem *addBarButton = [[UIBarButtonItem alloc] initWithCustomView:addButton];
+
     /////
     
     //userButton
-    UIImage *userImage = [UIImage imageNamed:@"user.png"];
+    UIImage *userImage = [UIImage imageNamed:@"person.png"];
     UIButton *userButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [userButton setImage:userImage forState:UIControlStateNormal];
-    [userButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [userButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [userButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
     UIBarButtonItem *userBarButton = [[UIBarButtonItem alloc] initWithCustomView:userButton];
     /////
     
     //messageButton
-    UIImage *messageImage = [UIImage imageNamed:@"message_icon.png"];
+    UIImage *messageImage = [UIImage imageNamed:@"message1.png"];
     UIButton *messageButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [messageButton setImage:messageImage forState:UIControlStateNormal];
-    [messageButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [messageButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [messageButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
     UIBarButtonItem *messageBarButton = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
     /////
     
     //myListButton
-    UIImage *myListImage = [UIImage imageNamed:@"trash.png"];
+    UIImage *myListImage = [UIImage imageNamed:@"listing.png"];
     UIButton *myListButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [myListButton setImage:myListImage forState:UIControlStateNormal];
-    [myListButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [myListButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [myListButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
     UIBarButtonItem *myListBarButton = [[UIBarButtonItem alloc] initWithCustomView:myListButton];
     /////
@@ -140,6 +141,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     else{
         return [self.dates count];
     }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -155,18 +157,23 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
   
-    
-    SelfListing *item  = [self.dates objectAtIndex:indexPath.row];
     SelfListingCell *cell1 = (SelfListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
-    if (cell1 == nil) {
-        cell1 = [[SelfListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier];
-    }
 
-    cell1.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell1.titleLabel.text = item.name;
-    cell1.serveCount = item.serveCount;
-    cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];//item.image
-    cell1.typeString = @"Non-Veg";//item.type
+    if(self.dates.count)
+    {
+        SelfListing *item  = [self.dates objectAtIndex:indexPath.row];
+        
+        if (cell1 == nil) {
+            cell1 = [[SelfListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier];
+        }
+
+        cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell1.titleLabel.text = item.name;
+        cell1.serveCount = item.serveCount;
+        cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];//item.image
+        cell1.typeString = @"Non-Veg";//item.type
+        
+    }
 
 
     if (indexPath.section == 0) {
