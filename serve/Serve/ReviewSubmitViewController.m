@@ -63,7 +63,7 @@ GMSMapView *mapView_;
     [super viewDidLoad];
     
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
-    self.listingItem = [NSEntityDescription insertNewObjectForEntityForName:@"ListingItem" inManagedObjectContext:self.managedObjectContext];
+    self.listingItem = [NSEntityDescription insertNewObjectForEntityForName:@"SelfListing" inManagedObjectContext:self.managedObjectContext];
     
     [self setUpActionSheets];
     [self setUpNavigationController];
@@ -239,29 +239,24 @@ GMSMapView *mapView_;
     //save to core data
     
     //test
-    [self.listingItem setValue:@"pan" forKey:@"name"];
-    [self.listingItem setValue:@"ian" forKey:@"cuisine"];
-    [self.listingItem setValue:@"This is a long desc" forKey:@"desc"];
+//    [self.listingItem setValue:@"pan" forKey:@"name"];
+//    [self.listingItem setValue:@"ian" forKey:@"cuisine"];
+//    [self.listingItem setValue:@"This is a long desc" forKey:@"desc"];
 
-//    [self.listingItem setValue:self.currentListing.title forKey:@"name"];
-//    [self.listingItem setValue:self.currentListing.serveCount forKey:@"serveCount"];
-//    [self.listingItem setValue:self.currentListing.type forKey:@"type"];
-//    [self.listingItem setValue:self.currentListing.cuisine forKey:@"cuisine"];
-//    [self.listingItem setValue:self.currentListing.desc forKey:@"desc"];
-//    [self.listingItem setValue:self.currentListing.addressLine1 forKey:@"address1"];
-//    [self.listingItem setValue:self.currentListing.addressLine2 forKey:@"address2"];
-//    [self.listingItem setValue:self.currentListing.city forKey:@"city"];
-//    [self.listingItem setValue:self.currentListing.state forKey:@"state"];
-//    [self.listingItem setValue:self.currentListing.zip forKey:@"zip"];
-//    [self.listingItem setValue:self.currentListing.phoneNumber forKey:@"phone"];
-//    [self.listingItem setValue:self.currentListing.image forKey:@"image"];
-    
-//    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.latitude]forKey:@"latitude"];
-//    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.longitude]forKey:@"longitude"];
-    
-//phoneNumber;
-//pickupDate;
-
+    [self.listingItem setValue:self.currentListing.title forKey:@"name"];
+    [self.listingItem setValue:self.currentListing.serveCount forKey:@"serveCount"];
+    [self.listingItem setValue:self.currentListing.type forKey:@"type"];
+    [self.listingItem setValue:self.currentListing.cuisine forKey:@"cuisine"];
+    [self.listingItem setValue:self.currentListing.desc forKey:@"desc"];
+    [self.listingItem setValue:self.currentListing.addressLine1 forKey:@"address1"];
+    [self.listingItem setValue:self.currentListing.addressLine2 forKey:@"address2"];
+    [self.listingItem setValue:self.currentListing.city forKey:@"city"];
+    [self.listingItem setValue:self.currentListing.state forKey:@"state"];
+    [self.listingItem setValue:self.currentListing.zip forKey:@"zip"];
+    [self.listingItem setValue:self.currentListing.phoneNumber forKey:@"phone"];
+    //[self.listingItem setValue:self.currentListing.image forKey:@"image"];
+    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.latitude]forKey:@"latitude"];
+    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.longitude]forKey:@"longitude"];
     
     [self.managedObjectContext performBlockAndWait:^
     {

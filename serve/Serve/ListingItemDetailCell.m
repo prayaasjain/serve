@@ -94,7 +94,7 @@
         [self addSubview:editButton];
     }
     
-    self.servesLabel.text = [NSString stringWithFormat:@"SERVES: %ld",(long)self.servesCount];
+    self.servesLabel.text = [NSString stringWithFormat:@"SERVES: %@", self.serveCount];
     self.typeLabel.text = [NSString stringWithFormat:@"%@",self.typeInput];
     
     if(self.cuisineInput)

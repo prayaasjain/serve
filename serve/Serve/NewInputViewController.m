@@ -162,7 +162,7 @@ static const BOOL showtitleCheckError = TRUE;
     
     //ADD PHOTO BIG BACKGROUND IMAGE
     self.addImageBackgroundView = [[UIImageView alloc]init];
-    self.addImageBackgroundView.image = [UIImage imageNamed:@"food1-gray.jpg"];
+    self.addImageBackgroundView.image = [UIImage imageNamed:@"food1.jpg"];
     //self.addImageBackgroundView.alpha = 0.6f;
     self.addImageBackgroundView.layer.borderColor = [UIColor blackColor].CGColor;
     self.addImageBackgroundView.layer.borderWidth = 0.5f;

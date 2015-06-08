@@ -10,10 +10,15 @@
 #import "NewInputViewController.h"
 #import "InputViewController.h"
 #import "AddListingCell.h"
-
+#import "ServeCoreDataController.h"
+#import "SelfListing.h"
+#import "SelfListingCell.h"
 
 const CGFloat iconWidth = 25.0f;
 const CGFloat iconHeight = 25.0f;
+
+static NSString * const addListingCellIdentifier = @"addListingCell";
+static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
 @interface MyListingsViewController ()
 @property (nonatomic ,strong) UITableView* homeTable;
@@ -22,6 +27,14 @@ const CGFloat iconHeight = 25.0f;
 - (IBAction)addNewListingButtonPressed:(id)sender;
 
 @property (strong, nonatomic) NewInputViewController *inputViewController;
+
+//coredata
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSManagedObject *listingItem;
+@property (strong, nonatomic) NSString *entityName;
+@property (nonatomic, strong) NSArray *dates;
+
+
 
 
 @end
@@ -33,19 +46,25 @@ const CGFloat iconHeight = 25.0f;
     [super viewDidLoad];
     
     [self setUpNavigationController];
+    
+    self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
  
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 500, 640)
                                                   style:UITableViewStylePlain];
     self.homeTable.scrollsToTop = NO;
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
-    self.homeTable.separatorInset = UIEdgeInsetsMake(-20, 0, 0, 0);
+    self.homeTable.separatorInset = UIEdgeInsetsMake(-10, 0, 0, 0);
     self.homeTable.separatorColor=[UIColor grayColor];
     self.homeTable.tableFooterView = [UIView new];
-    [self.homeTable registerClass:[AddListingCell class] forCellReuseIdentifier:@"addListingCell"];
+    //[self.homeTable registerClass:[AddListingCell class] forCellReuseIdentifier:@"addListingCell"];
+    
+    [self.homeTable registerClass:[SelfListingCell class] forCellReuseIdentifier:@"selfListingCell"];
     self.homeTable.tableFooterView = [UIView new];
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    [self loadRecordsFromCoreData];
 
 }
 
@@ -114,7 +133,8 @@ const CGFloat iconHeight = 25.0f;
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    //return
+    return [self.dates count];
 }
 
 
@@ -123,19 +143,17 @@ const CGFloat iconHeight = 25.0f;
     return 100.0f;
 }
 
-- (AddListingCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"addListingCell";
-    
     ///
     // Similar to UITableViewCell, but
-    AddListingCell *cell = (AddListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[AddListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    
-
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    AddListingCell *cell = (AddListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil) {
+//        cell = [[AddListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//    }
+//    
+//
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //    cell.textLabel.text = @"Add New Listing";
 //    cell.detailTextLabel.text = @"Akhil2";
 
@@ -146,25 +164,44 @@ const CGFloat iconHeight = 25.0f;
     
     /////
     
-    
 
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    ///
+        SelfListingCell *cell1 = (SelfListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
+        if (cell1 == nil) {
+            cell1 = [[SelfListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier];
+        }
+
+        cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell1.titleLabel.text = @"BURGER WITH FRIES";
+        cell1.serveCount = [NSNumber numberWithInt:5];
+        cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];
+
+    ///
+    
+    ///
+    
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+//    SelfListing *item  = [self.dates objectAtIndex:indexPath.row];
+//    
+//    UITableViewCell *cell = [[UITableViewCell alloc]init];
 //    
 //    if (cell == nil) {
-//        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+//        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:addListingCellIdentifier];
 //    }
 //    
 //    //Friend *friend = [self.fetchedResultsController objectAtIndexPath:indexPath];
 //    
-//    cell.textLabel.text = @"Akhil1";
+//    cell.textLabel.text = item.name;
 //    cell.textLabel.font = [cell.textLabel.font fontWithSize:10];
-//    cell.imageView.image = [UIImage imageNamed:@"add.png"];
+//    cell.imageView.image = [UIImage imageNamed:@"food1.jpg"];
 //    
 //    cell.detailTextLabel.text = @"Raju";
 //    cell.detailTextLabel.font = [cell.textLabel.font fontWithSize:10];
 //    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    return cell;
+    return cell1;
 
 }
 
@@ -181,7 +218,7 @@ const CGFloat iconHeight = 25.0f;
 - (IBAction)addNewListingButtonPressed:(id)sender {
     
     if(self.inputViewController == nil){
-        InputViewController *secondView = [[InputViewController alloc] init];
+        NewInputViewController *secondView = [[NewInputViewController alloc] init];
         self.inputViewController = secondView;
     }
     [self.navigationController pushViewController:self.inputViewController animated:YES];
@@ -201,6 +238,20 @@ const CGFloat iconHeight = 25.0f;
     [self.navigationController pushViewController:self.inputViewController animated:YES];
     
 }
+
+- (void)loadRecordsFromCoreData {
+    [self.managedObjectContext performBlockAndWait:^{
+        [self.managedObjectContext reset];
+        NSError *error = nil;
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"SelfListing"];
+        [request setSortDescriptors:[NSArray arrayWithObject:
+                                     [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+//        [request setPredicate:[NSPredicate predicateWithFormat:@"syncStatus != %d", 1]];
+        self.dates = [self.managedObjectContext executeFetchRequest:request error:&error];
+    }];
+}
+
+
 
 //-(void) populateCell:(CategoryCell *) cell forIndexPath:(NSIndexPath *) indexPath {
     
