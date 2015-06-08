@@ -195,7 +195,14 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 10.0f;
+    if(section==0)
+    {
+       return 10.0f;
+    }
+    else
+    {
+        return 0.0f;
+    }
 }
 
 - (IBAction)addNewListingButtonPressed:(id)sender {
@@ -209,12 +216,15 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    if(self.inputViewController == nil){
-        NewInputViewController *secondView = [[NewInputViewController alloc] init];
-        self.inputViewController = secondView;
+    if(indexPath.section == 0)
+    {
+        if(self.inputViewController == nil){
+            NewInputViewController *secondView = [[NewInputViewController alloc] init];
+            self.inputViewController = secondView;
+        }
+        self.inputViewController.view.backgroundColor = [UIColor whiteColor];
+        [self.navigationController pushViewController:self.inputViewController animated:YES];
     }
-    self.inputViewController.view.backgroundColor = [UIColor whiteColor];
-    [self.navigationController pushViewController:self.inputViewController animated:YES];
     
 }
 
