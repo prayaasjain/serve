@@ -12,12 +12,12 @@
 
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) UILabel *Label;
-
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *availablityLabel;
-@property (nonatomic, strong) UILabel *servesLabel;
-@property (nonatomic, strong) UILabel *typeLabel;
+@property (nonatomic, strong) UILabel *typeServesLabel;
+@property (nonatomic, strong) UIButton *syncStatus;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, assign) NSNumber *serveCount;
+@property (nonatomic, assign) NSString *typeString;
 
 @end

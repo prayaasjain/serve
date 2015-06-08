@@ -57,7 +57,6 @@ GMSMapView *mapView_;
     self.currentListing = _newListing;
 }
 
-
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -234,15 +233,7 @@ GMSMapView *mapView_;
 
 - (IBAction)submitButtonPressed:(id)sender {
     
-    NSLog(@"Trying to submit");
-    
     //save to core data
-    
-    //test
-//    [self.listingItem setValue:@"pan" forKey:@"name"];
-//    [self.listingItem setValue:@"ian" forKey:@"cuisine"];
-//    [self.listingItem setValue:@"This is a long desc" forKey:@"desc"];
-
     [self.listingItem setValue:self.currentListing.title forKey:@"name"];
     [self.listingItem setValue:self.currentListing.serveCount forKey:@"serveCount"];
     [self.listingItem setValue:self.currentListing.type forKey:@"type"];
@@ -269,7 +260,8 @@ GMSMapView *mapView_;
         [[ServeCoreDataController sharedInstance] saveMasterContext];
     }
      ];
-
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void) setUpActionSheets {
@@ -299,34 +291,22 @@ GMSMapView *mapView_;
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     
-    if ([buttonTitle isEqualToString:@"Other Button 1"]) {
-        NSLog(@"Other 1 pressed");
-    }
-    if ([buttonTitle isEqualToString:@"Other Button 2"]) {
-        NSLog(@"Other 2 pressed");
-    }
-    if ([buttonTitle isEqualToString:@"Other Button 3"]) {
-        NSLog(@"Other 3 pressed");
-    }
-    if ([buttonTitle isEqualToString:@"Cancel Button"]) {
-        NSLog(@"Cancel pressed --> Cancel ActionSheet");
-    }
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if(section==0)
-    {
-        return 1;
-    }
+//    if(section==0)
+//    {
+//        return 1;
+//    }
+//    
+//    if(section==1)
+//    {
+//        return 1;
+//    }
     
-    if(section==1)
-    {
-        return 1;
-    }
-    
-    return 2;
+    return 1;
 }
 
 
@@ -378,7 +358,6 @@ GMSMapView *mapView_;
     cell1.selectionStyle = UITableViewCellSelectionStyleNone;
     //cell1.backgroundColor = [UIColor darkGrayColor];
     
-    
     ListingItemDetailCell  *cell2 = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell2 == nil) {
         cell2 = [[ListingItemDetailCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
@@ -425,7 +404,6 @@ GMSMapView *mapView_;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 2;
 }
 
@@ -438,28 +416,4 @@ GMSMapView *mapView_;
 
 @end
 
-
-
-/*
  
- NSManagedObjectContext *context = [self managedObjectContext];
- NSManagedObject *failedBankInfo = [NSEntityDescription
- insertNewObjectForEntityForName:@"FailedBankInfo"
- inManagedObjectContext:context];
- [failedBankInfo setValue:@"Test Bank" forKey:@"name"];
- [failedBankInfo setValue:@"Testville" forKey:@"city"];
- [failedBankInfo setValue:@"Testland" forKey:@"state"];
- NSManagedObject *failedBankDetails = [NSEntityDescription
- insertNewObjectForEntityForName:@"FailedBankDetails"
- inManagedObjectContext:context];
- [failedBankDetails setValue:[NSDate date] forKey:@"closeDate"];
- [failedBankDetails setValue:[NSDate date] forKey:@"updateDate"];
- [failedBankDetails setValue:[NSNumber numberWithInt:12345] forKey:@"zip"];
- [failedBankDetails setValue:failedBankInfo forKey:@"info"];
- [failedBankInfo setValue:failedBankDetails forKey:@"details"];
- NSError *error;
- if (![context save:&error]) {
- NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
- }
- 
- */
