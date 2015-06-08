@@ -18,6 +18,7 @@
 		2091910E1B19901B008CCAA9 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091910D1B19901B008CCAA9 /* MapCell.m */; };
 		2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */; };
 		20A4FD8E1B1C101100B92927 /* chicken.png in Resources */ = {isa = PBXBuildFile; fileRef = 20A4FD8D1B1C101100B92927 /* chicken.png */; };
+		20AFA2311B2523C000635B51 /* SelfListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20AFA2301B2523C000635B51 /* SelfListingCell.m */; };
 		20B5A8C41B15708C00818741 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C31B15708C00818741 /* GoogleMaps.framework */; };
 		20B5A8C61B1570D500818741 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B5A8C51B1570D500818741 /* GoogleMaps.bundle */; };
 		20B5A8C81B15710100818741 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C71B15710100818741 /* AVFoundation.framework */; };
@@ -38,7 +39,7 @@
 		20CA6B561B1410E5005FE7AA /* reduce_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B521B1410E5005FE7AA /* reduce_32.png */; };
 		20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */; };
 		20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */; };
-		20D8E7551B1D6CF600AA5241 /* ListingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7541B1D6CF600AA5241 /* ListingItem.m */; };
+		20D8E7551B1D6CF600AA5241 /* SelfListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7541B1D6CF600AA5241 /* SelfListing.m */; };
 		20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DE790C1B082AB000E3F101 /* MyListingsViewController.m */; };
 		20EE2B111B01502B00F80CAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B101B01502B00F80CAC /* main.m */; };
 		20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B131B01502B00F80CAC /* AppDelegate.m */; };
@@ -81,6 +82,8 @@
 		2091911B1B1A4E83008CCAA9 /* GoogleMapApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapApi.h; sourceTree = "<group>"; };
 		2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapApi.m; sourceTree = "<group>"; };
 		20A4FD8D1B1C101100B92927 /* chicken.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chicken.png; sourceTree = "<group>"; };
+		20AFA22F1B2523C000635B51 /* SelfListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfListingCell.h; sourceTree = "<group>"; };
+		20AFA2301B2523C000635B51 /* SelfListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfListingCell.m; sourceTree = "<group>"; };
 		20B5A8C31B15708C00818741 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		20B5A8C51B1570D500818741 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		20B5A8C71B15710100818741 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -103,8 +106,8 @@
 		20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPickUpInfoViewController.m; sourceTree = "<group>"; };
 		20D8E7501B1D4A9100AA5241 /* ServeCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeCoreDataController.h; sourceTree = "<group>"; };
 		20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeCoreDataController.m; sourceTree = "<group>"; };
-		20D8E7531B1D6CF600AA5241 /* ListingItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingItem.h; sourceTree = "<group>"; };
-		20D8E7541B1D6CF600AA5241 /* ListingItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingItem.m; sourceTree = "<group>"; };
+		20D8E7531B1D6CF600AA5241 /* SelfListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfListing.h; sourceTree = "<group>"; };
+		20D8E7541B1D6CF600AA5241 /* SelfListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfListing.m; sourceTree = "<group>"; };
 		20DE790B1B082AB000E3F101 /* MyListingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyListingsViewController.h; sourceTree = "<group>"; };
 		20DE790C1B082AB000E3F101 /* MyListingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyListingsViewController.m; sourceTree = "<group>"; };
 		20EE2B0B1B01502B00F80CAC /* Serve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Serve.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +187,8 @@
 		203592191B044ADE00850472 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				20AFA22F1B2523C000635B51 /* SelfListingCell.h */,
+				20AFA2301B2523C000635B51 /* SelfListingCell.m */,
 				202AF3721B1AF12600531369 /* ListingItemDetailCell.h */,
 				202AF3731B1AF12600531369 /* ListingItemDetailCell.m */,
 				2091910C1B19901B008CCAA9 /* MapCell.h */,
@@ -236,8 +241,8 @@
 		20EE2B021B01502B00F80CAC = {
 			isa = PBXGroup;
 			children = (
-				20D8E7531B1D6CF600AA5241 /* ListingItem.h */,
-				20D8E7541B1D6CF600AA5241 /* ListingItem.m */,
+				20D8E7531B1D6CF600AA5241 /* SelfListing.h */,
+				20D8E7541B1D6CF600AA5241 /* SelfListing.m */,
 				20EE2B0D1B01502B00F80CAC /* Serve */,
 				20EE2B0C1B01502B00F80CAC /* Products */,
 				20EE2B2A1B01502B00F80CAC /* ServeTests */,
@@ -432,11 +437,12 @@
 				2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */,
 				2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */,
 				20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */,
-				20D8E7551B1D6CF600AA5241 /* ListingItem.m in Sources */,
+				20D8E7551B1D6CF600AA5241 /* SelfListing.m in Sources */,
 				20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */,
 				202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */,
 				20EE2B111B01502B00F80CAC /* main.m in Sources */,
 				D8130E241B1B9D040081E825 /* ListingNavigationData.m in Sources */,
+				20AFA2311B2523C000635B51 /* SelfListingCell.m in Sources */,
 				2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */,
 				20EF27941B0C24FC0082A828 /* NewInputViewController.m in Sources */,
 				20EE2B171B01502B00F80CAC /* Serve.xcdatamodeld in Sources */,

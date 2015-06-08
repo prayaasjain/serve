@@ -63,7 +63,7 @@ GMSMapView *mapView_;
     [super viewDidLoad];
     
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
-    self.listingItem = [NSEntityDescription insertNewObjectForEntityForName:@"ListingItem" inManagedObjectContext:self.managedObjectContext];
+    self.listingItem = [NSEntityDescription insertNewObjectForEntityForName:@"SelfListing" inManagedObjectContext:self.managedObjectContext];
     
     [self setUpActionSheets];
     [self setUpNavigationController];
@@ -218,18 +218,18 @@ GMSMapView *mapView_;
 
 - (IBAction)backButtonPressed:(id)sender {
     
-    NSError *error;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"ListingItem" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    for (NSManagedObject *info in fetchedObjects) {
-        NSLog(@"Name: %@", [info valueForKey:@"name"]);
-        NSLog(@"Zip: %@", [info valueForKey:@"cuisine"]);
-    }
+//    NSError *error;
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription
+//                                   entityForName:@"ListingItem" inManagedObjectContext:self.managedObjectContext];
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    for (NSManagedObject *info in fetchedObjects) {
+//        NSLog(@"Name: %@", [info valueForKey:@"name"]);
+//        NSLog(@"Zip: %@", [info valueForKey:@"cuisine"]);
+//    }
     
-    //[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)submitButtonPressed:(id)sender {
@@ -239,29 +239,24 @@ GMSMapView *mapView_;
     //save to core data
     
     //test
-    [self.listingItem setValue:@"pan" forKey:@"name"];
-    [self.listingItem setValue:@"ian" forKey:@"cuisine"];
-    [self.listingItem setValue:@"This is a long desc" forKey:@"desc"];
+//    [self.listingItem setValue:@"pan" forKey:@"name"];
+//    [self.listingItem setValue:@"ian" forKey:@"cuisine"];
+//    [self.listingItem setValue:@"This is a long desc" forKey:@"desc"];
 
-//    [self.listingItem setValue:self.currentListing.title forKey:@"name"];
-//    [self.listingItem setValue:self.currentListing.serveCount forKey:@"serveCount"];
-//    [self.listingItem setValue:self.currentListing.type forKey:@"type"];
-//    [self.listingItem setValue:self.currentListing.cuisine forKey:@"cuisine"];
-//    [self.listingItem setValue:self.currentListing.desc forKey:@"desc"];
-//    [self.listingItem setValue:self.currentListing.addressLine1 forKey:@"address1"];
-//    [self.listingItem setValue:self.currentListing.addressLine2 forKey:@"address2"];
-//    [self.listingItem setValue:self.currentListing.city forKey:@"city"];
-//    [self.listingItem setValue:self.currentListing.state forKey:@"state"];
-//    [self.listingItem setValue:self.currentListing.zip forKey:@"zip"];
-//    [self.listingItem setValue:self.currentListing.phoneNumber forKey:@"phone"];
-//    [self.listingItem setValue:self.currentListing.image forKey:@"image"];
-    
-//    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.latitude]forKey:@"latitude"];
-//    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.longitude]forKey:@"longitude"];
-    
-//phoneNumber;
-//pickupDate;
-
+    [self.listingItem setValue:self.currentListing.title forKey:@"name"];
+    [self.listingItem setValue:self.currentListing.serveCount forKey:@"serveCount"];
+    [self.listingItem setValue:self.currentListing.type forKey:@"type"];
+    [self.listingItem setValue:self.currentListing.cuisine forKey:@"cuisine"];
+    [self.listingItem setValue:self.currentListing.desc forKey:@"desc"];
+    [self.listingItem setValue:self.currentListing.addressLine1 forKey:@"address1"];
+    [self.listingItem setValue:self.currentListing.addressLine2 forKey:@"address2"];
+    [self.listingItem setValue:self.currentListing.city forKey:@"city"];
+    [self.listingItem setValue:self.currentListing.state forKey:@"state"];
+    [self.listingItem setValue:self.currentListing.zip forKey:@"zip"];
+    [self.listingItem setValue:self.currentListing.phoneNumber forKey:@"phone"];
+    //[self.listingItem setValue:self.currentListing.image forKey:@"image"];
+    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.latitude]forKey:@"latitude"];
+    [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.longitude]forKey:@"longitude"];
     
     [self.managedObjectContext performBlockAndWait:^
     {
@@ -391,21 +386,20 @@ GMSMapView *mapView_;
     
     
 //    cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
-    cell2.imageView.image = self.currentListing.image;
-    
 //    cell2.Label.text = @"BURGER WITH FRIES";
-    cell2.Label.text = self.currentListing.title;
-    cell2.descInput = @"This is a test description string with a count of 160 This is a test description string with a count of 160 This is a test description string with a count of160";
-    cell2.servesCount = 10;
-    cell2.cuisineInput = @"Chinese";
-    cell2.typeInput =@"Non-Veg";
+//    cell2.Label.text = self.currentListing.title;
+//    cell2.descInput = @"This is a test description string with a count of 160 This is a test description string with a count of 160 This is a test description string with a count of160";
+//    cell2.servesCount = 10;
+//    cell2.cuisineInput = @"Chinese";
+//    cell2.typeInput =@"Non-Veg";
     //cell2.backgroundColor = [UIColor darkGrayColor];
     
-//    cell2.Label.text = self.currentListing.title;
-//    cell2.descInput = self.currentListing.desc;
-//    cell2.servesCount = self.currentListing.serves;
-//    cell2.cuisineInput = self.currentListing.cuisine;
-//    cell2.typeInput = self.currentListing.type;
+    cell2.Label.text = self.currentListing.title;
+    cell2.descInput = self.currentListing.desc;
+    cell2.serveCount = self.currentListing.serveCount;
+    cell2.cuisineInput = self.currentListing.cuisine;
+    cell2.typeInput = self.currentListing.type;
+    cell2.imageView.image = self.currentListing.image;
     
     cell2.selectionStyle = UITableViewCellSelectionStyleNone;
     cell2.isEditModeEnabled = YES;

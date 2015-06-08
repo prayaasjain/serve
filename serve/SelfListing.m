@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Akhil Khemani. All rights reserved.
 //
 
-#import "ListingItem.h"
+#import "SelfListing.h"
 
 
-@implementation ListingItem
+@implementation SelfListing
 
 @dynamic address1;
 @dynamic address2;

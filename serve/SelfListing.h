@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface ListingItem : NSManagedObject
+@interface SelfListing : NSManagedObject
 
 @property (nonatomic, retain) NSString * address1;
 @property (nonatomic, retain) NSString * address2;
