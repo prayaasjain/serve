@@ -575,7 +575,6 @@ static const BOOL showtitleCheckError = false;
         }
         else {
             [self.pickUpInfoViewController updateListingWith:self.currentListing];
-            //self.pickUpInfoViewController.currentListing = self.currentListing;
         }
         [self.navigationController pushViewController:self.pickUpInfoViewController animated:YES];
     }
@@ -928,8 +927,7 @@ static const BOOL showtitleCheckError = false;
         [self.currentListing setDesc:self.descInput.text];
     }
     
-    [self.currentListing setImage:self.addImageBackgroundView.image];
-    [self.currentListing setImageData:[NSData dataWithData:UIImageJPEGRepresentation(self.addImageBackgroundView.image, 1.0)]];
+    [self.currentListing setImage:[NSData dataWithData:UIImageJPEGRepresentation(self.addImageBackgroundView.image, 1.0)]];
     
     return TRUE;
 }

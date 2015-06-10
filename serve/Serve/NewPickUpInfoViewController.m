@@ -455,10 +455,14 @@ static NSArray *deleteButtonActionSheetItems = nil;
 
 - (IBAction)continueButtonPressed:(id)sender {
     
+    [self writeDataToListing];
     if(self.reviewSubmitViewController == nil){
 //        ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] init];
         ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] initWithListing:self.currentListing];
         self.reviewSubmitViewController= secondView;
+    }
+    else {
+        [self.reviewSubmitViewController updateListingWith:self.currentListing];
     }
     
     //tell the navigation controller to push a new view into the stack
