@@ -393,12 +393,14 @@ GMSMapView *mapView_;
 //    cell2.typeInput =@"Non-Veg";
     //cell2.backgroundColor = [UIColor darkGrayColor];
     
-    cell2.imageView.image = self.currentListing.image;
+//    cell2.imageView.image = self.currentListing.image;
+    cell2.imageView.image = [UIImage imageWithData:self.currentListing.imageData];
     cell2.Label.text = self.currentListing.title;
     cell2.descInput = self.currentListing.desc;
-    cell2.servesCount = [self.currentListing.serveCount integerValue];
+    cell2.serveCount = self.currentListing.serveCount;
     cell2.cuisineInput = self.currentListing.cuisine;
     cell2.typeInput = self.currentListing.type;
+    cell2.imageView.image = self.currentListing.image;
     
     cell2.selectionStyle = UITableViewCellSelectionStyleNone;
     cell2.isEditModeEnabled = YES;

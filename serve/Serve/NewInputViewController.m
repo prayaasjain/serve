@@ -943,6 +943,7 @@ static const BOOL showtitleCheckError = TRUE;
     }
     
     [self.currentListing setImage:self.addImageBackgroundView.image];
+    [self.currentListing setImageData:[NSData dataWithData:UIImageJPEGRepresentation(self.addImageBackgroundView.image, 1.0)]];
     
     return TRUE;
 }

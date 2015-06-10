@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *cuisine;
 @property (nonatomic, strong) NSString *desc;
 @property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSData *imageData;
 
 @property (nonatomic, strong) NSString *addressLine1;
 @property (nonatomic, strong) NSString *addressLine2;
