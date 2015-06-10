@@ -10,9 +10,12 @@
 
 @interface MapCell : UITableViewCell
 
+@property (nonatomic, strong) UILabel *instructionsLabel;
 @property (nonatomic, strong) UILabel *addressLabel;
 @property (atomic, strong) UIView  *mapView;
 @property (nonatomic, retain) NSString* searchAddress;
+@property (nonatomic, strong) UILabel *availabiltyLabel;
+@property (nonatomic, retain) NSString* availability;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withAddress:(NSString *)searchAddress;
 

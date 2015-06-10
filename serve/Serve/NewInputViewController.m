@@ -49,7 +49,7 @@ static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216;
 static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 //flag for Title Error Message
-static const BOOL showtitleCheckError = TRUE;
+static const BOOL showtitleCheckError = false;
 
 @interface NewInputViewController ()
 
@@ -251,21 +251,7 @@ static const BOOL showtitleCheckError = TRUE;
                                                                      0.0f,
                                                                      self.view.window.frame.size.width,
                                                                      44.0f)];
-    //    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    //    {
-    //        toolBar.tintColor = [UIColor colorWithRed:0.6f
-    //                                            green:0.6f
-    //                                             blue:0.64f
-    //                                            alpha:1.0f];
-    //    }
-    //    else
-    //    {
-    //        toolBar.tintColor = [UIColor colorWithRed:0.56f
-    //                                            green:0.59f
-    //                                             blue:0.63f
-    //                                            alpha:1.0f];
-    //    }
-    //    toolBar.translucent = NO;
+
     toolBar.items =   @[
                         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                       target:nil

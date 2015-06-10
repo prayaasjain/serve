@@ -27,20 +27,26 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        UIView *titleOverlay = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width+60, 270)];
+        
+        UIView *titleOverlay = [[UIView alloc]initWithFrame:CGRectMake(10, 170, self.contentView.frame.size.width+15, 40)];
         titleOverlay.backgroundColor = [UIColor blackColor];
-        titleOverlay.alpha = 0.3;
-    
+        titleOverlay.alpha = 0.4;
+        
+        UIView *titleOverlay2 = [[UIView alloc]initWithFrame:CGRectMake(10, 30, self.bounds.size.width+15, 220)];
+        titleOverlay2.layer.borderColor = [[UIColor lightGrayColor]CGColor];
+        titleOverlay2.layer.borderWidth = 1.0f;
+
+        
         self.imageView = [[UIImageView alloc]init];
         //self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, self.contentView.frame.size.width+40, 180)];
         [self addSubview:self.imageView];
         
-        self.Label = [[UILabel alloc]init];
-        self.Label.textColor = [UIColor whiteColor];
-        self.Label.font = [UIFont fontWithName:@"Arial-BoldMT" size:20.0f];
+        self.titleLabel = [[UILabel alloc]init];
+        self.titleLabel.textColor = [UIColor blackColor];
+        self.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:18.0f];
         
         self.descriptionLabel = [[UILabel alloc]init];
-        self.descriptionLabel.textColor = [UIColor whiteColor];
+        self.descriptionLabel.textColor = [UIColor darkGrayColor];
         self.descriptionLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
         self.descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.descriptionLabel.numberOfLines = 0;
@@ -62,12 +68,14 @@
         typeIcon.frame = CGRectMake(350, 180, 20, 20);
 
         [self addSubview:titleOverlay];
-        [self addSubview:self.Label];
+        [self addSubview:titleOverlay2];
+        [self addSubview:self.titleLabel];
         [self addSubview:self.descriptionLabel];
         [self addSubview:self.servesLabel];
         [self addSubview:self.cuisineLabel];
         [self addSubview:self.typeLabel];
-        [self addSubview:typeIcon];
+        //[self addSubview:typeIcon];
+     
     }
     return self;
     
@@ -75,24 +83,14 @@
 
 - (void) layoutSubviews {
     [super layoutSubviews];
-    self.Label.frame = CGRectMake(5, 0, self.contentView.frame.size.width+40, 30);
-    self.imageView.frame= CGRectMake(0,0, self.contentView.frame.size.width+40, 180);
-    self.descriptionLabel.frame = CGRectMake(5, 190, self.contentView.frame.size.width-50, 70);
-    self.servesLabel.frame = CGRectMake(5, 180, 90, 20);
-    self.cuisineLabel.frame = CGRectMake(240, 180, 90, 20);
-    self.typeLabel.frame = CGRectMake(300, 180, 90, 20);
+    self.titleLabel.frame = CGRectMake(10, 0, self.contentView.frame.size.width+40, 30);
+    self.imageView.frame= CGRectMake(10,30, self.contentView.frame.size.width-20, 180);
+    self.descriptionLabel.frame = CGRectMake(15, 195, self.contentView.frame.size.width-50, 70);
+    self.servesLabel.frame = CGRectMake(15, 180, 90, 20);
     
-
-    if(self.isEditModeEnabled)
-    {
-        UIButton *editButton = [[UIButton alloc]initWithFrame:CGRectMake(self.bounds.size.width-30,
-                                                                         self.bounds.size.height-40,
-                                                                         25,25)];
-        
-        [editButton setImage:[UIImage imageNamed:@"edit.png"] forState:UIControlStateNormal];
-        
-        [self addSubview:editButton];
-    }
+    self.cuisineLabel.frame = CGRectMake(230, 180, 90, 20);
+    self.typeLabel.frame = CGRectMake(285, 180, 90, 20);
+    
     
     self.servesLabel.text = [NSString stringWithFormat:@"SERVES: %@", self.serveCount];
     self.typeLabel.text = [NSString stringWithFormat:@"%@",self.typeInput];

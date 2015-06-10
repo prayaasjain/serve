@@ -37,16 +37,21 @@ GMSMapView *cellMapView_;
     
     if (self) {
         
-        UIView *titleOverlay = [[UIView alloc]initWithFrame:CGRectMake(0, 160, self.contentView.frame.size.width+55, 100)];
+        UIView *titleOverlay = [[UIView alloc]initWithFrame:CGRectMake(10, 150, self.contentView.frame.size.width+15, 20)];
+        
         titleOverlay.backgroundColor = [UIColor blackColor];
         titleOverlay.alpha = 0.3;
         
-        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, self.bounds.size.width, 30)];
+        UIView *titleOverlay2 = [[UIView alloc]initWithFrame:CGRectMake(10, 30, self.bounds.size.width+15, 190)];
+        titleOverlay2.layer.borderColor = [[UIColor lightGrayColor]CGColor];
+        titleOverlay2.layer.borderWidth = 1.0f;
+        
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, self.bounds.size.width, 30)];
         self.addressLabel.text = searchAddress;
-        self.addressLabel.textColor = [UIColor whiteColor];
+        self.addressLabel.textColor = [UIColor blackColor];
         self.addressLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:12.0f];
 
-        CGRect mapFrame = CGRectMake(0, 0, self.bounds.size.width+55, 185);
+        CGRect mapFrame = CGRectMake(10, 30, self.bounds.size.width+15, 145);
         //NSString *searchAddress = @"1235,WILDWOOD AVE,SUNNYVALE,CA 94089" ;
         cellMapView_ = [GoogleMapApi displayMapwithAddress:searchAddress forFrame:mapFrame];
         cellMapView_.layer.borderColor = [UIColor grayColor].CGColor;
@@ -57,9 +62,28 @@ GMSMapView *cellMapView_;
                                                                          28,28)];
         
         
+        self.availabiltyLabel = [[UILabel alloc]init];
+        self.availabiltyLabel.textColor = [UIColor darkGrayColor];
+        self.availabiltyLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
+        self.availabiltyLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.availabiltyLabel.numberOfLines = 0;
+        self.availabiltyLabel.frame = CGRectMake(15, 148, self.contentView.frame.size.width-50, 70);
+        self.availabiltyLabel.text = @"Available 4:30 pm - 6:30 pm";
+        
+        self.instructionsLabel = [[UILabel alloc]init];
+        self.instructionsLabel.textColor = [UIColor darkGrayColor];
+        self.instructionsLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
+        self.instructionsLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.instructionsLabel.numberOfLines = 0;
+        self.instructionsLabel.frame = CGRectMake(15, 168, self.contentView.frame.size.width, 70);
+        self.instructionsLabel.text =  @"This is a test description string with a count of 160 This is a test description string with a count of 160 This is a test description string with";
+        
+        [self addSubview:titleOverlay2];
+
         [self addSubview:cellMapView_];
-        [self addSubview:titleOverlay];
         [self addSubview:self.addressLabel];
+        [self addSubview:self.availabiltyLabel];
+        [self addSubview:self.instructionsLabel];
         
 
     }

@@ -11,9 +11,8 @@
 @interface ListingItemDetailCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *descriptionLabel;
-@property (nonatomic, strong) UILabel *Label;
+@property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, assign) BOOL isEditModeEnabled;
 @property (nonatomic, strong) UILabel *servesLabel;
 @property (nonatomic, strong) UILabel *cuisineLabel;
 @property (nonatomic, strong) UILabel *typeLabel;

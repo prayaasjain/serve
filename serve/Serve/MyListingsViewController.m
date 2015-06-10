@@ -22,8 +22,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
 @interface MyListingsViewController ()
 @property (nonatomic ,strong) UITableView* homeTable;
-- (IBAction)continueButtonPressed:(id)sender;
-- (IBAction)cancelButtonPressed:(id)sender;
+
 - (IBAction)addNewListingButtonPressed:(id)sender;
 
 @property (strong, nonatomic) NewInputViewController *inputViewController;
@@ -33,9 +32,6 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 @property (nonatomic, strong) NSManagedObject *listingItem;
 @property (strong, nonatomic) NSString *entityName;
 @property (nonatomic, strong) NSArray *dates;
-
-
-
 
 @end
 
@@ -57,15 +53,20 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     self.homeTable.separatorInset = UIEdgeInsetsMake(-10, 0, 0, 0);
     self.homeTable.separatorColor=[UIColor grayColor];
     self.homeTable.tableFooterView = [UIView new];
-    //[self.homeTable registerClass:[AddListingCell class] forCellReuseIdentifier:@"addListingCell"];
-    
-    [self.homeTable registerClass:[SelfListingCell class] forCellReuseIdentifier:@"selfListingCell"];
+    [self.homeTable registerClass:[AddListingCell class] forCellReuseIdentifier:addListingCellIdentifier];
+    [self.homeTable registerClass:[SelfListingCell class] forCellReuseIdentifier:selfListingCellIdentifier];
     self.homeTable.tableFooterView = [UIView new];
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
     [self loadRecordsFromCoreData];
 
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    
+    [self loadRecordsFromCoreData];
+    [self.homeTable reloadData];
+    
 }
 
 - (void) setUpNavigationController {
@@ -83,37 +84,38 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     
     
     //add button
-    UIImage *addImage = [UIImage imageNamed:@"add.png"];
+    UIImage *image = [UIImage imageNamed:@"plus.png"];
     UIButton *addButton =  [UIButton buttonWithType:UIButtonTypeCustom];
-    [addButton setImage:addImage forState:UIControlStateNormal];
+    [addButton setImage:image forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addNewListingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [addButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
+    [addButton setFrame:CGRectMake(0, -40, iconWidth*3, iconHeight*3)];
     UIBarButtonItem *addBarButton = [[UIBarButtonItem alloc] initWithCustomView:addButton];
+
     /////
     
     //userButton
-    UIImage *userImage = [UIImage imageNamed:@"user.png"];
+    UIImage *userImage = [UIImage imageNamed:@"person.png"];
     UIButton *userButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [userButton setImage:userImage forState:UIControlStateNormal];
-    [userButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [userButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [userButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
     UIBarButtonItem *userBarButton = [[UIBarButtonItem alloc] initWithCustomView:userButton];
     /////
     
     //messageButton
-    UIImage *messageImage = [UIImage imageNamed:@"message_icon.png"];
+    UIImage *messageImage = [UIImage imageNamed:@"message1.png"];
     UIButton *messageButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [messageButton setImage:messageImage forState:UIControlStateNormal];
-    [messageButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [messageButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [messageButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
     UIBarButtonItem *messageBarButton = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
     /////
     
     //myListButton
-    UIImage *myListImage = [UIImage imageNamed:@"trash.png"];
+    UIImage *myListImage = [UIImage imageNamed:@"listing.png"];
     UIButton *myListButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [myListButton setImage:myListImage forState:UIControlStateNormal];
-    [myListButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [myListButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [myListButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
     UIBarButtonItem *myListBarButton = [[UIBarButtonItem alloc] initWithCustomView:myListButton];
     /////
@@ -124,95 +126,90 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     
 }
 
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 2;
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //return
-    return [self.dates count];
+    
+    if (section == 0) {
+            return 1;
+        }
+    
+    else{
+        return [self.dates count];
+    }
+    
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 100.0f;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ///
     // Similar to UITableViewCell, but
-//    AddListingCell *cell = (AddListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[AddListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//    }
-//    
-//
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.textLabel.text = @"Add New Listing";
-//    cell.detailTextLabel.text = @"Akhil2";
+    AddListingCell *cell = (AddListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:addListingCellIdentifier];
+    if (cell == nil) {
+        cell = [[AddListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addListingCellIdentifier];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  
+    SelfListingCell *cell1 = (SelfListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
 
-    //cell.accessoryView = ;
-    
-    // Just want to test, so I hardcode the data
-    //cell.descriptionLabel.text = @"Testing";
-    
-    /////
-    
-
-    ///
-        SelfListingCell *cell1 = (SelfListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
+    if(self.dates.count)
+    {
+        SelfListing *item  = [self.dates objectAtIndex:indexPath.row];
+        
         if (cell1 == nil) {
             cell1 = [[SelfListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier];
         }
 
         cell1.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell1.titleLabel.text = @"BURGER WITH FRIES";
-        cell1.serveCount = [NSNumber numberWithInt:5];
-        cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];
+        cell1.titleLabel.text = item.name;
+        cell1.serveCount = item.serveCount;
+        cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];//item.image
+        cell1.typeString = @"Non-Veg";//item.type
+        
+    }
 
-    ///
-    
-    ///
-    
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-//    SelfListing *item  = [self.dates objectAtIndex:indexPath.row];
-//    
-//    UITableViewCell *cell = [[UITableViewCell alloc]init];
-//    
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:addListingCellIdentifier];
-//    }
-//    
-//    //Friend *friend = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    
-//    cell.textLabel.text = item.name;
-//    cell.textLabel.font = [cell.textLabel.font fontWithSize:10];
-//    cell.imageView.image = [UIImage imageNamed:@"food1.jpg"];
-//    
-//    cell.detailTextLabel.text = @"Raju";
-//    cell.detailTextLabel.font = [cell.textLabel.font fontWithSize:10];
-//    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell1;
+
+    if (indexPath.section == 0) {
+        return cell;
+    }
+    else{
+        return cell1;
+    }
 
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    // Return the number of sections.
-    return 1;
+//        if(section==0)
+//        {
+//            return @"ITEM DETAILS";
+//        }
+    
+//        if(section==1)
+//        {
+//            return @"YOUR LISTINGS";
+//        }
+    
+    return nil;
 }
 
-- (IBAction)continueButtonPressed:(id)sender {
-    NSLog(@"Going to akhil view");
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if(section==0)
+    {
+       return 10.0f;
+    }
+    else
+    {
+        return 0.0f;
+    }
 }
 
 - (IBAction)addNewListingButtonPressed:(id)sender {
@@ -224,18 +221,17 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.navigationController pushViewController:self.inputViewController animated:YES];
 }
 
-- (IBAction)cancelButtonPressed:(id)sender {
-    NSLog(@"Going to list view");
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    if(self.inputViewController == nil){
-        NewInputViewController *secondView = [[NewInputViewController alloc] init];
-        self.inputViewController = secondView;
+    if(indexPath.section == 0)
+    {
+        if(self.inputViewController == nil){
+            NewInputViewController *secondView = [[NewInputViewController alloc] init];
+            self.inputViewController = secondView;
+        }
+        self.inputViewController.view.backgroundColor = [UIColor whiteColor];
+        [self.navigationController pushViewController:self.inputViewController animated:YES];
     }
-    self.inputViewController.view.backgroundColor = [UIColor whiteColor];
-    [self.navigationController pushViewController:self.inputViewController animated:YES];
     
 }
 
@@ -246,62 +242,14 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
         NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"SelfListing"];
         [request setSortDescriptors:[NSArray arrayWithObject:
                                      [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
-//        [request setPredicate:[NSPredicate predicateWithFormat:@"syncStatus != %d", 1]];
+        
         self.dates = [self.managedObjectContext executeFetchRequest:request error:&error];
     }];
 }
 
-
-
-//-(void) populateCell:(CategoryCell *) cell forIndexPath:(NSIndexPath *) indexPath {
-    
-//    id<CategoryUIObjectProtocol> category = [self.fetchedController objectAtIndexPath:indexPath];
-//    
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.textLabel.text = category.categoryName;
-//    cell.accessoryView = ([category categoryitemSelected]) ? [self checkMarkView] : nil;
-//    
-//    int itemCount = category.countOfItemsAssociatedWithUICategory;
-//    
-//    if (itemCount > 1)
-//    {
-//        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d %@",itemCount, NSLocalizedString(@"items", @"") ];
-//    }
-//    else
-//    {
-//        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d %@",itemCount, NSLocalizedString(@"item", @"") ];
-//    }
-//}
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
-*/
 
 @end
-
-
-
-
-////
-
-//-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    [self performSegueWithIdentifier:@"detailsView" sender:self];
-//}
-//
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    //I set the segue identifier in the interface builder
-//    if ([segue.identifier isEqualToString:@"detailsView"]){
-//        
-//        NSLog(@"segue"); //check to see if method is called, it is NOT called upon cell touch
-//        
-//        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-//        ///more code to prepare next view controller....
