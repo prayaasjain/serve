@@ -252,5 +252,4 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     // Dispose of any resources that can be recreated.
 }
 
-
 @end

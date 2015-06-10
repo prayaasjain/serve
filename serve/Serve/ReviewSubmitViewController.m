@@ -71,8 +71,10 @@ GMSMapView *mapView_;
     
     
     ///table setup
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, self.view.bounds.size.width, self.view.bounds.size.height)
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(10, 10, self.view.bounds.size.width-20, self.view.bounds.size.height)
                                                   style:UITableViewStylePlain];
+    
+    
     self.homeTable.scrollsToTop = NO;
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
@@ -83,10 +85,10 @@ GMSMapView *mapView_;
     [self.homeTable registerClass:[MapCell class] forCellReuseIdentifier:@"MapCell"];
     [self.homeTable registerClass:[ListingItemDetailCell class] forCellReuseIdentifier:@"ListingItemDetailCell"];
     self.homeTable.tableFooterView = [UIView new];
-    //[self.homeTable setBackgroundColor:[UIColor blackColor]];
+    [self.homeTable setBackgroundColor:[UIColor lightGrayColor]];
     
     [self.view addSubview:self.homeTable];
-    [self.view setBackgroundColor:[UIColor redColor]];
+    [self.view setBackgroundColor:[UIColor lightGrayColor]];
     
 }
 
@@ -312,10 +314,10 @@ GMSMapView *mapView_;
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    //    if(section==0)
-    //    {
-    //        return @"ITEM DETAILS";
-    //    }
+        if(section==0)
+        {
+            return @"STEP 3/3";
+        }
     
     //    if(section==1)
     //    {
@@ -335,7 +337,7 @@ GMSMapView *mapView_;
     
     if(indexPath.section==1)
     {
-        return 260.0f;
+        return 230.0f;
     }
     return 0;
 }
@@ -364,24 +366,33 @@ GMSMapView *mapView_;
     }
     
     
-//    cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
-//    cell2.Label.text = @"BURGER WITH FRIES";
-//    cell2.Label.text = self.currentListing.title;
-//    cell2.descInput = @"This is a test description string with a count of 160 This is a test description string with a count of 160 This is a test description string with a count of160";
-//    cell2.servesCount = 10;
-//    cell2.cuisineInput = @"Chinese";
-//    cell2.typeInput =@"Non-Veg";
+    cell2.imageView.image=[UIImage imageNamed:@"food1.jpg"];
+    cell2.titleLabel.text = @"BURGER WITH FRIES";
+    cell2.descInput = @"This is a test description string with a count of 160 This is a test description string with a count of 160 This is a test description string with a count of160";
+    cell2.serveCount = [NSNumber numberWithInteger:10];
+    cell2.cuisineInput = @"Chinese";
+    cell2.typeInput =@"Veg";
     //cell2.backgroundColor = [UIColor darkGrayColor];
     
-    cell2.Label.text = self.currentListing.title;
-    cell2.descInput = self.currentListing.desc;
-    cell2.serveCount = self.currentListing.serveCount;
-    cell2.cuisineInput = self.currentListing.cuisine;
-    cell2.typeInput = self.currentListing.type;
-    cell2.imageView.image = self.currentListing.image;
+//    cell2.Label.text = self.currentListing.title;
+//    cell2.descInput = self.currentListing.desc;
+//    cell2.serveCount = self.currentListing.serveCount;
+//    cell2.cuisineInput = self.currentListing.cuisine;
+//    cell2.typeInput = self.currentListing.type;
+//    cell2.imageView.image = self.currentListing.image;
     
     cell2.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell2.isEditModeEnabled = YES;
+    
+    //cell2.layer.shadowOffset = CGSizeMake(0, 20);
+//    cell2.layer.shadowColor = [[UIColor redColor]CGColor];
+//    cell2.layer.shadowRadius = 3;
+//    cell2.layer.shadowOpacity = .75f;
+    cell2.layer.borderColor = [[UIColor blackColor]CGColor];
+    cell2.layer.borderWidth = 1;
+    
+    cell1.layer.borderColor = [[UIColor blackColor]CGColor];
+    cell1.layer.borderWidth = 1;
+    
     
     if(indexPath.section == 0)
     {
@@ -400,6 +411,16 @@ GMSMapView *mapView_;
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 10.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(section == 0)
+    {
+        return 45.0f;
+    }
+    
+    return 0.0f;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
