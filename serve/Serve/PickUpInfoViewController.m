@@ -429,6 +429,7 @@ static NSString * const descriptionPlaceholder = @"Description Text (Optional)";
 
 - (IBAction)continueButtonPressed:(id)sender {
     
+    [self writeDataToListing];
     if(self.reviewSubmitViewController == nil){
 //        ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] init];
         ReviewSubmitViewController *secondView = [[ReviewSubmitViewController alloc] initWithListing:self.currentListing];
@@ -442,9 +443,13 @@ static NSString * const descriptionPlaceholder = @"Description Text (Optional)";
     [self.navigationController pushViewController:self.reviewSubmitViewController animated:YES];
 }
 
-
-
-
+- (void)writeDataToListing {
+    [self.currentListing setAddressLine1:self.addressinput1.text];
+    [self.currentListing setAddressLine2:self.addressinput2.text];
+    [self.currentListing setCity:self.cityInput.text];
+    [self.currentListing setState:self.stateInput.text];
+    [self.currentListing setZip:self.zipCodeInput.text];
+}
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
 
