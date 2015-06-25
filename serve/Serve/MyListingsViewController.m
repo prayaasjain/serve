@@ -239,7 +239,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.managedObjectContext performBlockAndWait:^{
         [self.managedObjectContext reset];
         NSError *error = nil;
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"SelfListing"];
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Listing"];
         [request setSortDescriptors:[NSArray arrayWithObject:
                                      [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         

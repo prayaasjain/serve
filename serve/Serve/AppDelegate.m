@@ -17,6 +17,8 @@
 #import "NewPickUpInfoViewController.h"
 
 #import <GoogleMaps/GoogleMaps.h>
+#import "Listing.h"
+#import "ServeSyncEngine.h"
 
 @interface AppDelegate ()
 
@@ -30,6 +32,9 @@
     
     ///google maps
     [GMSServices provideAPIKey:@"AIzaSyDHdTN_gkC_RqUdUQs_CNiaLUK7VDLGbh4"];
+    
+    //sync
+     [[ServeSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Listing class]];
     
     
     
@@ -88,6 +93,9 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    
+    [[ServeSyncEngine sharedEngine] startSync];
+    
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

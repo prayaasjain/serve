@@ -27,10 +27,14 @@
 		207873391B3B99BE00C3C86B /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 207873341B3B99BE00C3C86B /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2078733B1B3B9A5F00C3C86B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2078733A1B3B9A5F00C3C86B /* Foundation.framework */; };
 		2078733D1B3B9AAF00C3C86B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2078733C1B3B9AAF00C3C86B /* CoreGraphics.framework */; };
+		207873411B3B9F2D00C3C86B /* ServeAFParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 207873401B3B9F2D00C3C86B /* ServeAFParseAPIClient.m */; };
+		207873441B3BA50500C3C86B /* ServeSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 207873431B3BA50500C3C86B /* ServeSyncEngine.m */; };
 		20913C371B1B0B8600EA4A10 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 20913C361B1B0B8600EA4A10 /* edit.png */; };
 		2091910E1B19901B008CCAA9 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091910D1B19901B008CCAA9 /* MapCell.m */; };
 		2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */; };
 		20A4FD8E1B1C101100B92927 /* chicken.png in Resources */ = {isa = PBXBuildFile; fileRef = 20A4FD8D1B1C101100B92927 /* chicken.png */; };
+		20A5D9C01B3BB07700EA127D /* SelfListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5D9BF1B3BB07700EA127D /* SelfListing.m */; };
+		20A5D9C91B3BB28A00EA127D /* Listing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5D9C81B3BB28A00EA127D /* Listing.m */; };
 		20AFA2311B2523C000635B51 /* SelfListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20AFA2301B2523C000635B51 /* SelfListingCell.m */; };
 		20AFA23D1B2542F200635B51 /* cloud-tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFA23C1B2542F200635B51 /* cloud-tick.png */; };
 		20AFA23F1B2549E700635B51 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFA23E1B2549E700635B51 /* person.png */; };
@@ -58,7 +62,6 @@
 		20CA6B561B1410E5005FE7AA /* reduce_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B521B1410E5005FE7AA /* reduce_32.png */; };
 		20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */; };
 		20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */; };
-		20D8E7551B1D6CF600AA5241 /* SelfListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7541B1D6CF600AA5241 /* SelfListing.m */; };
 		20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DE790C1B082AB000E3F101 /* MyListingsViewController.m */; };
 		20EE2B111B01502B00F80CAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B101B01502B00F80CAC /* main.m */; };
 		20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B131B01502B00F80CAC /* AppDelegate.m */; };
@@ -119,12 +122,20 @@
 		207873341B3B99BE00C3C86B /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		2078733A1B3B9A5F00C3C86B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2078733C1B3B9AAF00C3C86B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2078733F1B3B9F2D00C3C86B /* ServeAFParseAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeAFParseAPIClient.h; sourceTree = "<group>"; };
+		207873401B3B9F2D00C3C86B /* ServeAFParseAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeAFParseAPIClient.m; sourceTree = "<group>"; };
+		207873421B3BA50500C3C86B /* ServeSyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeSyncEngine.h; sourceTree = "<group>"; };
+		207873431B3BA50500C3C86B /* ServeSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeSyncEngine.m; sourceTree = "<group>"; };
 		20913C361B1B0B8600EA4A10 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		2091910C1B19901B008CCAA9 /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
 		2091910D1B19901B008CCAA9 /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		2091911B1B1A4E83008CCAA9 /* GoogleMapApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapApi.h; sourceTree = "<group>"; };
 		2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapApi.m; sourceTree = "<group>"; };
 		20A4FD8D1B1C101100B92927 /* chicken.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chicken.png; sourceTree = "<group>"; };
+		20A5D9BE1B3BB07700EA127D /* SelfListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelfListing.h; path = ../SelfListing.h; sourceTree = "<group>"; };
+		20A5D9BF1B3BB07700EA127D /* SelfListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelfListing.m; path = ../SelfListing.m; sourceTree = "<group>"; };
+		20A5D9C71B3BB28A00EA127D /* Listing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Listing.h; path = ../Listing.h; sourceTree = "<group>"; };
+		20A5D9C81B3BB28A00EA127D /* Listing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Listing.m; path = ../Listing.m; sourceTree = "<group>"; };
 		20AFA22F1B2523C000635B51 /* SelfListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfListingCell.h; sourceTree = "<group>"; };
 		20AFA2301B2523C000635B51 /* SelfListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfListingCell.m; sourceTree = "<group>"; };
 		20AFA23C1B2542F200635B51 /* cloud-tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cloud-tick.png"; path = "../cloud-tick.png"; sourceTree = "<group>"; };
@@ -155,8 +166,6 @@
 		20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPickUpInfoViewController.m; sourceTree = "<group>"; };
 		20D8E7501B1D4A9100AA5241 /* ServeCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeCoreDataController.h; sourceTree = "<group>"; };
 		20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeCoreDataController.m; sourceTree = "<group>"; };
-		20D8E7531B1D6CF600AA5241 /* SelfListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfListing.h; sourceTree = "<group>"; };
-		20D8E7541B1D6CF600AA5241 /* SelfListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfListing.m; sourceTree = "<group>"; };
 		20DE790B1B082AB000E3F101 /* MyListingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyListingsViewController.h; sourceTree = "<group>"; };
 		20DE790C1B082AB000E3F101 /* MyListingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyListingsViewController.m; sourceTree = "<group>"; };
 		20EE2B0B1B01502B00F80CAC /* Serve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Serve.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,6 +298,17 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		2078733E1B3B9EC500C3C86B /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				2078733F1B3B9F2D00C3C86B /* ServeAFParseAPIClient.h */,
+				207873401B3B9F2D00C3C86B /* ServeAFParseAPIClient.m */,
+				207873421B3BA50500C3C86B /* ServeSyncEngine.h */,
+				207873431B3BA50500C3C86B /* ServeSyncEngine.m */,
+			);
+			name = Sync;
+			sourceTree = "<group>";
+		};
 		20B5A8BE1B156FB300818741 /* GoogleMaps */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +343,11 @@
 		20D8E74F1B1D4A5B00AA5241 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				20A5D9C71B3BB28A00EA127D /* Listing.h */,
+				20A5D9C81B3BB28A00EA127D /* Listing.m */,
+				20A5D9BE1B3BB07700EA127D /* SelfListing.h */,
+				20A5D9BF1B3BB07700EA127D /* SelfListing.m */,
+				20EE2B151B01502B00F80CAC /* Serve.xcdatamodeld */,
 				20D8E7501B1D4A9100AA5241 /* ServeCoreDataController.h */,
 				20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */,
 			);
@@ -332,8 +357,6 @@
 		20EE2B021B01502B00F80CAC = {
 			isa = PBXGroup;
 			children = (
-				20D8E7531B1D6CF600AA5241 /* SelfListing.h */,
-				20D8E7541B1D6CF600AA5241 /* SelfListing.m */,
 				20EE2B0D1B01502B00F80CAC /* Serve */,
 				20EE2B0C1B01502B00F80CAC /* Products */,
 				20EE2B2A1B01502B00F80CAC /* ServeTests */,
@@ -353,6 +376,7 @@
 		20EE2B0D1B01502B00F80CAC /* Serve */ = {
 			isa = PBXGroup;
 			children = (
+				2078733E1B3B9EC500C3C86B /* Sync */,
 				2055FD291B27EF3A00B85F77 /* Thirdparty */,
 				20D8E74F1B1D4A5B00AA5241 /* CoreData */,
 				D8130E211B1B9CE90081E825 /* Models */,
@@ -364,7 +388,6 @@
 				20EE2B1B1B01502B00F80CAC /* Main.storyboard */,
 				20EE2B1E1B01502B00F80CAC /* Images.xcassets */,
 				20EE2B201B01502B00F80CAC /* LaunchScreen.xib */,
-				20EE2B151B01502B00F80CAC /* Serve.xcdatamodeld */,
 				20EE2B0E1B01502B00F80CAC /* Supporting Files */,
 			);
 			path = Serve;
@@ -538,6 +561,7 @@
 			files = (
 				20FD2FC91B054D600024D090 /* PickUpInfoViewController.m in Sources */,
 				207873391B3B99BE00C3C86B /* UIImageView+AFNetworking.m in Sources */,
+				20A5D9C01B3BB07700EA127D /* SelfListing.m in Sources */,
 				20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */,
 				2055FD3E1B27EF4D00B85F77 /* AFHTTPRequestOperation.m in Sources */,
 				2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */,
@@ -545,15 +569,16 @@
 				207873351B3B99BE00C3C86B /* AFImageRequestOperation.m in Sources */,
 				20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */,
 				207873281B3B973900C3C86B /* AFJSONRequestOperation.m in Sources */,
-				20D8E7551B1D6CF600AA5241 /* SelfListing.m in Sources */,
 				20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */,
 				207873361B3B99BE00C3C86B /* AFNetworkActivityIndicatorManager.m in Sources */,
 				202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */,
 				20EE2B111B01502B00F80CAC /* main.m in Sources */,
+				207873411B3B9F2D00C3C86B /* ServeAFParseAPIClient.m in Sources */,
 				D8130E241B1B9D040081E825 /* ListingNavigationData.m in Sources */,
 				207873381B3B99BE00C3C86B /* AFXMLRequestOperation.m in Sources */,
 				20AFA2311B2523C000635B51 /* SelfListingCell.m in Sources */,
 				2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */,
+				20A5D9C91B3BB28A00EA127D /* Listing.m in Sources */,
 				2055FD431B27EF4D00B85F77 /* AFURLConnectionOperation.m in Sources */,
 				207873251B3B969500C3C86B /* AFJSONUtilities.m in Sources */,
 				207873221B3B965C00C3C86B /* AFHTTPClient.m in Sources */,
@@ -563,6 +588,7 @@
 				2091910E1B19901B008CCAA9 /* MapCell.m in Sources */,
 				202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */,
 				20EE2B3F1B01511700F80CAC /* InputViewController.m in Sources */,
+				207873441B3BA50500C3C86B /* ServeSyncEngine.m in Sources */,
 				20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
