@@ -165,7 +165,7 @@ static const BOOL showtitleCheckError = false;
     self.addImageBackgroundView.image = [UIImage imageNamed:@"food1.jpg"];
     //self.addImageBackgroundView.alpha = 0.6f;
     self.addImageBackgroundView.layer.borderColor = [UIColor blackColor].CGColor;
-    self.addImageBackgroundView.layer.borderWidth = 0.5f;
+    //self.addImageBackgroundView.layer.borderWidth = 0.5f;
     self.addImageBackgroundView.layer.cornerRadius = 10;
     self.addImageBackgroundView.tag = ImageBackgroundViewTag;
     [self.addImageBackgroundView setUserInteractionEnabled:YES];
@@ -521,7 +521,8 @@ static const BOOL showtitleCheckError = false;
     [superview addConstraints:@[progressViewHeightConstraint]];
     
     [superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[progressView]|" options:0 metrics:metrics views:views]];
-    [superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[imageView]-rightMargin-|" options:0 metrics:metrics views:views]];
+    //[superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[imageView]-rightMargin-|" options:0 metrics:metrics views:views]];
+    [superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:0 metrics:metrics views:views]];
     [superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[titleLabel]-[titleInput]-rightMargin-|" options:0 metrics:metrics views:views]];
     [superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[typeLabel]-[typeInput]-rightMargin-|" options:0 metrics:metrics views:views]];
     [superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[servesLabel]-[servesInput]-rightMargin-|" options:0 metrics:metrics views:views]];
