@@ -36,7 +36,6 @@
         titleOverlay2.layer.borderColor = [[UIColor lightGrayColor]CGColor];
         titleOverlay2.layer.borderWidth = 1.0f;
 
-        
         self.imageView = [[UIImageView alloc]init];
         //self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0,0, self.contentView.frame.size.width+40, 180)];
         [self addSubview:self.imageView];

@@ -63,7 +63,7 @@
     navigationController = [[UINavigationController alloc]
                             initWithRootViewController:myListingsViewController];
     
-    navigationController.navigationBar.barTintColor = [UIColor blackColor];
+    navigationController.navigationBar.barTintColor = [UIColor blackColor];//#007AFF
     navigationController.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
     
     

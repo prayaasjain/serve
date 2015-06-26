@@ -53,16 +53,31 @@
     localMapView_.myLocationEnabled = YES;
     
     // Creates a marker in the center of the map.
-//    GMSMarker *marker = [[GMSMarker alloc] init];
-//    marker.position = CLLocationCoordinate2DMake(latitude+.001, longitude+.001);
-//    marker.title = @"My";
-//    marker.snippet = @"Location";
-//    marker.map = localMapView_;
-//    marker.appearAnimation = kGMSMarkerAnimationPop;
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    marker.position = CLLocationCoordinate2DMake(latitude+.001, longitude+.001);
+    marker.title = @"Burger";
+    marker.snippet = @"Location";
+    marker.map = localMapView_;
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    
+    GMSMarker *marker3 = [[GMSMarker alloc] init];
+    marker3.position = CLLocationCoordinate2DMake(latitude+.002, longitude+.002);
+    marker3.title = @"Pizza";
+    marker3.snippet = @"Location";
+    marker3.map = localMapView_;
+    marker3.appearAnimation = kGMSMarkerAnimationPop;
+    
+    GMSMarker *marker4 = [[GMSMarker alloc] init];
+    marker4.position = CLLocationCoordinate2DMake(latitude-.001, longitude-.001);
+    marker4.title = @"Tandoori Chicken";
+    marker4.snippet = @"Location";
+    marker4.map = localMapView_;
+    marker4.appearAnimation = kGMSMarkerAnimationPop;
+    
     
     GMSMarker *marker2 = [[GMSMarker alloc] init];
     marker2.position = CLLocationCoordinate2DMake(latitude, longitude);
-    marker2.title = @"Your Listing";
+    marker2.title = @"My";
     marker2.snippet = @"Location";
     marker2.map = localMapView_;
     marker2.appearAnimation = kGMSMarkerAnimationPop;

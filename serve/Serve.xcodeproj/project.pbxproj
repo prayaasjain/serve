@@ -12,6 +12,7 @@
 		201B33051B075890000930F7 /* food1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 201B33041B075890000930F7 /* food1.jpg */; };
 		202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202AF3731B1AF12600531369 /* ListingItemDetailCell.m */; };
 		202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */; };
+		2031AE9F1B3CE3890000CF40 /* PublicListingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */; };
 		2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8D11B0925F100CA99B1 /* AddListingCell.m */; };
 		2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8E01B0935E700CA99B1 /* PickImageViewController.m */; };
 		2055FD3E1B27EF4D00B85F77 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2055FD2C1B27EF4D00B85F77 /* AFHTTPRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -56,6 +57,7 @@
 		20B5A8DA1B15717400818741 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8D91B15717400818741 /* OpenGLES.framework */; };
 		20B5A8DC1B15718500818741 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8DB1B15718500818741 /* QuartzCore.framework */; };
 		20B5A8DE1B15718E00818741 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8DD1B15718E00818741 /* SystemConfiguration.framework */; };
+		20C1E1971B3D1A5A0064761D /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C1E1961B3D1A5A0064761D /* refresh.png */; };
 		20CA6B531B1410E5005FE7AA /* add_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B4F1B1410E5005FE7AA /* add_32.png */; };
 		20CA6B541B1410E5005FE7AA /* next_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B501B1410E5005FE7AA /* next_32.png */; };
 		20CA6B551B1410E5005FE7AA /* previous_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B511B1410E5005FE7AA /* previous_32.png */; };
@@ -94,6 +96,10 @@
 		202AF3731B1AF12600531369 /* ListingItemDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingItemDetailCell.m; sourceTree = "<group>"; };
 		202CBF101B05AC49007DFB30 /* ReviewSubmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewSubmitViewController.h; sourceTree = "<group>"; };
 		202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewSubmitViewController.m; sourceTree = "<group>"; };
+		2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicListingViewController.m; sourceTree = "<group>"; };
+		2031AE9E1B3CE3890000CF40 /* PublicListingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicListingViewController.h; sourceTree = "<group>"; };
+		2031AEA21B3CE4690000CF40 /* ServeConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeConstants.h; sourceTree = "<group>"; };
+		2031AEA31B3CE5D80000CF40 /* Serve-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Serve-Prefix.pch"; sourceTree = "<group>"; };
 		2040C8D01B0925F100CA99B1 /* AddListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddListingCell.h; sourceTree = "<group>"; };
 		2040C8D11B0925F100CA99B1 /* AddListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddListingCell.m; sourceTree = "<group>"; };
 		2040C8DF1B0935E700CA99B1 /* PickImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickImageViewController.h; sourceTree = "<group>"; };
@@ -158,6 +164,7 @@
 		20B5A8D91B15717400818741 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		20B5A8DB1B15718500818741 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		20B5A8DD1B15718E00818741 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		20C1E1961B3D1A5A0064761D /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
 		20CA6B4F1B1410E5005FE7AA /* add_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_32.png; path = assets_test/add_32.png; sourceTree = "<group>"; };
 		20CA6B501B1410E5005FE7AA /* next_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next_32.png; path = assets_test/next_32.png; sourceTree = "<group>"; };
 		20CA6B511B1410E5005FE7AA /* previous_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = previous_32.png; path = assets_test/previous_32.png; sourceTree = "<group>"; };
@@ -227,6 +234,8 @@
 		203592181B044A8300850472 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */,
+				2031AE9E1B3CE3890000CF40 /* PublicListingViewController.h */,
 				20DE790B1B082AB000E3F101 /* MyListingsViewController.h */,
 				20DE790C1B082AB000E3F101 /* MyListingsViewController.m */,
 				20EE2B3D1B01511700F80CAC /* InputViewController.h */,
@@ -265,6 +274,7 @@
 		2055FD291B27EF3A00B85F77 /* Thirdparty */ = {
 			isa = PBXGroup;
 			children = (
+				20B5A8BE1B156FB300818741 /* GoogleMaps */,
 				2055FD2A1B27EF4D00B85F77 /* AFNetworking */,
 			);
 			name = Thirdparty;
@@ -380,7 +390,6 @@
 				2055FD291B27EF3A00B85F77 /* Thirdparty */,
 				20D8E74F1B1D4A5B00AA5241 /* CoreData */,
 				D8130E211B1B9CE90081E825 /* Models */,
-				20B5A8BE1B156FB300818741 /* GoogleMaps */,
 				203592191B044ADE00850472 /* CustomCells */,
 				203592181B044A8300850472 /* ViewControllers */,
 				20EE2B121B01502B00F80CAC /* AppDelegate.h */,
@@ -396,6 +405,9 @@
 		20EE2B0E1B01502B00F80CAC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				20C1E1961B3D1A5A0064761D /* refresh.png */,
+				2031AEA21B3CE4690000CF40 /* ServeConstants.h */,
+				2031AEA31B3CE5D80000CF40 /* Serve-Prefix.pch */,
 				20AFA2441B254BDA00635B51 /* listing.png */,
 				20AFA2461B254C6400635B51 /* plus.png */,
 				20AFA2401B254B1000635B51 /* message2.png */,
@@ -532,6 +544,7 @@
 				20AFA2411B254B1000635B51 /* message2.png in Resources */,
 				20913C371B1B0B8600EA4A10 /* edit.png in Resources */,
 				20AFA2451B254BDA00635B51 /* listing.png in Resources */,
+				20C1E1971B3D1A5A0064761D /* refresh.png in Resources */,
 				2014A1FB1B16D2B800AA5351 /* food1-gray.jpg in Resources */,
 				20AFA2431B254B4A00635B51 /* message1.png in Resources */,
 				201B33051B075890000930F7 /* food1.jpg in Resources */,
@@ -575,6 +588,7 @@
 				20EE2B111B01502B00F80CAC /* main.m in Sources */,
 				207873411B3B9F2D00C3C86B /* ServeAFParseAPIClient.m in Sources */,
 				D8130E241B1B9D040081E825 /* ListingNavigationData.m in Sources */,
+				2031AE9F1B3CE3890000CF40 /* PublicListingViewController.m in Sources */,
 				207873381B3B99BE00C3C86B /* AFXMLRequestOperation.m in Sources */,
 				20AFA2311B2523C000635B51 /* SelfListingCell.m in Sources */,
 				2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */,
@@ -723,6 +737,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Serve",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Serve/Serve-Prefix.pch";
 				INFOPLIST_FILE = Serve/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -737,6 +753,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Serve",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Serve/Serve-Prefix.pch";
 				INFOPLIST_FILE = Serve/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

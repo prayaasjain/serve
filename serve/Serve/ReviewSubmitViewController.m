@@ -247,7 +247,7 @@ GMSMapView *mapView_;
     [self.listingItem setValue:self.currentListing.state forKey:@"state"];
     [self.listingItem setValue:self.currentListing.zip forKey:@"zip"];
     [self.listingItem setValue:self.currentListing.phoneNumber forKey:@"phone"];
-    //[self.listingItem setValue:self.currentListing.image forKey:@"image"];
+    [self.listingItem setValue:self.currentListing.image forKey:@"image"];
     [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.latitude]forKey:@"latitude"];
     [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.longitude]forKey:@"longitude"];
     
@@ -381,7 +381,7 @@ GMSMapView *mapView_;
     cell2.typeInput = self.currentListing.type;
     
     cell2.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell2.backgroundColor = [UIColor darkGrayColor];
+    cell2.backgroundColor = [UIColor whiteColor];
     
 //    cell2.layer.shadowOffset = CGSizeMake(0, 20);
 //    cell2.layer.shadowColor = [[UIColor redColor]CGColor];

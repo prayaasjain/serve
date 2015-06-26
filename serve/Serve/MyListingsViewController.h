@@ -12,7 +12,3 @@
 
 @end
 
-
-
-
-//@interface WTCategoryViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>

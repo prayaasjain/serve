@@ -13,9 +13,10 @@
 #import "ServeCoreDataController.h"
 #import "SelfListing.h"
 #import "SelfListingCell.h"
+#import "PublicListingViewController.h"
 
-const CGFloat iconWidth = 25.0f;
-const CGFloat iconHeight = 25.0f;
+//const CGFloat iconWidth = 25.0f;
+//const CGFloat iconHeight = 25.0f;
 
 static NSString * const addListingCellIdentifier = @"addListingCell";
 static NSString * const selfListingCellIdentifier = @"selfListingCell";
@@ -26,6 +27,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 - (IBAction)addNewListingButtonPressed:(id)sender;
 
 @property (strong, nonatomic) NewInputViewController *inputViewController;
+@property (strong, nonatomic) PublicListingViewController *publicListingViewController;
 
 //coredata
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -117,6 +119,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [myListButton setImage:myListImage forState:UIControlStateNormal];
     [myListButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [myListButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
+    [myListButton addTarget:self action:@selector(PublicListingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *myListBarButton = [[UIBarButtonItem alloc] initWithCustomView:myListButton];
     /////
     
@@ -170,8 +173,11 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
         cell1.selectionStyle = UITableViewCellSelectionStyleNone;
         cell1.titleLabel.text = item.name;
         cell1.serveCount = item.serveCount;
-        cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];//item.image
+        //cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];//item.image
+        
+        cell1.imageView.image = [UIImage imageWithData:item.image];//item.image
         cell1.typeString = @"Non-Veg";//item.type
+        //[UIImage imageWithData:self.currentListing.image]
         
     }
 
@@ -221,6 +227,16 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.navigationController pushViewController:self.inputViewController animated:YES];
 }
 
+- (IBAction)PublicListingButtonPressed:(id)sender {
+    
+    if(self.publicListingViewController == nil){
+        PublicListingViewController *secondView = [[PublicListingViewController alloc] init];
+        self.publicListingViewController = secondView;
+    }
+    [self.navigationController pushViewController:self.publicListingViewController animated:YES];
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     if(indexPath.section == 0)
@@ -239,7 +255,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.managedObjectContext performBlockAndWait:^{
         [self.managedObjectContext reset];
         NSError *error = nil;
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Listing"];
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"SelfListing"];
         [request setSortDescriptors:[NSArray arrayWithObject:
                                      [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         
