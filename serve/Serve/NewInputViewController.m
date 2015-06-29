@@ -903,7 +903,6 @@ static const BOOL showtitleCheckError = false;
 
 - (BOOL)writeDataToListing {
     
-    
     if(showtitleCheckError && (self.titleInput.text.length == 0 || [self.titleInput.text isEqualToString:titlePlaceholder])) {
         [self showErrorWithTitle:@"Incomplete Info" message:@"Please enter a title for your listing." cancelButtonTitle:@"OK"];
         
@@ -912,6 +911,17 @@ static const BOOL showtitleCheckError = false;
     
     [self.currentListing setTitle:self.titleInput.text];
     [self.currentListing setServeCount:self.numberOfServes];
+    
+    
+    if([self.typeInput.text isEqualToString:@"Vegetarian"])
+    {
+        self.typeInput.text = @"VEG";
+    }
+    else
+    {
+        self.typeInput.text = @"NON-VEG";
+    }
+        
     [self.currentListing setType:self.typeInput.text];
     
     if(self.cuisineInput.text.length == 0 || [self.cuisineInput.text isEqualToString:cuisinePlaceholder]) {

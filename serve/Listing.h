@@ -23,6 +23,7 @@
 @property (nonatomic, retain) NSString * pickUp;
 @property (nonatomic, retain) NSString * phone;
 @property (nonatomic, retain) NSString * objectId;
+@property (nonatomic, retain) NSString * author;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * desc;
 @property (nonatomic, retain) NSString * cuisine;

@@ -8,9 +8,11 @@
 
 #import "ServeSyncEngine.h"
 #import "ServeCoreDataController.h"
+#import "NSManagedObject+JSON.h"
 
 NSString * const kServeSyncEngineInitialCompleteKey = @"ServeSyncEngineInitialSyncCompleted";
 NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngineSyncCompleted";
+//NSString * const kServeUpSyncEngineSyncCompletedNotificationName = @"ServeUpSyncEngineSyncCompleted";
 
 @interface ServeSyncEngine ()
 
@@ -23,6 +25,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
 
 @synthesize registeredClassesToSync = _registeredClassesToSync;
 @synthesize syncInProgress = _syncInProgress;
+//@synthesize upSyncInProgress = _upSyncInProgress;
 @synthesize dateFormatter = _dateFormatter;
 
 + (ServeSyncEngine *)sharedEngine {
@@ -89,6 +92,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     [record setValue:[NSNumber numberWithInt:ServeObjectSynced] forKey:@"syncStatus"];
 }
 
+
 - (void)updateManagedObject:(NSManagedObject *)managedObject withRecord:(NSDictionary *)record {
     [record enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [self setValue:obj forKey:key forManagedObject:managedObject];
@@ -128,8 +132,13 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     __block NSArray *results = nil;
     NSManagedObjectContext *managedObjectContext = [[ServeCoreDataController sharedInstance] backgroundManagedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:className];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"syncStatus = %d", syncStatus];
-    [fetchRequest setPredicate:predicate];
+    NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"syncStatus = %d", syncStatus];
+    NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"author = %@", @"akhil"];
+    
+    NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:predicate1, predicate2,nil]];
+    
+    [fetchRequest setPredicate:compoundPredicate];
+
     [managedObjectContext performBlockAndWait:^{
         NSError *error = nil;
         results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
@@ -160,7 +169,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     return results;
 }
 
-- (void)downloadDataForRegisteredObjects:(BOOL)useUpdatedAtDate {
+- (void)downloadDataForRegisteredObjects:(BOOL)useUpdatedAtDate toDeleteLocalRecords:(BOOL)toDelete{
     NSMutableArray *operations = [NSMutableArray array];
     
     for (NSString *className in self.registeredClassesToSync) {
@@ -189,17 +198,24 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     [[ServeAFParseAPIClient sharedClient] enqueueBatchOfHTTPRequestOperations:operations progressBlock:^(NSUInteger numberOfCompletedOperations, NSUInteger totalNumberOfOperations) {
         
     } completionBlock:^(NSArray *operations) {
-        [self processJSONDataRecordsIntoCoreData];
-        NSLog(@"All operations completed");
+        if (!toDelete) {
+            [self processJSONDataRecordsIntoCoreData];
+        } else {
+            [self processJSONDataRecordsForDeletion];
+        }
     }];
+    
 }
 
+//only wen downloading public listings
 - (void)processJSONDataRecordsIntoCoreData {
     NSManagedObjectContext *managedObjectContext = [[ServeCoreDataController sharedInstance] backgroundManagedObjectContext];
     //
     // Iterate over all registered classes to sync
     //
-    for (NSString *className in self.registeredClassesToSync) {
+    for (NSString *className in self.registeredClassesToSync)
+    //NSString* className = @"Listing";
+    {
         if (![self initialSyncComplete]) { // import all downloaded data to Core Data for initial sync
             //
             // If this is the initial sync then the logic is pretty simple, you will fetch the JSON data from disk
@@ -273,17 +289,118 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
         // syncInProgress flag to NO
         //
         [self deleteJSONDataRecordsForClassWithName:className];
-        [self executeSyncCompletedOperations];
     }
+
+    [self downloadDataForRegisteredObjects:NO toDeleteLocalRecords:YES];
 }
 
+- (void)processJSONDataRecordsForDeletion {
+    NSManagedObjectContext *managedObjectContext = [[ServeCoreDataController sharedInstance] backgroundManagedObjectContext];
+    //
+    // Iterate over all registered classes to sync
+    //
+    for (NSString *className in self.registeredClassesToSync) {
+        //
+        // Retrieve the JSON response records from disk
+        //
+        NSArray *JSONRecords = [self JSONDataRecordsForClass:className sortedByKey:@"objectId"];
+        if ([JSONRecords count] > 0) {
+            //
+            // If there are any records fetch all locally stored records that are NOT in the list of downloaded records
+            //
+            NSArray *storedRecords = [self
+                                      managedObjectsForClass:className
+                                      sortedByKey:@"objectId"
+                                      usingArrayOfIds:[JSONRecords valueForKey:@"objectId"]
+                                      inArrayOfIds:NO];
+            
+            //
+            // Schedule the NSManagedObject for deletion and save the context
+            //
+            [managedObjectContext performBlockAndWait:^{
+                for (NSManagedObject *managedObject in storedRecords) {
+                    [managedObjectContext deleteObject:managedObject];
+                }
+                NSError *error = nil;
+                BOOL saved = [managedObjectContext save:&error];
+                if (!saved) {
+                    NSLog(@"Unable to save context after deleting records for class %@ because %@", className, error);
+                }
+            }];
+        }
+        
+        //
+        // Delete all JSON Record response files to clean up after yourself
+        //
+        [self deleteJSONDataRecordsForClassWithName:className];
+    }
+    
+    //
+    // Execute the sync completion operations as this is now the final step of the sync process
+    //
+    //[self postLocalObjectsToServer];
+    
+    [self executeSyncCompletedOperations];
+}
+
+- (void)postLocalObjectsToServer {
+    
+    NSMutableArray *operations = [NSMutableArray array];
+    for (NSString *className in self.registeredClassesToSync) {
+        NSArray *objectsToCreate = [self managedObjectsForClass:className withSyncStatus:ServeObjectCreated];
+        for (NSManagedObject *objectToCreate in objectsToCreate) {
+            NSDictionary *jsonString = [objectToCreate JSONToCreateObjectOnServer];
+            NSMutableURLRequest *request = [[ServeAFParseAPIClient sharedClient] POSTRequestForClass:className parameters:jsonString];
+            
+            AFHTTPRequestOperation *operation = [[ServeAFParseAPIClient sharedClient] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"Success creation: %@", responseObject);
+                NSDictionary *responseDictionary = responseObject;
+                NSDate *createdDate = [self dateUsingStringFromAPI:[responseDictionary valueForKey:@"createdAt"]];
+                [objectToCreate setValue:createdDate forKey:@"createdAt"];
+                [objectToCreate setValue:[responseDictionary valueForKey:@"objectId"] forKey:@"objectId"];
+                [objectToCreate setValue:[NSNumber numberWithInt:ServeObjectSynced] forKey:@"syncStatus"];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Failed creation: %@", error);
+            }];
+            [operations addObject:operation];
+        }
+    }
+    
+    [[ServeAFParseAPIClient sharedClient] enqueueBatchOfHTTPRequestOperations:operations progressBlock:^(NSUInteger numberOfCompletedOperations, NSUInteger totalNumberOfOperations) {
+        NSLog(@"Completed %d of %d create operations", numberOfCompletedOperations, totalNumberOfOperations);
+    } completionBlock:^(NSArray *operations) {
+        if ([operations count] > 0) {
+            NSLog(@"Creation of objects on server compelete, updated objects in context: %@", [[[ServeCoreDataController sharedInstance] backgroundManagedObjectContext] updatedObjects]);
+            [[ServeCoreDataController sharedInstance] saveBackgroundContext];
+            NSLog(@"SBC After call creation");
+            
+        }
+        
+        //[self deleteObjectsOnServer];
+        [self executeSyncCompletedOperations];
+    }];
+}
+
+
 - (void)startSync {
-    if (!self.syncInProgress) {
-        [self willChangeValueForKey:@"syncInProgress"];
+//    if (!self.syncInProgress) {
+//        [self willChangeValueForKey:@"syncInProgress"];
+//        _syncInProgress = YES;
+//        [self didChangeValueForKey:@"syncInProgress"];
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+//            [self downloadDataForRegisteredObjects:YES toDeleteLocalRecords:NO];
+//        });
+//    }
+}
+
+- (void)startUpSync {
+    if (!self.syncInProgress)
+    {
+        [self willChangeValueForKey:@"SyncInProgress"];
         _syncInProgress = YES;
-        [self didChangeValueForKey:@"syncInProgress"];
+        [self didChangeValueForKey:@"SyncInProgress"];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [self downloadDataForRegisteredObjects:YES];
+            [self postLocalObjectsToServer];
         });
     }
 }
@@ -300,6 +417,13 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
 - (void)executeSyncCompletedOperations {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setInitialSyncCompleted];
+        NSError *error = nil;
+        [[ServeCoreDataController sharedInstance] saveBackgroundContext];
+        if (error) {
+            NSLog(@"Error saving background context after creating objects on server: %@", error);
+        }
+        
+        [[ServeCoreDataController sharedInstance] saveMasterContext];
         [[NSNotificationCenter defaultCenter]
          postNotificationName:kServeSyncEngineSyncCompletedNotificationName
          object:nil];

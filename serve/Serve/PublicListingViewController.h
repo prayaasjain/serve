@@ -10,7 +10,6 @@
 
 @interface PublicListingViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 
-@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (strong, nonatomic) IBOutlet UISearchDisplayController *searchBarController;
+@property (nonatomic, strong) NSArray *serverItems;
 
 @end

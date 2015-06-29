@@ -11,9 +11,11 @@
 #import "InputViewController.h"
 #import "AddListingCell.h"
 #import "ServeCoreDataController.h"
-#import "SelfListing.h"
+#import "Listing.h"
 #import "SelfListingCell.h"
 #import "PublicListingViewController.h"
+#import "ServeSyncEngine.h"
+
 
 //const CGFloat iconWidth = 25.0f;
 //const CGFloat iconHeight = 25.0f;
@@ -25,19 +27,21 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 @property (nonatomic ,strong) UITableView* homeTable;
 
 - (IBAction)addNewListingButtonPressed:(id)sender;
+- (IBAction)refreshButtonTouched:(id)sender;
 
 @property (strong, nonatomic) NewInputViewController *inputViewController;
 @property (strong, nonatomic) PublicListingViewController *publicListingViewController;
 
 //coredata
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) NSManagedObject *listingItem;
 @property (strong, nonatomic) NSString *entityName;
-@property (nonatomic, strong) NSArray *dates;
+@property (nonatomic, strong) NSArray *selfListings;
 
 @end
 
 @implementation MyListingsViewController
+
+@synthesize selfListings;
 
 - (void)viewDidLoad {
     
@@ -46,6 +50,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self setUpNavigationController];
     
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
+    [self loadRecordsFromCoreData];
  
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 500, 640)
                                                   style:UITableViewStylePlain];
@@ -60,16 +65,22 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     self.homeTable.tableFooterView = [UIView new];
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self loadRecordsFromCoreData];
+    
 
 }
 
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
-    [self loadRecordsFromCoreData];
-    [self.homeTable reloadData];
+    [self checkSyncStatus];
     
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"ServeSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [self loadRecordsFromCoreData];
+        [self.homeTable reloadData];
+    }];
+    [[ServeSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
 }
+
 
 - (void) setUpNavigationController {
     
@@ -108,7 +119,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     UIImage *messageImage = [UIImage imageNamed:@"message1.png"];
     UIButton *messageButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [messageButton setImage:messageImage forState:UIControlStateNormal];
-    [messageButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+    [messageButton addTarget:self action:@selector(refreshButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [messageButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
     UIBarButtonItem *messageBarButton = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
     /////
@@ -123,7 +134,6 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     UIBarButtonItem *myListBarButton = [[UIBarButtonItem alloc] initWithCustomView:myListButton];
     /////
     
-
     NSArray *items = [NSArray arrayWithObjects:myListBarButton,itemSpace, addBarButton,itemSpace, messageBarButton,itemSpace, userBarButton, nil];
     self.toolbarItems = items;
     
@@ -142,7 +152,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
         }
     
     else{
-        return [self.dates count];
+        return [self.selfListings count];
     }
     
 }
@@ -162,9 +172,9 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
   
     SelfListingCell *cell1 = (SelfListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
 
-    if(self.dates.count)
+    if(self.selfListings.count)
     {
-        SelfListing *item  = [self.dates objectAtIndex:indexPath.row];
+        Listing *item  = [self.selfListings objectAtIndex:indexPath.row];
         
         if (cell1 == nil) {
             cell1 = [[SelfListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier];
@@ -172,12 +182,12 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
         cell1.selectionStyle = UITableViewCellSelectionStyleNone;
         cell1.titleLabel.text = item.name;
-        cell1.serveCount = item.serveCount;
+        //cell1.serveCount = item.serveCount;
+        cell1.serveCount = item.syncStatus;
         //cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];//item.image
-        
-        cell1.imageView.image = [UIImage imageWithData:item.image];//item.image
-        cell1.typeString = @"Non-Veg";//item.type
-        //[UIImage imageWithData:self.currentListing.image]
+        cell1.imageView.image = [UIImage imageWithData:item.image];
+        cell1.typeString = item.type;
+
         
     }
 
@@ -191,20 +201,6 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-//        if(section==0)
-//        {
-//            return @"ITEM DETAILS";
-//        }
-    
-//        if(section==1)
-//        {
-//            return @"YOUR LISTINGS";
-//        }
-    
-    return nil;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -219,16 +215,13 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 }
 
 - (IBAction)addNewListingButtonPressed:(id)sender {
-    
-    if(self.inputViewController == nil){
-        NewInputViewController *secondView = [[NewInputViewController alloc] init];
-        self.inputViewController = secondView;
-    }
+    NewInputViewController *secondView = [[NewInputViewController alloc] init];
+    self.inputViewController = secondView;
     [self.navigationController pushViewController:self.inputViewController animated:YES];
 }
 
+
 - (IBAction)PublicListingButtonPressed:(id)sender {
-    
     if(self.publicListingViewController == nil){
         PublicListingViewController *secondView = [[PublicListingViewController alloc] init];
         self.publicListingViewController = secondView;
@@ -255,11 +248,15 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.managedObjectContext performBlockAndWait:^{
         [self.managedObjectContext reset];
         NSError *error = nil;
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"SelfListing"];
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Listing"];
+        
         [request setSortDescriptors:[NSArray arrayWithObject:
                                      [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         
-        self.dates = [self.managedObjectContext executeFetchRequest:request error:&error];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"author = %@", @"akhil"];
+        [request setPredicate:predicate];
+        
+        self.selfListings = [self.managedObjectContext executeFetchRequest:request error:&error];
     }];
 }
 
@@ -268,4 +265,44 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     // Dispose of any resources that can be recreated.
 }
 
+- (void)saveAndSyncMethod
+{
+    [[ServeSyncEngine sharedEngine] startUpSync];
+}
+
+
+- (IBAction)refreshButtonTouched:(id)sender {
+    [[ServeSyncEngine sharedEngine] startUpSync];
+}
+
+- (void)checkSyncStatus {
+    if ([[ServeSyncEngine sharedEngine] syncInProgress]) {
+        [self replaceRefreshButtonWithActivityIndicator];
+    } else {
+        [self removeActivityIndicatorFromRefreshButon];
+        [self loadRecordsFromCoreData];
+        [self.homeTable reloadData];
+    }
+}
+
+- (void)replaceRefreshButtonWithActivityIndicator {
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    [activityIndicator setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin)];
+    [activityIndicator startAnimating];
+    UIBarButtonItem *activityItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    self.navigationItem.leftBarButtonItem = activityItem;
+}
+
+- (void)removeActivityIndicatorFromRefreshButon {
+    //self.navigationItem.leftBarButtonItem = nil;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"syncInProgress"]) {
+        [self checkSyncStatus];
+    }
+}
+
 @end
+

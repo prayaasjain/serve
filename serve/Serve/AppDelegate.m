@@ -15,6 +15,7 @@
 #import "ReviewSubmitViewController.h"
 #import "NewInputViewController.h"
 #import "NewPickUpInfoViewController.h"
+#import "PublicListingViewController.h"
 
 #import <GoogleMaps/GoogleMaps.h>
 #import "Listing.h"
@@ -34,8 +35,8 @@
     [GMSServices provideAPIKey:@"AIzaSyDHdTN_gkC_RqUdUQs_CNiaLUK7VDLGbh4"];
     
     //sync
-     [[ServeSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Listing class]];
-    
+    [[ServeSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Listing class]];
+    //[[ServeSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[SelfListing class]];
     
     
     PickUpInfoViewController *pickUpViewController = [[PickUpInfoViewController alloc]init];
@@ -45,6 +46,7 @@
     ReviewSubmitViewController *reviewSubmitViewController = [[ReviewSubmitViewController alloc]init];
     NewInputViewController *newInputViewController = [[NewInputViewController alloc]init];
     NewPickUpInfoViewController *newPickUpinfoViewController = [[NewPickUpInfoViewController alloc]init];
+    //PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
     
 
     //self.window.rootViewController = pickUpViewController;
@@ -54,6 +56,7 @@
     //self.window.rootViewController = reviewSubmitViewController;
     //self.window.rootViewController = newInputViewController;
     //self.window.rootViewController = newPickUpinfoViewController;
+    //self.window.rootViewController = publicListingViewController;
     
     
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:

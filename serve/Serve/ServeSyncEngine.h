@@ -12,16 +12,19 @@
 
 typedef enum {
     ServeObjectSynced = 0,
-    ServeObjectCreated,
-    ServeObjectDeleted,
+    ServeObjectCreated,//1
+    ServeObjectDeleted,//2
 } ServeObjectSyncStatus;
 
 @interface ServeSyncEngine : NSObject
 
 @property (atomic, readonly) BOOL syncInProgress;
+//@property (atomic, readonly) BOOL upSyncInProgress;
 
 + (ServeSyncEngine *)sharedEngine;
 - (void)registerNSManagedObjectClassToSync:(Class)aClass;
 - (void)startSync;
+- (void)startUpSync;
+- (NSString *)dateStringForAPIUsingDate:(NSDate *)date;
 
 @end

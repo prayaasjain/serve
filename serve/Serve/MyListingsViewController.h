@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ReviewSubmitViewController.h"
 
 @interface MyListingsViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 

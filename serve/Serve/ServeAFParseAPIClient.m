@@ -62,4 +62,10 @@ static NSString * const kSDFParseAPIKey = @"TakBT8h7x9x59VevnG6upfDcBNYt2Gr6H1Lz
     return request;
 }
 
+- (NSMutableURLRequest *)POSTRequestForClass:(NSString *)className parameters:(NSDictionary *)parameters {
+    NSMutableURLRequest *request = nil;
+    request = [self requestWithMethod:@"POST" path:[NSString stringWithFormat:@"classes/%@", className] parameters:parameters];
+    return request;
+}
+
 @end

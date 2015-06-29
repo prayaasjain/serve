@@ -7,6 +7,8 @@
 //
 
 #import "Listing.h"
+#import "NSManagedObject+JSON.h"
+#import "ServeSyncEngine.h"
 
 
 @implementation Listing
@@ -18,6 +20,7 @@
 @dynamic deleteFromServer;
 @dynamic zip;
 @dynamic type;
+@dynamic author;
 @dynamic state;
 @dynamic pickUp;
 @dynamic phone;
@@ -32,5 +35,26 @@
 @dynamic latitude;
 @dynamic syncStatus;
 @dynamic serveCount;
+
+
+- (NSDictionary *)JSONToCreateObjectOnServer {
+
+//    if(!self.createdAt)
+//    {
+//        self.createdAt = [NSDate date];
+//    }
+//    NSDictionary *date = [NSDictionary dictionaryWithObjectsAndKeys:
+//                          @"Date", @"__type",
+//                          [[ServeSyncEngine sharedEngine] dateStringForAPIUsingDate:self.createdAt], @"iso" , nil];
+
+    NSDictionary *jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    self.name, @"name",
+                                    self.address1, @"address1",
+                                    self.serveCount, @"serveCount",
+                                    self.author,@"author",
+                                     nil];
+    return jsonDictionary;
+}
+
 
 @end

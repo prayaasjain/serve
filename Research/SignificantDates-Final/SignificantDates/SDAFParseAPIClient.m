@@ -9,9 +9,8 @@
 #import "AFJSONRequestOperation.h"
 
 static NSString * const kSDFParseAPIBaseURLString = @"https://api.parse.com/1/";
-
-static NSString * const kSDFParseAPIApplicationId = @"PNoAVcL1lvrvf02BCIw3FMAYipcyeAOP0l7AwowS";
-static NSString * const kSDFParseAPIKey = @"FZxPnpfsnhfU0H0244QwaZIvrcW2gJts9IQt5ghc";
+static NSString * const kSDFParseAPIApplicationId = @"ZFpCdXKc9QoeUeTzFLtvK9JJ5rZd3CeF6FVzHTfW";
+static NSString * const kSDFParseAPIKey = @"TakBT8h7x9x59VevnG6upfDcBNYt2Gr6H1LzBVfX";
 
 @implementation SDAFParseAPIClient
 

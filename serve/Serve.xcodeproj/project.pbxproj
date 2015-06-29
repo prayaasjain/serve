@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F23110862C98C056B42C67A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7933C95D924B8547364C7637 /* libPods.a */; };
 		2014A1FB1B16D2B800AA5351 /* food1-gray.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1F91B16D2B800AA5351 /* food1-gray.jpg */; };
 		2014A1FC1B16D2B800AA5351 /* camera-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1FA1B16D2B800AA5351 /* camera-2.png */; };
 		201B33051B075890000930F7 /* food1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 201B33041B075890000930F7 /* food1.jpg */; };
@@ -30,11 +31,13 @@
 		2078733D1B3B9AAF00C3C86B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2078733C1B3B9AAF00C3C86B /* CoreGraphics.framework */; };
 		207873411B3B9F2D00C3C86B /* ServeAFParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 207873401B3B9F2D00C3C86B /* ServeAFParseAPIClient.m */; };
 		207873441B3BA50500C3C86B /* ServeSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 207873431B3BA50500C3C86B /* ServeSyncEngine.m */; };
+		20836EA81B3F55D50046FEAC /* PublicListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20836EA61B3F55D50046FEAC /* PublicListingCell.m */; };
+		20836EAB1B3F626E0046FEAC /* PublicListingViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 20836EAA1B3F626E0046FEAC /* PublicListingViewController2.m */; };
+		20836EB41B3FBDC20046FEAC /* NSManagedObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 20836EB31B3FBDC20046FEAC /* NSManagedObject+JSON.m */; };
 		20913C371B1B0B8600EA4A10 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 20913C361B1B0B8600EA4A10 /* edit.png */; };
 		2091910E1B19901B008CCAA9 /* MapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091910D1B19901B008CCAA9 /* MapCell.m */; };
 		2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */; };
 		20A4FD8E1B1C101100B92927 /* chicken.png in Resources */ = {isa = PBXBuildFile; fileRef = 20A4FD8D1B1C101100B92927 /* chicken.png */; };
-		20A5D9C01B3BB07700EA127D /* SelfListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5D9BF1B3BB07700EA127D /* SelfListing.m */; };
 		20A5D9C91B3BB28A00EA127D /* Listing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5D9C81B3BB28A00EA127D /* Listing.m */; };
 		20AFA2311B2523C000635B51 /* SelfListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20AFA2301B2523C000635B51 /* SelfListingCell.m */; };
 		20AFA23D1B2542F200635B51 /* cloud-tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFA23C1B2542F200635B51 /* cloud-tick.png */; };
@@ -43,8 +46,6 @@
 		20AFA2431B254B4A00635B51 /* message1.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFA2421B254B4A00635B51 /* message1.png */; };
 		20AFA2451B254BDA00635B51 /* listing.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFA2441B254BDA00635B51 /* listing.png */; };
 		20AFA2471B254C6400635B51 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFA2461B254C6400635B51 /* plus.png */; };
-		20B5A8C41B15708C00818741 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C31B15708C00818741 /* GoogleMaps.framework */; };
-		20B5A8C61B1570D500818741 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 20B5A8C51B1570D500818741 /* GoogleMaps.bundle */; };
 		20B5A8C81B15710100818741 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C71B15710100818741 /* AVFoundation.framework */; };
 		20B5A8CA1B15710800818741 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8C91B15710800818741 /* CoreData.framework */; };
 		20B5A8CC1B15710F00818741 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8CB1B15710F00818741 /* CoreLocation.framework */; };
@@ -132,14 +133,18 @@
 		207873401B3B9F2D00C3C86B /* ServeAFParseAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeAFParseAPIClient.m; sourceTree = "<group>"; };
 		207873421B3BA50500C3C86B /* ServeSyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeSyncEngine.h; sourceTree = "<group>"; };
 		207873431B3BA50500C3C86B /* ServeSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeSyncEngine.m; sourceTree = "<group>"; };
+		20836EA61B3F55D50046FEAC /* PublicListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicListingCell.m; sourceTree = "<group>"; };
+		20836EA71B3F55D50046FEAC /* PublicListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicListingCell.h; sourceTree = "<group>"; };
+		20836EA91B3F626E0046FEAC /* PublicListingViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicListingViewController2.h; sourceTree = "<group>"; };
+		20836EAA1B3F626E0046FEAC /* PublicListingViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicListingViewController2.m; sourceTree = "<group>"; };
+		20836EB21B3FBDC20046FEAC /* NSManagedObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+JSON.h"; sourceTree = "<group>"; };
+		20836EB31B3FBDC20046FEAC /* NSManagedObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+JSON.m"; sourceTree = "<group>"; };
 		20913C361B1B0B8600EA4A10 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		2091910C1B19901B008CCAA9 /* MapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapCell.h; sourceTree = "<group>"; };
 		2091910D1B19901B008CCAA9 /* MapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapCell.m; sourceTree = "<group>"; };
 		2091911B1B1A4E83008CCAA9 /* GoogleMapApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapApi.h; sourceTree = "<group>"; };
 		2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapApi.m; sourceTree = "<group>"; };
 		20A4FD8D1B1C101100B92927 /* chicken.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chicken.png; sourceTree = "<group>"; };
-		20A5D9BE1B3BB07700EA127D /* SelfListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelfListing.h; path = ../SelfListing.h; sourceTree = "<group>"; };
-		20A5D9BF1B3BB07700EA127D /* SelfListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelfListing.m; path = ../SelfListing.m; sourceTree = "<group>"; };
 		20A5D9C71B3BB28A00EA127D /* Listing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Listing.h; path = ../Listing.h; sourceTree = "<group>"; };
 		20A5D9C81B3BB28A00EA127D /* Listing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Listing.m; path = ../Listing.m; sourceTree = "<group>"; };
 		20AFA22F1B2523C000635B51 /* SelfListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfListingCell.h; sourceTree = "<group>"; };
@@ -150,8 +155,6 @@
 		20AFA2421B254B4A00635B51 /* message1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message1.png; sourceTree = "<group>"; };
 		20AFA2441B254BDA00635B51 /* listing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listing.png; sourceTree = "<group>"; };
 		20AFA2461B254C6400635B51 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
-		20B5A8C31B15708C00818741 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
-		20B5A8C51B1570D500818741 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		20B5A8C71B15710100818741 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		20B5A8C91B15710800818741 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		20B5A8CB1B15710F00818741 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -193,8 +196,11 @@
 		20EF27931B0C24FC0082A828 /* NewInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewInputViewController.m; sourceTree = "<group>"; };
 		20FD2FC71B054D600024D090 /* PickUpInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickUpInfoViewController.h; sourceTree = "<group>"; };
 		20FD2FC81B054D600024D090 /* PickUpInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickUpInfoViewController.m; sourceTree = "<group>"; };
+		7933C95D924B8547364C7637 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B77A8E135CDC66F0C66A6171 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D8130E221B1B9D040081E825 /* ListingNavigationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingNavigationData.h; sourceTree = "<group>"; };
 		D8130E231B1B9D040081E825 /* ListingNavigationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingNavigationData.m; sourceTree = "<group>"; };
+		D963B3DD7D509AEC1A9BF3C0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,7 +223,7 @@
 				20B5A8CC1B15710F00818741 /* CoreLocation.framework in Frameworks */,
 				20B5A8CA1B15710800818741 /* CoreData.framework in Frameworks */,
 				20B5A8C81B15710100818741 /* AVFoundation.framework in Frameworks */,
-				20B5A8C41B15708C00818741 /* GoogleMaps.framework in Frameworks */,
+				0F23110862C98C056B42C67A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +240,8 @@
 		203592181B044A8300850472 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				20836EA91B3F626E0046FEAC /* PublicListingViewController2.h */,
+				20836EAA1B3F626E0046FEAC /* PublicListingViewController2.m */,
 				2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */,
 				2031AE9E1B3CE3890000CF40 /* PublicListingViewController.h */,
 				20DE790B1B082AB000E3F101 /* MyListingsViewController.h */,
@@ -257,6 +265,8 @@
 		203592191B044ADE00850472 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				20836EA61B3F55D50046FEAC /* PublicListingCell.m */,
+				20836EA71B3F55D50046FEAC /* PublicListingCell.h */,
 				20AFA22F1B2523C000635B51 /* SelfListingCell.h */,
 				20AFA2301B2523C000635B51 /* SelfListingCell.m */,
 				202AF3721B1AF12600531369 /* ListingItemDetailCell.h */,
@@ -274,7 +284,6 @@
 		2055FD291B27EF3A00B85F77 /* Thirdparty */ = {
 			isa = PBXGroup;
 			children = (
-				20B5A8BE1B156FB300818741 /* GoogleMaps */,
 				2055FD2A1B27EF4D00B85F77 /* AFNetworking */,
 			);
 			name = Thirdparty;
@@ -311,21 +320,14 @@
 		2078733E1B3B9EC500C3C86B /* Sync */ = {
 			isa = PBXGroup;
 			children = (
+				20836EB21B3FBDC20046FEAC /* NSManagedObject+JSON.h */,
+				20836EB31B3FBDC20046FEAC /* NSManagedObject+JSON.m */,
 				2078733F1B3B9F2D00C3C86B /* ServeAFParseAPIClient.h */,
 				207873401B3B9F2D00C3C86B /* ServeAFParseAPIClient.m */,
 				207873421B3BA50500C3C86B /* ServeSyncEngine.h */,
 				207873431B3BA50500C3C86B /* ServeSyncEngine.m */,
 			);
 			name = Sync;
-			sourceTree = "<group>";
-		};
-		20B5A8BE1B156FB300818741 /* GoogleMaps */ = {
-			isa = PBXGroup;
-			children = (
-				20B5A8C51B1570D500818741 /* GoogleMaps.bundle */,
-				20B5A8C31B15708C00818741 /* GoogleMaps.framework */,
-			);
-			name = GoogleMaps;
 			sourceTree = "<group>";
 		};
 		20B5A8DF1B15719D00818741 /* Frameworks */ = {
@@ -346,6 +348,7 @@
 				20B5A8CB1B15710F00818741 /* CoreLocation.framework */,
 				20B5A8C91B15710800818741 /* CoreData.framework */,
 				20B5A8C71B15710100818741 /* AVFoundation.framework */,
+				7933C95D924B8547364C7637 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -355,8 +358,6 @@
 			children = (
 				20A5D9C71B3BB28A00EA127D /* Listing.h */,
 				20A5D9C81B3BB28A00EA127D /* Listing.m */,
-				20A5D9BE1B3BB07700EA127D /* SelfListing.h */,
-				20A5D9BF1B3BB07700EA127D /* SelfListing.m */,
 				20EE2B151B01502B00F80CAC /* Serve.xcdatamodeld */,
 				20D8E7501B1D4A9100AA5241 /* ServeCoreDataController.h */,
 				20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */,
@@ -371,6 +372,7 @@
 				20EE2B0C1B01502B00F80CAC /* Products */,
 				20EE2B2A1B01502B00F80CAC /* ServeTests */,
 				20B5A8DF1B15719D00818741 /* Frameworks */,
+				E9558C5B82D9227619B5E733 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -455,6 +457,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		E9558C5B82D9227619B5E733 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B77A8E135CDC66F0C66A6171 /* Pods.debug.xcconfig */,
+				D963B3DD7D509AEC1A9BF3C0 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -462,9 +473,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 20EE2B311B01502B00F80CAC /* Build configuration list for PBXNativeTarget "Serve" */;
 			buildPhases = (
+				5EFCC3664C1C3B487C6527A4 /* Check Pods Manifest.lock */,
 				20EE2B071B01502B00F80CAC /* Sources */,
 				20EE2B081B01502B00F80CAC /* Frameworks */,
 				20EE2B091B01502B00F80CAC /* Resources */,
+				FE968C19A9FAF183B83D285B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -540,7 +553,6 @@
 				20A4FD8E1B1C101100B92927 /* chicken.png in Resources */,
 				2014A1FC1B16D2B800AA5351 /* camera-2.png in Resources */,
 				20EE2B1D1B01502B00F80CAC /* Main.storyboard in Resources */,
-				20B5A8C61B1570D500818741 /* GoogleMaps.bundle in Resources */,
 				20AFA2411B254B1000635B51 /* message2.png in Resources */,
 				20913C371B1B0B8600EA4A10 /* edit.png in Resources */,
 				20AFA2451B254BDA00635B51 /* listing.png in Resources */,
@@ -567,6 +579,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5EFCC3664C1C3B487C6527A4 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		FE968C19A9FAF183B83D285B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		20EE2B071B01502B00F80CAC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -574,13 +619,13 @@
 			files = (
 				20FD2FC91B054D600024D090 /* PickUpInfoViewController.m in Sources */,
 				207873391B3B99BE00C3C86B /* UIImageView+AFNetworking.m in Sources */,
-				20A5D9C01B3BB07700EA127D /* SelfListing.m in Sources */,
 				20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */,
 				2055FD3E1B27EF4D00B85F77 /* AFHTTPRequestOperation.m in Sources */,
 				2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */,
 				2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */,
 				207873351B3B99BE00C3C86B /* AFImageRequestOperation.m in Sources */,
 				20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */,
+				20836EAB1B3F626E0046FEAC /* PublicListingViewController2.m in Sources */,
 				207873281B3B973900C3C86B /* AFJSONRequestOperation.m in Sources */,
 				20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */,
 				207873361B3B99BE00C3C86B /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -589,8 +634,10 @@
 				207873411B3B9F2D00C3C86B /* ServeAFParseAPIClient.m in Sources */,
 				D8130E241B1B9D040081E825 /* ListingNavigationData.m in Sources */,
 				2031AE9F1B3CE3890000CF40 /* PublicListingViewController.m in Sources */,
+				20836EA81B3F55D50046FEAC /* PublicListingCell.m in Sources */,
 				207873381B3B99BE00C3C86B /* AFXMLRequestOperation.m in Sources */,
 				20AFA2311B2523C000635B51 /* SelfListingCell.m in Sources */,
+				20836EB41B3FBDC20046FEAC /* NSManagedObject+JSON.m in Sources */,
 				2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */,
 				20A5D9C91B3BB28A00EA127D /* Listing.m in Sources */,
 				2055FD431B27EF4D00B85F77 /* AFURLConnectionOperation.m in Sources */,
@@ -731,6 +778,7 @@
 		};
 		20EE2B321B01502B00F80CAC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B77A8E135CDC66F0C66A6171 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -747,6 +795,7 @@
 		};
 		20EE2B331B01502B00F80CAC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D963B3DD7D509AEC1A9BF3C0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (

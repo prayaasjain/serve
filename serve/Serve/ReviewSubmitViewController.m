@@ -10,6 +10,8 @@
 #import "MapCell.h"
 #import "ListingItemDetailCell.h"
 #import "ServeCoreDataController.h"
+#import "ServeSyncEngine.h"
+#import "MyListingsViewController.h"
 
 const CGFloat reviewProgressButtonSize = 19.0f;
 const CGFloat reviewProgressButtonY = 365.0f;
@@ -42,6 +44,11 @@ const CGFloat reviewDeleteButtonTag = 1;
 
 @implementation ReviewSubmitViewController
 
+//@synthesize ssdelegate;
+//@synthesize upSyncCompletionBlock;
+
+@synthesize listingItem;
+
 GMSMapView *mapView_;
 
 - (id)initWithListing:(ListingNavigationData *)_listing {
@@ -62,7 +69,7 @@ GMSMapView *mapView_;
     [super viewDidLoad];
     
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
-    self.listingItem = [NSEntityDescription insertNewObjectForEntityForName:@"SelfListing" inManagedObjectContext:self.managedObjectContext];
+    self.listingItem = [NSEntityDescription insertNewObjectForEntityForName:@"Listing" inManagedObjectContext:self.managedObjectContext];
     
     [self setUpActionSheets];
     [self setUpNavigationController];
@@ -235,6 +242,8 @@ GMSMapView *mapView_;
 
 - (IBAction)submitButtonPressed:(id)sender {
     
+    //[self setSsdelegate:self.view.window.rootViewController];
+    
     //save to core data
     [self.listingItem setValue:self.currentListing.title forKey:@"name"];
     [self.listingItem setValue:self.currentListing.serveCount forKey:@"serveCount"];
@@ -250,7 +259,14 @@ GMSMapView *mapView_;
     [self.listingItem setValue:self.currentListing.image forKey:@"image"];
     [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.latitude]forKey:@"latitude"];
     [self.listingItem setValue:[NSNumber numberWithInt:self.currentListing.locationCenter.longitude]forKey:@"longitude"];
+    [self.listingItem setValue:[NSNumber numberWithInt:ServeObjectCreated] forKey:@"syncStatus"];
+    [self.listingItem setValue:@"akhil" forKey:@"author"];
+
+    NSUUID  *UUID = [NSUUID UUID];
+    NSString* stringUUID = [UUID UUIDString];
     
+    [self.listingItem setValue:stringUUID forKey:@"objectId"];
+
     [self.managedObjectContext performBlockAndWait:^
     {
         NSError *error = nil;
@@ -263,8 +279,13 @@ GMSMapView *mapView_;
     }
      ];
     
+    MyListingsViewController* rvc = (MyListingsViewController*)(self.navigationController.viewControllers[0]);
+    self.ssdelegate = rvc;
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
-}
+
+    [self.ssdelegate saveAndSyncMethod];
+   }
 
 - (void) setUpActionSheets {
     
