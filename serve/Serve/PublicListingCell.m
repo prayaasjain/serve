@@ -56,6 +56,7 @@
         [self.serveIcon addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
 
         self.imageView = [[UIImageView alloc]init];
+        self.imageView.layer.cornerRadius = 5;
         
         [self addSubview:self.imageView];
         [self addSubview:self.titleLabel];
@@ -81,7 +82,8 @@
         self.availablityLabel.frame = CGRectMake(self.contentView.frame.size.width/3+15,75,300, 30);
 
     
-        self.imageView.frame= CGRectMake(0,0,self.contentView.frame.size.width/3,self.contentView.frame.size.height);
+        self.imageView.frame= CGRectMake(5,5,self.contentView.frame.size.width/3,self.contentView.frame.size.height-15);
+    
     
         [self.serveIcon setFrame:CGRectMake(340, 30, 128.0/9, 99.0/9)];
         self.serveCountLabel.frame = CGRectMake(355, 30, 128.0/9, 99.0/9);

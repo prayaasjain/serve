@@ -131,7 +131,14 @@ NSString * const kSDSyncEngineSyncCompletedNotificationName = @"SDSyncEngineSync
         }];
         
         [operations addObject:operation];
+        
+    
     }
+    
+
+    
+    
+    
     
     [[SDAFParseAPIClient sharedClient] enqueueBatchOfHTTPRequestOperations:operations progressBlock:^(NSUInteger numberOfCompletedOperations, NSUInteger totalNumberOfOperations) {
         

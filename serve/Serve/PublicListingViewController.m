@@ -45,6 +45,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
     
+    //NSLog(@"Came from viewdidload");
     [self loadRecordsFromCoreData];
 
     [self setUpNavigationController];
@@ -78,39 +79,27 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     
 }
 
-//- (void)viewDidDisappear:(BOOL)animated {
-//    [super viewDidDisappear:animated];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ServeSyncEngineSyncCompleted" object:nil];
-//    [[ServeSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
-//}
-
 - (void)refresh:(UIRefreshControl *)refreshControl {
-    // Do your job, when done:
-    [[ServeSyncEngine sharedEngine] startUpSync];
-    //[refreshControl endRefreshing];
+    [[ServeSyncEngine sharedEngine] startSync];
 }
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    //[self loadRecordsFromCoreData];
-//    [self.homeTable reloadData];
-//    [super viewWillAppear: animated];
-//}
-
 - (void)viewDidAppear:(BOOL)animated {
-    
     [super viewDidAppear:animated];
-    //[self checkSyncStatus];
-//    [
-//     
-//     [NSNotificationCenter defaultCenter] addObserverForName:@"ServeSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
-//        [self loadRecordsFromCoreData];
-//        [self.homeTable reloadData];
-//    }];
-//    [[ServeSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [self checkSyncStatus];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"ServeSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        //NSLog(@"Came from viewdidappear");
+        [self loadRecordsFromCoreData];
+        [self.homeTable reloadData];
+    }];
+    [[ServeSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
+}
 
-    //[self loadRecordsFromCoreData];
-//    [self.homeTable reloadData];
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ServeSyncEngineSyncCompleted" object:nil];
+    [[ServeSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -158,7 +147,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     [button setTitle:@"Map" forState:UIControlStateNormal];
     [button.titleLabel setTextColor:[UIColor whiteColor]];
     [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [button addTarget:self action:@selector(switchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *flipBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -169,7 +158,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     [button2 setTitle:@"Filter" forState:UIControlStateNormal];
     [button2.titleLabel setTextColor:[UIColor whiteColor]];
     [button2.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [button2 addTarget:self action:@selector(switchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [button2 addTarget:self action:@selector(refreshButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.filterBarButton = [[UIBarButtonItem alloc] initWithCustomView:button2];
 
     self.navigationItem.titleView = self.searchController.searchBar;
@@ -247,7 +236,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    NSLog(@"Count : %lu",(unsigned long)[self.serverItems count]);
+    //NSLog(@"Count : %lu",(unsigned long)[self.serverItems count]);
     return [self.serverItems count];
 }
 
@@ -290,6 +279,8 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         [request setPredicate:predicate];
         
         self.serverItems = [self.managedObjectContext executeFetchRequest:request error:&error];
+        
+        //NSLog(@"Serve items count = %lu",(unsigned long)[self.serverItems count]);
     }];
 }
 
@@ -298,13 +289,22 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     // Dispose of any resources that can be recreated.
 }
 
-//- (void)checkSyncStatus {
-//    if ([[ServeSyncEngine sharedEngine] syncInProgress]) {
-//        [self replaceRefreshButtonWithActivityIndicator];
-//    } else {
-//        [self removeActivityIndicatorFromRefreshButon];
-//    }
-//}
+- (IBAction)refreshButtonTouched:(id)sender {
+    [self loadRecordsFromCoreData];
+    [self.homeTable reloadData];
+}
+
+- (void)checkSyncStatus {
+    if ([[ServeSyncEngine sharedEngine] syncInProgress]) {
+        //[self replaceRefreshButtonWithActivityIndicator];
+    } else {
+        //[self removeActivityIndicatorFromRefreshButon];
+        
+        //NSLog(@"Came from checkSyncStatus");
+        [self loadRecordsFromCoreData];
+        [self.homeTable reloadData];
+    }
+}
 
 - (void)replaceRefreshButtonWithActivityIndicator {
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
@@ -316,14 +316,16 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 
 - (void)removeActivityIndicatorFromRefreshButon {
     self.navigationItem.leftBarButtonItem = self.filterBarButton;
+
 }
 
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-//{
-//    if ([keyPath isEqualToString:@"syncInProgress"]) {
-//        [self checkSyncStatus];
-//    }
-//}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"syncInProgress"]) {
+        [self checkSyncStatus];
+    }
+}
+
 
 
 //- (void)initializePins

@@ -294,15 +294,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Serve/ServeSyncEngine.m"
-            timestampString = "457247623.594552"
+            timestampString = "457418868.398087"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
             landmarkName = "-writeJSONResponse:toDiskForClassWithName:"
             landmarkType = "5">
          </BreakpointContent>
@@ -314,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Serve/PublicListingViewController.m"
-            timestampString = "457216806.107542"
+            timestampString = "457335712.493571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
             landmarkName = "-setUpNavigationController"
             landmarkType = "5">
          </BreakpointContent>

@@ -169,58 +169,64 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     return results;
 }
 
-- (void)downloadDataForRegisteredObjects:(BOOL)useUpdatedAtDate toDeleteLocalRecords:(BOOL)toDelete{
+- (void)downloadDataForRegisteredObjects:(BOOL)useUpdatedAtDate toDeleteLocalRecords:(BOOL)toDelete {
     NSMutableArray *operations = [NSMutableArray array];
+    
+    //dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
     for (NSString *className in self.registeredClassesToSync) {
         NSDate *mostRecentUpdatedDate = nil;
         if (useUpdatedAtDate) {
+            NSLog(@"YES use mostupdatedDate ");
             mostRecentUpdatedDate = [self mostRecentUpdatedAtDateForEntityWithName:className];
+            NSLog(@"MostRecentUpdated %@",mostRecentUpdatedDate);
         }
         NSMutableURLRequest *request = [[ServeAFParseAPIClient sharedClient]
                                         GETRequestForAllRecordsOfClass:className
                                         updatedAfterDate:mostRecentUpdatedDate];
+        
         AFHTTPRequestOperation *operation = [[ServeAFParseAPIClient sharedClient] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if ([responseObject isKindOfClass:[NSDictionary class]]) {
                 
-                NSLog(@"Response for %@: %@", className, responseObject);
                 [self writeJSONResponse:responseObject toDiskForClassWithName:className];
-                NSLog(@"DONE WRITING TO DISK");
-                
+                NSLog(@"Response (D) : %@",responseObject);
+                NSLog(@"Done writing to disk");
+                //dispatch_semaphore_signal(semaphore);
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Request for class %@ failed with error: %@", className, error);
+            //dispatch_semaphore_signal(semaphore);
         }];
         
         [operations addObject:operation];
+        
+        //dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        
     }
+    
     
     [[ServeAFParseAPIClient sharedClient] enqueueBatchOfHTTPRequestOperations:operations progressBlock:^(NSUInteger numberOfCompletedOperations, NSUInteger totalNumberOfOperations) {
         
     } completionBlock:^(NSArray *operations) {
+        
         if (!toDelete) {
+             NSLog(@"!Delete");
             [self processJSONDataRecordsIntoCoreData];
         } else {
             [self processJSONDataRecordsForDeletion];
         }
     }];
-    
 }
 
-//only wen downloading public listings
+
 - (void)processJSONDataRecordsIntoCoreData {
     NSManagedObjectContext *managedObjectContext = [[ServeCoreDataController sharedInstance] backgroundManagedObjectContext];
     //
     // Iterate over all registered classes to sync
     //
     for (NSString *className in self.registeredClassesToSync)
-    //NSString* className = @"Listing";
     {
-        if (![self initialSyncComplete]) { // import all downloaded data to Core Data for initial sync
-            //
-            // If this is the initial sync then the logic is pretty simple, you will fetch the JSON data from disk
-            // for the class of the current iteration and create new NSManagedObjects for each record
-            //
+        if (![self initialSyncComplete]) {
             NSDictionary *JSONDictionary = [self JSONDictionaryForClassWithName:className];
             NSArray *records = [JSONDictionary objectForKey:@"results"];
             for (NSDictionary *record in records) {
@@ -255,40 +261,25 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
                     }
                     
                     if ([[storedManagedObject valueForKey:@"objectId"] isEqualToString:[record valueForKey:@"objectId"]]) {
-                        //
-                        // Do a quick spot check to validate the objectIds in fact do match, if they do update the stored
-                        // object with the values received from the remote service
-                        //
                         [self updateManagedObject:[storedRecords objectAtIndex:currentIndex] withRecord:record];
                     } else {
-                        //
-                        // Otherwise you have a new object coming in from your remote service so create a new
-                        // NSManagedObject to represent this remote object locally
-                        //
+             
                         [self newManagedObjectWithClassName:className forRecord:record];
                     }
                     currentIndex++;
                 }
             }
         }
-        //
-        // Once all NSManagedObjects are created in your context you can save the context to persist the objects
-        // to your persistent store. In this case though you used an NSManagedObjectContext who has a parent context
-        // so all changes will be pushed to the parent context
-        //
+        
         [managedObjectContext performBlockAndWait:^{
             NSError *error = nil;
             if (![managedObjectContext save:&error]) {
                 NSLog(@"Unable to save context for class %@", className);
             }
         }];
-        
-        //
-        // You are now done with the downloaded JSON responses so you can delete them to clean up after yourself,
-        // then call your -executeSyncCompletedOperations to save off your master context and set the
-        // syncInProgress flag to NO
-        //
+
         [self deleteJSONDataRecordsForClassWithName:className];
+
     }
 
     [self downloadDataForRegisteredObjects:NO toDeleteLocalRecords:YES];
@@ -332,14 +323,10 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
         //
         // Delete all JSON Record response files to clean up after yourself
         //
+        NSLog(@"from here1");
         [self deleteJSONDataRecordsForClassWithName:className];
     }
-    
-    //
-    // Execute the sync completion operations as this is now the final step of the sync process
-    //
-    //[self postLocalObjectsToServer];
-    
+
     [self executeSyncCompletedOperations];
 }
 
@@ -383,14 +370,14 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
 
 
 - (void)startSync {
-//    if (!self.syncInProgress) {
-//        [self willChangeValueForKey:@"syncInProgress"];
-//        _syncInProgress = YES;
-//        [self didChangeValueForKey:@"syncInProgress"];
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//            [self downloadDataForRegisteredObjects:YES toDeleteLocalRecords:NO];
-//        });
-//    }
+    if (!self.syncInProgress) {
+        [self willChangeValueForKey:@"syncInProgress"];
+        _syncInProgress = YES;
+        [self didChangeValueForKey:@"syncInProgress"];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [self downloadDataForRegisteredObjects:YES toDeleteLocalRecords:NO];
+        });
+    }
 }
 
 - (void)startUpSync {
@@ -424,6 +411,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
         }
         
         [[ServeCoreDataController sharedInstance] saveMasterContext];
+        
         [[NSNotificationCenter defaultCenter]
          postNotificationName:kServeSyncEngineSyncCompletedNotificationName
          object:nil];
@@ -431,6 +419,8 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
         _syncInProgress = NO;
         [self didChangeValueForKey:@"syncInProgress"];
     });
+    
+    NSLog(@"Sync complete operation message");
 }
 
 
@@ -525,11 +515,13 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
 }
 
 - (NSDictionary *)JSONDictionaryForClassWithName:(NSString *)className {
+    NSLog(@"at JSONDictionaryForClassWithName" );
     NSURL *fileURL = [NSURL URLWithString:className relativeToURL:[self JSONDataRecordsDirectory]];
     return [NSDictionary dictionaryWithContentsOfURL:fileURL];
 }
 
 - (NSArray *)JSONDataRecordsForClass:(NSString *)className sortedByKey:(NSString *)key {
+    NSLog(@"at JSONDataRecordsForClass" );
     NSDictionary *JSONDictionary = [self JSONDictionaryForClassWithName:className];
     NSArray *records = [JSONDictionary objectForKey:@"results"];
     return [records sortedArrayUsingDescriptors:[NSArray arrayWithObject:
