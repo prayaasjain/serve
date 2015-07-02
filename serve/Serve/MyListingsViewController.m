@@ -185,7 +185,17 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
         //cell1.serveCount = item.serveCount;
         cell1.serveCount = item.syncStatus;
         //cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];//item.image
-        cell1.imageView.image = [UIImage imageWithData:item.image];
+        
+        if(item.image)
+        {
+            cell1.imageView.image = [UIImage imageWithData:item.image];
+        }
+        else
+        {
+            cell1.imageView.image = [UIImage imageNamed:@"no-image.png"];
+        }
+        
+    
         cell1.typeString = item.type;
 
         

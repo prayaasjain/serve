@@ -21,6 +21,8 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)switchButtonPressed:(id)sender;
+- (IBAction)searchCancelButtonPressed:(id)sender;
+
 
 //coredata
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
@@ -29,7 +31,10 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 @property (nonatomic, strong) UIView *listView;
 @property (nonatomic, strong) UIView *mapView;
 @property (nonatomic, strong) UIBarButtonItem *filterBarButton;
-@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) UIBarButtonItem *flipViewBarButton;
+
+@property (strong, nonatomic) UISearchDisplayController *searchController;
+@property (strong, nonatomic) UISearchBar *searchBar;
 
 @end
 
@@ -46,9 +51,9 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
     
     //NSLog(@"Came from viewdidload");
-    [self loadRecordsFromCoreData];
+    [self loadRecordsFromCoreDataWithSearchString:nil];
 
-    [self setUpNavigationController];
+
     
     //setting up list view
     self.listMode = YES;
@@ -77,7 +82,197 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     //[self.homeTable addSubview:refresh];
      //self.view = self.listView;
     
+    [self configureSearch];
+    
+    [self setUpNavigationController];
+    
+    //  self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 160, 44)];
+    //    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    //    self.searchController.delegate = self;
+    //    self.searchController.searchResultsDataSource = self;
+    
+    //self.navigationItem.titleView = self.searchBar;
+    //self.navigationItem.titleView = self.searchBar;
+    
+    
+//    self.navigationItem.leftBarButtonItem = self.filterBarButton;
+//    self.navigationItem.rightBarButtonItem = flipBarButton;
+
 }
+
+- (void)configureSearch {
+    
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(80, 0, 160, 44)];
+    
+    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar
+                                                              contentsController:self];
+    self.searchController.delegate = self;
+    self.searchController.searchResultsDataSource = self;
+    self.searchController.searchResultsDelegate = self;
+    self.searchController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+//    UINib *cellNib = [UINib nibWithNibName:NSStringFromClass([SwipeCell class]) bundle:nil];
+   
+//    [self.searchController.searchResultsTableView registerNib:cellNib forCellReuseIdentifier:WTCellIdentifier];
+//    [self.searchController.searchResultsTableView registerClass:[WTTaskListTableSectionHeaderView class] forHeaderFooterViewReuseIdentifier:WTSectionHeaderIndentifier];
+    
+    self.searchBar.layer.borderWidth = 0;
+    
+
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setBackgroundColor:[UIColor blackColor]];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
+    
+//    CGRect rect = self.searchBar.frame;
+//    UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(0, rect.size.height-1,rect.size.width, 1)];
+//    topLineView.backgroundColor = [UIColor whiteColor];
+//    UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0,rect.size.width, 1)];
+//    bottomLineView.backgroundColor = [UIColor whiteColor];
+//    [self.searchBar addSubview:topLineView];
+//    [self.searchBar addSubview:bottomLineView];
+    
+    self.searchBar.delegate = self;
+    //self.searchBar.barTintColor = [UIColor yellowColor];
+    //self.searchBar.barStyle = UIBarStyleBlack;
+    
+    
+    [self.searchBar setReturnKeyType:UIReturnKeySearch];
+    [self.searchBar setKeyboardAppearance:UIKeyboardAppearanceDark];
+    
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f,
+                                                                     0.0f,
+                                                                     self.view.window.frame.size.width,
+                                                                     44.0f)];
+    
+    toolBar.items =   @[
+                        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                      target:nil
+                                                                      action:nil],
+                        
+                        [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+                                                         style:UIBarButtonItemStyleDone
+                                                        target:self
+                                                        action:@selector(searchCancelButtonPressed:)]
+                        ,
+                        ];
+    
+    toolBar.backgroundColor = [UIColor blackColor];
+    
+    toolBar.alpha = 0.5;
+    toolBar.tintColor = [UIColor blackColor];
+    toolBar.translucent = YES;
+    
+    self.searchBar.inputAccessoryView = toolBar;
+
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(280, 0, 50, 28);
+    button.layer.borderColor = [UIColor whiteColor].CGColor;
+    button.layer.borderWidth = .2f;
+    button.layer.cornerRadius = 5;
+    [button setTitle:@"Map" forState:UIControlStateNormal];
+    [button.titleLabel setTextColor:[UIColor whiteColor]];
+    [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
+    [button addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
+    self.flipViewBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    button2.frame = CGRectMake(0, 0, 50, 28);
+    button2.layer.borderColor = [UIColor whiteColor].CGColor;
+    button2.layer.borderWidth = .2f;
+    button2.layer.cornerRadius = 5;
+    [button2 setTitle:@"Filter" forState:UIControlStateNormal];
+    [button2.titleLabel setTextColor:[UIColor whiteColor]];
+    [button2.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
+    [button2 addTarget:self action:@selector(refreshButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.filterBarButton = [[UIBarButtonItem alloc] initWithCustomView:button2];
+    
+    UIView * comboView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 45)];
+    [comboView addSubview:self.searchController.searchBar];
+    [comboView addSubview:button2];
+    [comboView addSubview:button];
+    
+    
+    //self.navigationItem.titleView = self.searchBar;
+    //self.homeTable.tableHeaderView = comboView;
+
+    self.navigationItem.titleView = self.searchController.searchBar;
+    self.navigationItem.leftBarButtonItem = self.filterBarButton;
+    self.navigationItem.rightBarButtonItem = self.flipViewBarButton;
+
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self loadRecordsFromCoreDataWithSearchString:searchText];
+    [self.homeTable reloadData];
+    
+    if([searchText length] == 0) {
+        
+        NSLog(@"[searchText length] == 0)");
+//        [searchBar performSelector: @selector(resignFirstResponder)
+//                        withObject: nil
+//                        afterDelay: 0.1];
+        [self loadRecordsFromCoreDataWithSearchString:nil];
+        [self.homeTable reloadData];
+    }
+}
+
+//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+//    NSLog(@"searchBarCancelButtonClicked");
+//    [self.navigationItem setLeftBarButtonItem: self.filterBarButton animated:YES];
+//    [self.navigationItem setRightBarButtonItem: self.flipViewBarButton animated:YES];
+//    //[self.searchBar setShowsCancelButton:NO animated:YES];
+//    self.searchBar.text = @"";
+//    
+//    [self loadRecordsFromCoreDataWithSearchString:nil];
+//    [self.homeTable reloadData];
+//}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [self.navigationItem setLeftBarButtonItem: nil animated:YES];
+    [self.navigationItem setRightBarButtonItem: nil animated:YES];
+    
+    UITextField *searchTextField = [self.searchBar valueForKey:@"_searchField"];
+    if ([searchTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor grayColor];
+        [searchTextField setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"" attributes:@{NSForegroundColorAttributeName: color}]];
+    }
+    return YES;
+}
+
+- (IBAction)searchCancelButtonPressed:(id)sender {
+    
+    [self.navigationItem setLeftBarButtonItem: self.filterBarButton animated:YES];
+    [self.navigationItem setRightBarButtonItem: self.flipViewBarButton animated:YES];
+    self.searchBar.text = nil;
+    
+    UITextField *searchTextField = [self.searchBar valueForKey:@"_searchField"];
+    if ([searchTextField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        UIColor *color = [UIColor grayColor];
+        [searchTextField setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Search" attributes:@{NSForegroundColorAttributeName: color}]];
+    }
+    
+    [self.searchBar resignFirstResponder];
+    [self loadRecordsFromCoreDataWithSearchString:nil];
+    [self.homeTable reloadData];
+}
+
+
+//- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+//{
+//    [self loadRecordsFromCoreData:searchString];
+//    [self.homeTable reloadData];
+//
+//    return YES;
+//}
+
+//- (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+//{
+//    [self.navigationItem setLeftBarButtonItem: self.filterBarButton animated:YES];
+//    [self.navigationItem setRightBarButtonItem: self.flipViewBarButton animated:YES];
+//    [self.searchBar setShowsCancelButton:NO animated:YES];
+//    [self loadRecordsFromCoreDataWithSearchString:nil];
+//    [self.homeTable reloadData];
+//}
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
     [[ServeSyncEngine sharedEngine] startSync];
@@ -90,7 +285,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     
     [[NSNotificationCenter defaultCenter] addObserverForName:@"ServeSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
         //NSLog(@"Came from viewdidappear");
-        [self loadRecordsFromCoreData];
+        [self loadRecordsFromCoreDataWithSearchString:nil];
         [self.homeTable reloadData];
     }];
     [[ServeSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
@@ -112,14 +307,6 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     //[self.navigationItem setTitle:@"My Listings"];
     [self.view setBackgroundColor:[UIColor darkGrayColor]];
     //self.navigationController.toolbarHidden = YES;
-    
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    //self.searchController.searchResultsUpdater = self.homeTable;
-    //searchController.hidesNavigationBarDuringPresentation = NO;
-    //searchController.dimsBackgroundDuringPresentation = NO;
-    //definesPresentationContext = YES;
-    //searchController.searchBar.scopeButtonTitles = @[@"Posts", @"Users", @"Subreddits"];
-    //[self presentViewController:self.searchController animated:YES completion:nil];
 
     //myListButton
     UIImage *myListImage = [UIImage imageNamed:@"refresh.png"];
@@ -139,31 +326,13 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     UIBarButtonItem *userBarButton = [[UIBarButtonItem alloc] initWithCustomView:userButton];
     /////
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0, 0, 50, 28);
-    button.layer.borderColor = [UIColor whiteColor].CGColor;
-    button.layer.borderWidth = .5f;
-    button.layer.cornerRadius = 5;
-    [button setTitle:@"Map" forState:UIControlStateNormal];
-    [button.titleLabel setTextColor:[UIColor whiteColor]];
-    [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [button addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *flipBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
-    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button2.frame = CGRectMake(0, 0, 50, 28);
-    button2.layer.borderColor = [UIColor whiteColor].CGColor;
-    button2.layer.borderWidth = .5f;
-    button2.layer.cornerRadius = 5;
-    [button2 setTitle:@"Filter" forState:UIControlStateNormal];
-    [button2.titleLabel setTextColor:[UIColor whiteColor]];
-    [button2.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [button2 addTarget:self action:@selector(refreshButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    self.filterBarButton = [[UIBarButtonItem alloc] initWithCustomView:button2];
 
-    self.navigationItem.titleView = self.searchController.searchBar;
-    self.navigationItem.leftBarButtonItem = self.filterBarButton;
-    self.navigationItem.rightBarButtonItem = flipBarButton;
+    //self.navigationItem.titleView = self.searchController.searchBar;
+    
+    //self.navigationItem.titleView = self.searchBar;
+//    self.navigationItem.leftBarButtonItem = self.filterBarButton;
+//    self.navigationItem.rightBarButtonItem = flipBarButton;
 
     //add button
     UIImage *image = [UIImage imageNamed:@"plus.png"];
@@ -204,6 +373,8 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     
 }
 
+
+
 - (IBAction)backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -237,7 +408,12 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     //NSLog(@"Count : %lu",(unsigned long)[self.serverItems count]);
-    return [self.serverItems count];
+    if(self.homeTable == self.searchDisplayController.searchResultsTableView){
+        return 1;
+    }
+    
+    else{
+        return [self.serverItems count];}
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -261,13 +437,31 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         cell1.serveCount = item.serveCount;
         cell1.addressString = item.address1;
         //cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];
-        cell1.imageView.image = [UIImage imageWithData:item.image];
+        
+        if(item.image)
+        {
+            cell1.imageView.image = [UIImage imageWithData:item.image];
+        }
+        else
+        {
+            cell1.imageView.image = [UIImage imageNamed:@"no-image.png"];
+        }
+        
         cell1.typeString = item.type;
     }
         return cell1;
 }
 
-- (void)loadRecordsFromCoreData {
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    [self.navigationItem setLeftBarButtonItem: self.filterBarButton animated:YES];
+    [self.navigationItem setRightBarButtonItem: self.flipViewBarButton animated:YES];
+    
+    NSLog(@"selected");
+}
+
+- (void)loadRecordsFromCoreDataWithSearchString:(NSString*)searchString {
+
     [self.managedObjectContext performBlockAndWait:^{
         [self.managedObjectContext reset];
         NSError *error = nil;
@@ -275,12 +469,22 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         [request setSortDescriptors:[NSArray arrayWithObject:
                                      [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"author != %@", @"akhil"];
-        [request setPredicate:predicate];
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"author != %@", @"akhil"];
+        NSPredicate *finalPredicate;
+    
+        if(searchString!=nil)
+        {
+            NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchString];
+            finalPredicate =[NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:predicate1, predicate2,nil]];
+        }
         
+        else
+        {
+            finalPredicate = predicate1;
+        }
+        
+        [request setPredicate:finalPredicate];
         self.serverItems = [self.managedObjectContext executeFetchRequest:request error:&error];
-        
-        //NSLog(@"Serve items count = %lu",(unsigned long)[self.serverItems count]);
     }];
 }
 
@@ -290,7 +494,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 }
 
 - (IBAction)refreshButtonTouched:(id)sender {
-    [self loadRecordsFromCoreData];
+    [self loadRecordsFromCoreDataWithSearchString:nil];
     [self.homeTable reloadData];
 }
 
@@ -301,7 +505,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         //[self removeActivityIndicatorFromRefreshButon];
         
         //NSLog(@"Came from checkSyncStatus");
-        [self loadRecordsFromCoreData];
+        [self loadRecordsFromCoreDataWithSearchString:nil];
         [self.homeTable reloadData];
     }
 }

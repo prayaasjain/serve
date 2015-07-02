@@ -40,7 +40,7 @@
         self.availablityLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
         
         self.syncStatus =  [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.syncStatus setImage:[UIImage imageNamed:@"cloud-tick.png"] forState:UIControlStateNormal];
+        [self.syncStatus setImage:[UIImage imageNamed:@"cloud.png"] forState:UIControlStateNormal];
         [self.syncStatus addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
         [self.syncStatus setFrame:CGRectMake(340, 75, 128.0/9, 99.0/9)];
         

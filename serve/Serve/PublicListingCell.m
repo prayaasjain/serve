@@ -82,7 +82,7 @@
         self.availablityLabel.frame = CGRectMake(self.contentView.frame.size.width/3+15,75,300, 30);
 
     
-        self.imageView.frame= CGRectMake(5,5,self.contentView.frame.size.width/3,self.contentView.frame.size.height-15);
+        self.imageView.frame= CGRectMake(5,5,self.contentView.frame.size.width/3,self.contentView.frame.size.height-5);
     
     
         [self.serveIcon setFrame:CGRectMake(340, 30, 128.0/9, 99.0/9)];

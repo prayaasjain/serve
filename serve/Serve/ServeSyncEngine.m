@@ -117,6 +117,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
                 NSURLResponse *response = nil;
                 NSError *error = nil;
                 NSData *dataResponse = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+                
                 [managedObject setValue:dataResponse forKey:key];
             } else {
                 NSLog(@"Unknown Data Type Received");
@@ -177,9 +178,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     for (NSString *className in self.registeredClassesToSync) {
         NSDate *mostRecentUpdatedDate = nil;
         if (useUpdatedAtDate) {
-            NSLog(@"YES use mostupdatedDate ");
             mostRecentUpdatedDate = [self mostRecentUpdatedAtDateForEntityWithName:className];
-            NSLog(@"MostRecentUpdated %@",mostRecentUpdatedDate);
         }
         NSMutableURLRequest *request = [[ServeAFParseAPIClient sharedClient]
                                         GETRequestForAllRecordsOfClass:className
@@ -189,6 +188,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
             if ([responseObject isKindOfClass:[NSDictionary class]]) {
                 
                 [self writeJSONResponse:responseObject toDiskForClassWithName:className];
+                
                 NSLog(@"Response (D) : %@",responseObject);
                 NSLog(@"Done writing to disk");
                 //dispatch_semaphore_signal(semaphore);
@@ -203,7 +203,6 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
         //dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         
     }
-    
     
     [[ServeAFParseAPIClient sharedClient] enqueueBatchOfHTTPRequestOperations:operations progressBlock:^(NSUInteger numberOfCompletedOperations, NSUInteger totalNumberOfOperations) {
         
@@ -220,6 +219,8 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
 
 
 - (void)processJSONDataRecordsIntoCoreData {
+    
+    NSLog(@"Starting to processJSONDataRecordsIntoCoreData");
     NSManagedObjectContext *managedObjectContext = [[ServeCoreDataController sharedInstance] backgroundManagedObjectContext];
     //
     // Iterate over all registered classes to sync
