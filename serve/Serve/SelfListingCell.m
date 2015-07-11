@@ -39,10 +39,11 @@
         self.availablityLabel.textColor = [UIColor grayColor];
         self.availablityLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];
         
+        self.syncStatus = [[UIButton alloc]init];
         self.syncStatus =  [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.syncStatus setFrame:CGRectMake(340, 75, 128.0/9, 99.0/9)];
         [self.syncStatus setImage:[UIImage imageNamed:@"cloud.png"] forState:UIControlStateNormal];
         [self.syncStatus addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-        [self.syncStatus setFrame:CGRectMake(340, 75, 128.0/9, 99.0/9)];
         
         self.imageView = [[UIImageView alloc]init];
         
@@ -51,6 +52,7 @@
         [self addSubview:self.typeServesLabel];
         [self addSubview:self.availablityLabel];
         [self addSubview:self.syncStatus];
+
 
     }
     return self;
@@ -68,6 +70,13 @@
 
         self.typeServesLabel.text = [NSString stringWithFormat:@"%@, Serves %@ persons",self.typeString, self.serveCount];
         self.availablityLabel.text = @"Available 4:30 pm - 6:30 pm";
+    
+//        NSNumber *val = [NSNumber numberWithInteger:1];
+//        if(self.syncStatusValue == val)
+//        {
+//            [self.syncStatus setFrame:CGRectMake(340, 75, 128.0/9, 99.0/9)];
+//            [self addSubview:self.syncStatus];
+//        }
 }
 
 

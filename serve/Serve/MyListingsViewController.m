@@ -171,7 +171,6 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
   
     SelfListingCell *cell1 = (SelfListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
-
     if(self.selfListings.count)
     {
         Listing *item  = [self.selfListings objectAtIndex:indexPath.row];
@@ -182,10 +181,9 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
         cell1.selectionStyle = UITableViewCellSelectionStyleNone;
         cell1.titleLabel.text = item.name;
-        //cell1.serveCount = item.serveCount;
-        cell1.serveCount = item.syncStatus;
-        //cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];//item.image
-        
+        //cell1.syncStatusValue = item.syncStatus;
+        cell1.serveCount = item.serveCount;
+   
         if(item.image)
         {
             cell1.imageView.image = [UIImage imageWithData:item.image];
@@ -195,13 +193,11 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
             cell1.imageView.image = [UIImage imageNamed:@"no-image.png"];
         }
         
-    
         cell1.typeString = item.type;
 
-        
     }
-
-
+    
+    
     if (indexPath.section == 0) {
         return cell;
     }

@@ -16,10 +16,14 @@
 #import "NewInputViewController.h"
 #import "NewPickUpInfoViewController.h"
 #import "PublicListingViewController.h"
+#import "FilterTableViewController.h"
 
 #import <GoogleMaps/GoogleMaps.h>
 #import "Listing.h"
 #import "ServeSyncEngine.h"
+
+#import "Filter.h"
+#import "ServeCoreDataController.h"
 
 @interface AppDelegate ()
 
@@ -47,6 +51,7 @@
     NewInputViewController *newInputViewController = [[NewInputViewController alloc]init];
     NewPickUpInfoViewController *newPickUpinfoViewController = [[NewPickUpInfoViewController alloc]init];
     PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
+    FilterTableViewController *filterTableViewController = [[FilterTableViewController alloc]init];
     
 
     //self.window.rootViewController = pickUpViewController;
@@ -56,7 +61,8 @@
     //self.window.rootViewController = reviewSubmitViewController;
     //self.window.rootViewController = newInputViewController;
     //self.window.rootViewController = newPickUpinfoViewController;
-    self.window.rootViewController = publicListingViewController;
+    //self.window.rootViewController = publicListingViewController;
+    //self.window.rootViewController = filterTableViewController;
     
     
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -72,6 +78,16 @@
     
     navigationController.toolbar.barTintColor = [UIColor blackColor];
     navigationController.toolbar.translucent = YES ;
+    
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    //transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [navigationController.view.layer addAnimation:transition forKey:nil];
+    [navigationController popViewControllerAnimated:NO];
+    
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = navigationController;
@@ -99,6 +115,30 @@
     
     //[[ServeSyncEngine sharedEngine] startSync];
     
+    //This should happen only once in a lifecycle
+    NSManagedObjectContext *managedObjectContext;
+    NSManagedObject *filter;
+    managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
+    filter = [NSEntityDescription insertNewObjectForEntityForName:@"Filter" inManagedObjectContext:managedObjectContext];
+    
+    [filter setValue:[NSNumber numberWithInt:Next5Hrs] forKey:@"availability"];
+    [filter setValue:[NSNumber numberWithInt:Name] forKey:@"sortBy"];
+    [filter setValue:[NSNumber numberWithInt:2] forKey:@"type"];
+    [filter setValue:[NSNumber numberWithInt:10] forKey:@"distance"];
+    
+    [managedObjectContext performBlockAndWait:^
+     {
+         NSError *error = nil;
+         BOOL saved = [managedObjectContext save:&error];
+         if (!saved) {
+             // do some real error handling
+             NSLog(@"Could not save Date due to %@", error);
+         }
+         [[ServeCoreDataController sharedInstance] saveMasterContext];
+     }
+     ];
+    
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIButton *syncStatus;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, assign) NSNumber *serveCount;
+@property (nonatomic, assign) NSNumber *syncStatusValue;
 @property (nonatomic, assign) NSString *typeString;
 
 @end

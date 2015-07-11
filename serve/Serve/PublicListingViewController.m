@@ -13,6 +13,7 @@
 #import "PublicListingCell.h"
 #import "GoogleMapApi.h"
 #import "ServeSyncEngine.h"
+#import "FilterTableViewController.h"
 
 static NSString * const publicListingCellIdentifier = @"publicListingCellIdentifier";
 
@@ -22,6 +23,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)switchButtonPressed:(id)sender;
 - (IBAction)searchCancelButtonPressed:(id)sender;
+- (IBAction)filterButtonPressed:(id)sender;
 
 
 //coredata
@@ -53,8 +55,6 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     //NSLog(@"Came from viewdidload");
     [self loadRecordsFromCoreDataWithSearchString:nil];
 
-
-    
     //setting up list view
     self.listMode = YES;
     self.listView = [[UIView alloc]initWithFrame:CGRectZero];
@@ -67,8 +67,8 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     self.homeTable.separatorInset = UIEdgeInsetsMake(-10, 0, 0, 0);
     self.homeTable.separatorColor=[UIColor grayColor];
     [self.homeTable registerClass:[PublicListingCell class] forCellReuseIdentifier:publicListingCellIdentifier];
-    [self.view addSubview:self.homeTable];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.listView addSubview:self.homeTable];
+    [self.listView setBackgroundColor:[UIColor whiteColor]];
     
     //setting up mapview
     self.mapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
@@ -80,24 +80,11 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     [refresh addTarget:self action:@selector(refresh:)
       forControlEvents:UIControlEventValueChanged];
     //[self.homeTable addSubview:refresh];
-     //self.view = self.listView;
+     self.view = self.listView;
     
     [self configureSearch];
-    
     [self setUpNavigationController];
     
-    //  self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 160, 44)];
-    //    self.searchController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    //    self.searchController.delegate = self;
-    //    self.searchController.searchResultsDataSource = self;
-    
-    //self.navigationItem.titleView = self.searchBar;
-    //self.navigationItem.titleView = self.searchBar;
-    
-    
-//    self.navigationItem.leftBarButtonItem = self.filterBarButton;
-//    self.navigationItem.rightBarButtonItem = flipBarButton;
-
 }
 
 - (void)configureSearch {
@@ -172,7 +159,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     [button setTitle:@"Map" forState:UIControlStateNormal];
     [button.titleLabel setTextColor:[UIColor whiteColor]];
     [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [button addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(switchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     self.flipViewBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -183,13 +170,13 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     [button2 setTitle:@"Filter" forState:UIControlStateNormal];
     [button2.titleLabel setTextColor:[UIColor whiteColor]];
     [button2.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [button2 addTarget:self action:@selector(refreshButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [button2 addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     self.filterBarButton = [[UIBarButtonItem alloc] initWithCustomView:button2];
     
-    UIView * comboView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 45)];
-    [comboView addSubview:self.searchController.searchBar];
-    [comboView addSubview:button2];
-    [comboView addSubview:button];
+//    UIView * comboView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 45)];
+//    [comboView addSubview:self.searchController.searchBar];
+//    [comboView addSubview:button2];
+//    [comboView addSubview:button];
     
     
     //self.navigationItem.titleView = self.searchBar;
@@ -255,6 +242,16 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     [self loadRecordsFromCoreDataWithSearchString:nil];
     [self.homeTable reloadData];
 }
+
+- (IBAction)filterButtonPressed:(id)sender {
+    
+    FilterTableViewController *secondView = [[FilterTableViewController alloc] init];
+    //self.inputViewController = secondView;
+    [self.navigationController pushViewController:secondView animated:YES];
+
+}
+
+
 
 
 //- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
@@ -372,8 +369,6 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     self.toolbarItems = items2;
     
 }
-
-
 
 - (IBAction)backButtonPressed:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -548,46 +543,6 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 //    [self.mapView addAnnotations:self.mapPins];
 //}
 
-
-// text view
-//- (void)textFieldDidBeginEditing:(UITextField *)textField {
-//    [self textViewAnimationStart:textField];
-//    
-//    if([textField.text isEqualToString:titlePlaceholder])
-//    {
-//        textField.text = @"";
-//        textField.textColor = [UIColor blackColor];
-//    }
-//    else if ([textField.text isEqualToString:cuisinePlaceholder])
-//    {
-//        textField.text = @"";
-//        textField.textColor = [UIColor blackColor];
-//    }
-//}
-//
-//- (void)textFieldDidEndEditing:(UITextField *)textField {
-//    [self textViewAnimationEnd];
-//    
-//    if ([textField.text isEqualToString:@""]) {
-//        
-//        if(textField.tag == TitleInputTag){
-//            textField.text = titlePlaceholder;
-//            textField.textColor = [UIColor grayColor];
-//        }
-//        
-//        else if(textField.tag == CusineInputTag){
-//            textField.text = cuisinePlaceholder;
-//            textField.textColor = [UIColor grayColor];
-//        }
-//        
-//        [textField resignFirstResponder];
-//    }
-//}
-//
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-//    [textField resignFirstResponder];
-//    return YES;
-//}
 
 //- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 //    

@@ -81,10 +81,7 @@
         self.addressLabel.frame = CGRectMake(self.contentView.frame.size.width/3+15,45,300, 30);
         self.availablityLabel.frame = CGRectMake(self.contentView.frame.size.width/3+15,75,300, 30);
 
-    
         self.imageView.frame= CGRectMake(5,5,self.contentView.frame.size.width/3,self.contentView.frame.size.height-5);
-    
-    
         [self.serveIcon setFrame:CGRectMake(340, 30, 128.0/9, 99.0/9)];
         self.serveCountLabel.frame = CGRectMake(355, 30, 128.0/9, 99.0/9);
     
@@ -94,6 +91,8 @@
         self.distanceLabel.text = @"0.3 mi";
         self.availablityLabel.text = @"Available 4:30 pm - 6:30 pm";
         self.addressLabel.text = self.addressString;
+    
+    
 }
 
 
