@@ -11,7 +11,7 @@
 
 static NSString * const kSDFParseAPIBaseURLString = @"https://api.parse.com/1/";
 static NSString * const kSDFParseAPIApplicationId = @"ZFpCdXKc9QoeUeTzFLtvK9JJ5rZd3CeF6FVzHTfW";
-static NSString * const kSDFParseAPIKey = @"TakBT8h7x9x59VevnG6upfDcBNYt2Gr6H1LzBVfX";
+static NSString * const kSDFParseRestAPIKey = @"TakBT8h7x9x59VevnG6upfDcBNYt2Gr6H1LzBVfX";
 
 @implementation ServeAFParseAPIClient
 
@@ -31,7 +31,7 @@ static NSString * const kSDFParseAPIKey = @"TakBT8h7x9x59VevnG6upfDcBNYt2Gr6H1Lz
         [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
         [self setParameterEncoding:AFJSONParameterEncoding];
         [self setDefaultHeader:@"X-Parse-Application-Id" value:kSDFParseAPIApplicationId];
-        [self setDefaultHeader:@"X-Parse-REST-API-Key" value:kSDFParseAPIKey];
+        [self setDefaultHeader:@"X-Parse-REST-API-Key" value:kSDFParseRestAPIKey];
     }
     
     return self;

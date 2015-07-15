@@ -25,6 +25,17 @@
 #import "Filter.h"
 #import "ServeCoreDataController.h"
 
+
+#import "ServeLoginViewController.h"
+#import "EWDBlurExampleVC.h"
+
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+
 @interface AppDelegate ()
 
 @end
@@ -37,50 +48,45 @@
     
     ///google maps
     [GMSServices provideAPIKey:@"AIzaSyDHdTN_gkC_RqUdUQs_CNiaLUK7VDLGbh4"];
-    
-    //sync
     [[ServeSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Listing class]];
-    //[[ServeSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[SelfListing class]];
     
-    /////
-//    if (![PFUser currentUser]) { // No user logged in
-//        // Create the log in view controller
-//        PFLogInViewController *logInViewController = [[PFLogInViewController alloc] init];
-//        [logInViewController setDelegate:self]; // Set ourselves as the delegate
-//        
-//        // Create the sign up view controller
-//        PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc] init];
-//        [signUpViewController setDelegate:self]; // Set ourselves as the delegate
-//        
-//        // Assign our sign up controller to be displayed from the login controller
-//        [logInViewController setSignUpController:signUpViewController];
-//        
-//        // Present the log in view controller
-//        [self presentViewController:logInViewController animated:YES completion:NULL];
-//    }
-//    
-//    
+    [Parse setApplicationId:@"ZFpCdXKc9QoeUeTzFLtvK9JJ5rZd3CeF6FVzHTfW" clientKey:@"KvvKmvSkbajcQluKWEQDwiOpvwB05Ket60RwTBbH"];
+    [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+
+        //[PFUser logOut];////just for testing
+        if (![PFUser currentUser]) {
     
+            ServeLoginViewController *logInViewController = [[ServeLoginViewController alloc]init];
     
-    ////
+            self.window.rootViewController = logInViewController;
     
+            navigationController = [[UINavigationController alloc]
+                                    initWithRootViewController:logInViewController];
     
-    
-    
-    PickUpInfoViewController *pickUpViewController = [[PickUpInfoViewController alloc]init];
-    InputViewController *inputViewController = [[InputViewController alloc]init];
-    MyListingsViewController *myListingsViewController = [[MyListingsViewController alloc]init];
-    PickImageViewController *imageViewController =[[PickImageViewController alloc]init];
-    ReviewSubmitViewController *reviewSubmitViewController = [[ReviewSubmitViewController alloc]init];
-    NewInputViewController *newInputViewController = [[NewInputViewController alloc]init];
-    NewPickUpInfoViewController *newPickUpinfoViewController = [[NewPickUpInfoViewController alloc]init];
-    PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
-    FilterTableViewController *filterTableViewController = [[FilterTableViewController alloc]init];
+        }
+
+        else
+        {
+            
+            MyListingsViewController *myListingsViewController = [[MyListingsViewController alloc]init];
+            self.window.rootViewController = myListingsViewController;
+            
+            navigationController = [[UINavigationController alloc]
+                                initWithRootViewController:myListingsViewController];
+        }
     
 
+//    PickUpInfoViewController *pickUpViewController = [[PickUpInfoViewController alloc]init];
+//    InputViewController *inputViewController = [[InputViewController alloc]init];
+//    PickImageViewController *imageViewController =[[PickImageViewController alloc]init];
+//    ReviewSubmitViewController *reviewSubmitViewController = [[ReviewSubmitViewController alloc]init];
+//    NewInputViewController *newInputViewController = [[NewInputViewController alloc]init];
+//    NewPickUpInfoViewController *newPickUpinfoViewController = [[NewPickUpInfoViewController alloc]init];
+//    PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
+//    FilterTableViewController *filterTableViewController = [[FilterTableViewController alloc]init];
+    
     //self.window.rootViewController = pickUpViewController;
     //self.window.rootViewController = inputViewController;
-    self.window.rootViewController = myListingsViewController;
     //self.window.rootViewController = imageViewController;
     //self.window.rootViewController = reviewSubmitViewController;
     //self.window.rootViewController = newInputViewController;
@@ -92,9 +98,9 @@
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                [UIColor whiteColor],NSForegroundColorAttributeName,
                                                 nil];
+//    navigationController = [[UINavigationController alloc]
+//                            initWithRootViewController:logInViewController];
 
-    navigationController = [[UINavigationController alloc]
-                            initWithRootViewController:myListingsViewController];
     
     navigationController.navigationBar.barTintColor = [UIColor blackColor];//#007AFF
     navigationController.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
@@ -118,8 +124,21 @@
     [self.window makeKeyAndVisible];
 
     return YES;
+//    return [[FBSDKApplicationDelegate sharedInstance] application:application
+//                                    didFinishLaunchingWithOptions:launchOptions];
 
 }
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -137,30 +156,32 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
+    [FBSDKAppEvents activateApp];
+    
     //[[ServeSyncEngine sharedEngine] startSync];
     
     //This should happen only once in a lifecycle
-    NSManagedObjectContext *managedObjectContext;
-    NSManagedObject *filter;
-    managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
-    filter = [NSEntityDescription insertNewObjectForEntityForName:@"Filter" inManagedObjectContext:managedObjectContext];
-    
-    [filter setValue:[NSNumber numberWithInt:Next5Hrs] forKey:@"availability"];
-    [filter setValue:[NSNumber numberWithInt:Name] forKey:@"sortBy"];
-    [filter setValue:[NSNumber numberWithInt:2] forKey:@"type"];
-    [filter setValue:[NSNumber numberWithInt:10] forKey:@"distance"];
-    
-    [managedObjectContext performBlockAndWait:^
-     {
-         NSError *error = nil;
-         BOOL saved = [managedObjectContext save:&error];
-         if (!saved) {
-             // do some real error handling
-             NSLog(@"Could not save Date due to %@", error);
-         }
-         [[ServeCoreDataController sharedInstance] saveMasterContext];
-     }
-     ];
+//    NSManagedObjectContext *managedObjectContext;
+//    NSManagedObject *filter;
+//    managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
+//    filter = [NSEntityDescription insertNewObjectForEntityForName:@"Filter" inManagedObjectContext:managedObjectContext];
+//    
+//    [filter setValue:[NSNumber numberWithInt:Next5Hrs] forKey:@"availability"];
+//    [filter setValue:[NSNumber numberWithInt:Name] forKey:@"sortBy"];
+//    [filter setValue:[NSNumber numberWithInt:2] forKey:@"type"];
+//    [filter setValue:[NSNumber numberWithInt:10] forKey:@"distance"];
+//    
+//    [managedObjectContext performBlockAndWait:^
+//     {
+//         NSError *error = nil;
+//         BOOL saved = [managedObjectContext save:&error];
+//         if (!saved) {
+//             // do some real error handling
+//             NSLog(@"Could not save Date due to %@", error);
+//         }
+//         [[ServeCoreDataController sharedInstance] saveMasterContext];
+//     }
+//     ];
     
 
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
@@ -239,17 +260,17 @@
 //
 //#pragma mark - Core Data Saving support
 //
-//- (void)saveContext {
-//    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-//    if (managedObjectContext != nil) {
-//        NSError *error = nil;
-//        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-//            // Replace this implementation with code to handle the error appropriately.
-//            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//            abort();
-//        }
-//    }
-//}
+- (void)saveContext {
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil) {
+        NSError *error = nil;
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
 
 @end

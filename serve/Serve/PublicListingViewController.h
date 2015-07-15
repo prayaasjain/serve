@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PublicListingViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate>
+@interface PublicListingViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchResultsUpdating,UISearchBarDelegate>
 
 @property (nonatomic, strong) NSArray *serverItems;
 

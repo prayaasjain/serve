@@ -4,6 +4,9 @@
 
 
 #import "ServeConstants.h"
+#import <Parse/Parse.h>
+
+
 
 /*
 #ifndef __IPHONE_5_0

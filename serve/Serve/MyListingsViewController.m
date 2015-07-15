@@ -15,6 +15,7 @@
 #import "SelfListingCell.h"
 #import "PublicListingViewController.h"
 #import "ServeSyncEngine.h"
+#import "EWDBlurExampleVC.h"
 
 
 //const CGFloat iconWidth = 25.0f;
@@ -221,6 +222,12 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 }
 
 - (IBAction)addNewListingButtonPressed:(id)sender {
+    
+    
+//    EWDBlurExampleVC *secondView = [[EWDBlurExampleVC alloc]init];
+//    [self.navigationController pushViewController:secondView animated:YES];
+    
+    
     NewInputViewController *secondView = [[NewInputViewController alloc] init];
     self.inputViewController = secondView;
     [self.navigationController pushViewController:self.inputViewController animated:YES];
