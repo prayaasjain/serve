@@ -52,8 +52,6 @@
         [self addSubview:self.typeServesLabel];
         [self addSubview:self.availablityLabel];
         [self addSubview:self.syncStatus];
-
-
     }
     return self;
     
@@ -66,7 +64,7 @@
         self.typeServesLabel.frame = CGRectMake(self.contentView.frame.size.width/3+15,25,300, 30);
         self.availablityLabel.frame = CGRectMake(self.contentView.frame.size.width/3+15,65,300, 30);
     
-        self.imageView.frame= CGRectMake(0,0,self.contentView.frame.size.width/3,self.contentView.frame.size.height);
+        self.imageView.frame= CGRectMake(10,17,self.contentView.frame.size.width/5,self.contentView.frame.size.height/1.5);
 
         self.typeServesLabel.text = [NSString stringWithFormat:@"%@, Serves %@ persons",self.typeString, self.serveCount];
         self.availablityLabel.text = @"Available 4:30 pm - 6:30 pm";

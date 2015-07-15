@@ -7,6 +7,7 @@
 //
 
 #import "ServeLoginViewController.h"
+#import "MyListingsViewController.h"
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
 typedef enum : NSInteger
@@ -24,6 +25,7 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
 @property (nonatomic, strong) UITextField *emailInput;
 @property (nonatomic, strong) UITextField *passInput;
 @property (nonatomic, strong) UILabel *promptLabel;
+@property (strong, nonatomic) MyListingsViewController *myListingsViewController;
 
 - (IBAction)signup:(id)sender;
 
@@ -35,6 +37,7 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor blackColor];
+    self.navigationItem.hidesBackButton = YES;
     
     self.promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 350, 190, 50)];
     self.promptLabel.text = @"Successful signup";
@@ -154,8 +157,12 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
         } else if (user.isNew) {
             NSLog(@"User signed up and logged in through Facebook!");
+            self.myListingsViewController = [[MyListingsViewController alloc]init];
+            [self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
         } else {
             NSLog(@"User logged in through Facebook!");
+            self.myListingsViewController = [[MyListingsViewController alloc]init];
+            [self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
         }
         
         if (![PFFacebookUtils isLinkedWithUser:user]) {
@@ -169,7 +176,6 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
     }];
     
 }
-
 - (IBAction)logoutWithFacebook:(id)sender {
 
     [PFUser logOut];
@@ -180,7 +186,6 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
 //        }
 //    }];
 }
-
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if([textField.text isEqualToString:emailPlaceholder]||[textField.text isEqualToString:passwordPlaceholder])
@@ -241,6 +246,10 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
             weakSelf.promptLabel.textColor = [UIColor greenColor];
             weakSelf.promptLabel.text = @"Signup successful!";
             weakSelf.promptLabel.hidden = NO;
+            
+            self.myListingsViewController = [[MyListingsViewController alloc]init];
+            [self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
+            
         } else {
     
             NSLog(@"Error:%@",[error userInfo]);
@@ -263,6 +272,11 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
              weakSelf.promptLabel.textColor = [UIColor greenColor];
              weakSelf.promptLabel.text = @"Login Successful";
              weakSelf.promptLabel.hidden = NO;
+             //present the self.listing view controller
+             
+             self.myListingsViewController = [[MyListingsViewController alloc]init];
+            [self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
+             
              
          } else {
             
@@ -298,24 +312,10 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
          }
      }];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-//- (void) ourMagicalMethod {
-//    [Parse setApplicationId:@"SOME_ID" 		clientKey:@"Your Super Secret KEY"];
-//    [PFFacebookUtils 	 initializeWithApplicationId:@"SOME_FB_ID"];
-//    NSArray* permissions @["desired 	permissions"];
-//    [PFFacebookUtils loginWithPermissions:permissions block:^(PFUser* user, NSError* error) {
-//        // your epic logic goes heres
-//    }];
-//    
-//    
-//}
-/*
-
 
 /*
  code = 101;

@@ -15,8 +15,7 @@
 #import "SelfListingCell.h"
 #import "PublicListingViewController.h"
 #import "ServeSyncEngine.h"
-#import "EWDBlurExampleVC.h"
-
+#import "ServeLoginViewController.h"
 
 //const CGFloat iconWidth = 25.0f;
 //const CGFloat iconHeight = 25.0f;
@@ -32,11 +31,15 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
 @property (strong, nonatomic) NewInputViewController *inputViewController;
 @property (strong, nonatomic) PublicListingViewController *publicListingViewController;
+@property (strong, nonatomic) ServeLoginViewController *loginViewController;
 
 //coredata
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSString *entityName;
 @property (nonatomic, strong) NSArray *selfListings;
+
+//temporary signOut
+@property (nonatomic, strong) UIActionSheet *logoutActionSheet;
 
 @end
 
@@ -48,6 +51,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     
     [super viewDidLoad];
     
+    [self setUpActionSheets];
     [self setUpNavigationController];
     
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
@@ -82,7 +86,6 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [[ServeSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
 }
 
-
 - (void) setUpNavigationController {
     
     self.navigationItem.hidesBackButton = YES;
@@ -104,14 +107,14 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [addButton addTarget:self action:@selector(addNewListingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [addButton setFrame:CGRectMake(0, -40, iconWidth*3, iconHeight*3)];
     UIBarButtonItem *addBarButton = [[UIBarButtonItem alloc] initWithCustomView:addButton];
-
+    
     /////
     
     //userButton
     UIImage *userImage = [UIImage imageNamed:@"person.png"];
     UIButton *userButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [userButton setImage:userImage forState:UIControlStateNormal];
-    [userButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+    [userButton addTarget:self action:@selector(showActionSheet:) forControlEvents:UIControlEventTouchUpInside];
     [userButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
     UIBarButtonItem *userBarButton = [[UIBarButtonItem alloc] initWithCustomView:userButton];
     /////
@@ -139,6 +142,49 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     self.toolbarItems = items;
     
 }
+
+
+#pragma mark - Logout Action Sheet stuff
+
+- (void)setUpActionSheets{
+    
+    //here i want to have the display name of the pf user
+    NSString *userName = [PFUser currentUser].username;
+    
+    NSArray *logoutButtonActionSheetItems = [[NSArray alloc] initWithObjects:userName,
+                                    @"LogOut",@"Cancel", nil];
+
+    self.logoutActionSheet= [[UIActionSheet alloc]initWithTitle:[logoutButtonActionSheetItems objectAtIndex:0] delegate:self cancelButtonTitle:[logoutButtonActionSheetItems objectAtIndex:2] destructiveButtonTitle:[logoutButtonActionSheetItems objectAtIndex:1] otherButtonTitles:nil, nil];
+    
+}
+
+- (void)showActionSheet:(id)sender {
+    [self.logoutActionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if  ([buttonTitle isEqualToString:@"LogOut"])
+    {
+        [PFUser logOut];
+        NSLog(@"LogOut successful");
+        
+        if(self.loginViewController == nil){
+            ServeLoginViewController *secondView = [[ServeLoginViewController alloc] init];
+            self.loginViewController = secondView;
+        }
+        [self.navigationController pushViewController:self.loginViewController animated:YES];
+        
+    }
+
+    if ([buttonTitle isEqualToString:@"Cancel"]) {
+        NSLog(@"Cancel");
+    }
+}
+
+#pragma mark - TableViewController stuff
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -208,9 +254,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if(section==0)
     {
        return 10.0f;
@@ -220,6 +264,22 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
         return 0.0f;
     }
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if(indexPath.section == 0)
+    {
+        if(self.inputViewController == nil){
+            NewInputViewController *secondView = [[NewInputViewController alloc] init];
+            self.inputViewController = secondView;
+        }
+        self.inputViewController.view.backgroundColor = [UIColor whiteColor];
+        [self.navigationController pushViewController:self.inputViewController animated:YES];
+    }
+    
+}
+
+
 
 - (IBAction)addNewListingButtonPressed:(id)sender {
     
@@ -233,7 +293,6 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.navigationController pushViewController:self.inputViewController animated:YES];
 }
 
-
 - (IBAction)PublicListingButtonPressed:(id)sender {
     if(self.publicListingViewController == nil){
         PublicListingViewController *secondView = [[PublicListingViewController alloc] init];
@@ -242,19 +301,8 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.navigationController pushViewController:self.publicListingViewController animated:YES];
 }
 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    if(indexPath.section == 0)
-    {
-        if(self.inputViewController == nil){
-            NewInputViewController *secondView = [[NewInputViewController alloc] init];
-            self.inputViewController = secondView;
-        }
-        self.inputViewController.view.backgroundColor = [UIColor whiteColor];
-        [self.navigationController pushViewController:self.inputViewController animated:YES];
-    }
-    
+- (IBAction)refreshButtonTouched:(id)sender {
+    [[ServeSyncEngine sharedEngine] startUpSync];
 }
 
 - (void)loadRecordsFromCoreData {
@@ -278,13 +326,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     // Dispose of any resources that can be recreated.
 }
 
-- (void)saveAndSyncMethod
-{
-    [[ServeSyncEngine sharedEngine] startUpSync];
-}
-
-
-- (IBAction)refreshButtonTouched:(id)sender {
+- (void)saveAndSyncMethod {
     [[ServeSyncEngine sharedEngine] startUpSync];
 }
 
@@ -310,8 +352,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     //self.navigationItem.leftBarButtonItem = nil;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"syncInProgress"]) {
         [self checkSyncStatus];
     }

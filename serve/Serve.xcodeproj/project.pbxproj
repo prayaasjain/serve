@@ -45,9 +45,7 @@
 		207873411B3B9F2D00C3C86B /* ServeAFParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 207873401B3B9F2D00C3C86B /* ServeAFParseAPIClient.m */; };
 		207873441B3BA50500C3C86B /* ServeSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 207873431B3BA50500C3C86B /* ServeSyncEngine.m */; };
 		20836EA81B3F55D50046FEAC /* PublicListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20836EA61B3F55D50046FEAC /* PublicListingCell.m */; };
-		20836EAB1B3F626E0046FEAC /* PublicListingViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 20836EAA1B3F626E0046FEAC /* PublicListingViewController2.m */; };
 		20836EB41B3FBDC20046FEAC /* NSManagedObject+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 20836EB31B3FBDC20046FEAC /* NSManagedObject+JSON.m */; };
-		208DCD041B54AE9D0094967A /* EWDBlurExampleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 208DCD031B54AE9D0094967A /* EWDBlurExampleVC.m */; };
 		208DCD091B54CD770094967A /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 208DCD071B54CD770094967A /* FBSDKCoreKit.framework */; };
 		208DCD0A1B54CD770094967A /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 208DCD081B54CD770094967A /* FBSDKLoginKit.framework */; };
 		208DCD0C1B54CDAC0094967A /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 208DCD0B1B54CDAC0094967A /* ParseFacebookUtilsV4.framework */; };
@@ -200,12 +198,8 @@
 		207873431B3BA50500C3C86B /* ServeSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeSyncEngine.m; sourceTree = "<group>"; };
 		20836EA61B3F55D50046FEAC /* PublicListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicListingCell.m; sourceTree = "<group>"; };
 		20836EA71B3F55D50046FEAC /* PublicListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicListingCell.h; sourceTree = "<group>"; };
-		20836EA91B3F626E0046FEAC /* PublicListingViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicListingViewController2.h; sourceTree = "<group>"; };
-		20836EAA1B3F626E0046FEAC /* PublicListingViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicListingViewController2.m; sourceTree = "<group>"; };
 		20836EB21B3FBDC20046FEAC /* NSManagedObject+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+JSON.h"; sourceTree = "<group>"; };
 		20836EB31B3FBDC20046FEAC /* NSManagedObject+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+JSON.m"; sourceTree = "<group>"; };
-		208DCD021B54AE9D0094967A /* EWDBlurExampleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EWDBlurExampleVC.h; sourceTree = "<group>"; };
-		208DCD031B54AE9D0094967A /* EWDBlurExampleVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EWDBlurExampleVC.m; sourceTree = "<group>"; };
 		208DCD071B54CD770094967A /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Serve/thirdparty/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		208DCD081B54CD770094967A /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = Serve/thirdparty/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		208DCD0B1B54CDAC0094967A /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = Serve/thirdparty/ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -361,8 +355,6 @@
 		203592181B044A8300850472 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				20836EA91B3F626E0046FEAC /* PublicListingViewController2.h */,
-				20836EAA1B3F626E0046FEAC /* PublicListingViewController2.m */,
 				2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */,
 				2031AE9E1B3CE3890000CF40 /* PublicListingViewController.h */,
 				20DE790B1B082AB000E3F101 /* MyListingsViewController.h */,
@@ -628,8 +620,6 @@
 				20F3E2411B5245C3003B2D7D /* TwitterDown.png */,
 				20F3E2511B52698C003B2D7D /* ServeLoginViewController.h */,
 				20F3E2521B52698C003B2D7D /* ServeLoginViewController.m */,
-				208DCD021B54AE9D0094967A /* EWDBlurExampleVC.h */,
-				208DCD031B54AE9D0094967A /* EWDBlurExampleVC.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -843,8 +833,6 @@
 				2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */,
 				207873351B3B99BE00C3C86B /* AFImageRequestOperation.m in Sources */,
 				20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */,
-				208DCD041B54AE9D0094967A /* EWDBlurExampleVC.m in Sources */,
-				20836EAB1B3F626E0046FEAC /* PublicListingViewController2.m in Sources */,
 				207873281B3B973900C3C86B /* AFJSONRequestOperation.m in Sources */,
 				20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */,
 				207873361B3B99BE00C3C86B /* AFNetworkActivityIndicatorManager.m in Sources */,

@@ -9,7 +9,6 @@
 #import "PublicListingViewController.h"
 #import "ServeCoreDataController.h"
 #import "Listing.h"
-//#import "SelfListing.h"
 #import "PublicListingCell.h"
 #import "GoogleMapApi.h"
 #import "ServeSyncEngine.h"
@@ -81,10 +80,14 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     //[self.homeTable addSubview:refresh];
      self.view = self.listView;
     
-    [self configureSearch];
+
     [self setUpNavigationController];
+    [self configureSearch];
     
 }
+
+
+#pragma mark - Search Controller
 
 - (void)configureSearch {
     //new code//
@@ -95,7 +98,9 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     //[self.searchController.searchBar sizeToFit];
     //self.definesPresentationContext = YES;
     self.searchController.hidesNavigationBarDuringPresentation =NO;
+    self.searchController.searchBar.barTintColor = [UIColor clearColor];//this part still not giving ideal results
     self.navigationItem.titleView = self.searchController.searchBar;
+    
 }
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController{
@@ -261,12 +266,18 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
       [UIColor whiteColor], NSForegroundColorAttributeName,[UIFont fontWithName:@"Helvetica-Bold" size:12.0],
       NSFontAttributeName, nil]forState:UIControlStateNormal];
     
+    UIBarButtonItem *itemSpace = [[UIBarButtonItem alloc]
+                                  initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                  target:nil
+                                  action:nil];
 
-    NSArray *items2 = [NSArray arrayWithObjects:cancelButton,refreshButton, nil];
+    NSArray *items2 = [NSArray arrayWithObjects:cancelButton,itemSpace,refreshButton,itemSpace,itemSpace, nil];
     self.toolbarItems = items2;
 
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(280, 0, 50, 28);
+    //button.frame = CGRectZero;
+    button.frame = CGRectMake(0, 0, 50, 28);
+
     button.layer.borderColor = [UIColor whiteColor].CGColor;
     button.layer.borderWidth = .2f;
     button.layer.cornerRadius = 5;
@@ -381,7 +392,6 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     return NSNotFound;
 }
 
-
 - (void)loadRecordsFromCoreDataWithSearchString:(NSString*)searchString {
 
     [self.managedObjectContext performBlockAndWait:^{
@@ -420,12 +430,11 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     [self.homeTable reloadData];
 }
 
-- (void)checkSyncStatus {
+- (void) checkSyncStatus {
     if ([[ServeSyncEngine sharedEngine] syncInProgress]) {
-        //[self replaceRefreshButtonWithActivityIndicator];
+        [self replaceRefreshButtonWithActivityIndicator];
     } else {
-        //[self removeActivityIndicatorFromRefreshButon];
-        
+        [self removeActivityIndicatorFromRefreshButon];
         //NSLog(@"Came from checkSyncStatus");
         [self loadRecordsFromCoreDataWithSearchString:nil];
         [self.homeTable reloadData];

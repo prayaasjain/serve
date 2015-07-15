@@ -17,21 +17,12 @@
 #import "NewPickUpInfoViewController.h"
 #import "PublicListingViewController.h"
 #import "FilterTableViewController.h"
-
 #import <GoogleMaps/GoogleMaps.h>
 #import "Listing.h"
 #import "ServeSyncEngine.h"
-
 #import "Filter.h"
 #import "ServeCoreDataController.h"
-
-
 #import "ServeLoginViewController.h"
-#import "EWDBlurExampleVC.h"
-
-//#import <FBSDKCoreKit/FBSDKCoreKit.h>
-//#import <FBSDKLoginKit/FBSDKLoginKit.h>
-
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
@@ -116,17 +107,11 @@
     //transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
     [navigationController.view.layer addAnimation:transition forKey:nil];
     [navigationController popViewControllerAnimated:NO];
-    
-    
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
 
     return YES;
-//    return [[FBSDKApplicationDelegate sharedInstance] application:application
-//                                    didFinishLaunchingWithOptions:launchOptions];
-
 }
 
 - (BOOL)application:(UIApplication *)application
