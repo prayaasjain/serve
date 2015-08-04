@@ -16,6 +16,8 @@
 #import "PublicListingViewController.h"
 #import "ServeSyncEngine.h"
 #import "ServeLoginViewController.h"
+#import "AppDelegate.h"
+#import "NewViewController.h"
 
 //const CGFloat iconWidth = 25.0f;
 //const CGFloat iconHeight = 25.0f;
@@ -29,7 +31,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 - (IBAction)addNewListingButtonPressed:(id)sender;
 - (IBAction)refreshButtonTouched:(id)sender;
 
-@property (strong, nonatomic) NewInputViewController *inputViewController;
+@property (strong, nonatomic) NewViewController *inputViewController;
 @property (strong, nonatomic) PublicListingViewController *publicListingViewController;
 @property (strong, nonatomic) ServeLoginViewController *loginViewController;
 
@@ -71,7 +73,6 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -92,7 +93,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.navigationItem setTitle:@"My Listings"];
     [self.view setBackgroundColor:[UIColor darkGrayColor]];
     
-    self.navigationController.toolbarHidden = NO;
+    self.navigationController.toolbarHidden = YES;
     
     UIBarButtonItem *itemSpace = [[UIBarButtonItem alloc]
                                   initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -132,7 +133,6 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     UIImage *myListImage = [UIImage imageNamed:@"listing.png"];
     UIButton *myListButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [myListButton setImage:myListImage forState:UIControlStateNormal];
-    [myListButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [myListButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
     [myListButton addTarget:self action:@selector(PublicListingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *myListBarButton = [[UIBarButtonItem alloc] initWithCustomView:myListButton];
@@ -151,7 +151,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     //here i want to have the display name of the pf user
     NSString *userName = [PFUser currentUser].username;
     
-    NSArray *logoutButtonActionSheetItems = [[NSArray alloc] initWithObjects:userName,
+    NSArray *logoutButtonActionSheetItems = [[NSArray alloc] initWithObjects:@"akhil",
                                     @"LogOut",@"Cancel", nil];
 
     self.logoutActionSheet= [[UIActionSheet alloc]initWithTitle:[logoutButtonActionSheetItems objectAtIndex:0] delegate:self cancelButtonTitle:[logoutButtonActionSheetItems objectAtIndex:2] destructiveButtonTitle:[logoutButtonActionSheetItems objectAtIndex:1] otherButtonTitles:nil, nil];
@@ -267,14 +267,24 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+
+    
     if(indexPath.section == 0)
     {
-        if(self.inputViewController == nil){
-            NewInputViewController *secondView = [[NewInputViewController alloc] init];
-            self.inputViewController = secondView;
-        }
-        self.inputViewController.view.backgroundColor = [UIColor whiteColor];
-        [self.navigationController pushViewController:self.inputViewController animated:YES];
+//        if(self.inputViewController == nil){
+//            NewViewController *secondView = [[NewViewController alloc] init];
+//            self.inputViewController = secondView;
+//        }
+        
+        self.inputViewController= [[NewViewController alloc] init];
+        self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
+        
+        
+        UINavigationController *navigationController1 = nil;
+        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
+
+        [self presentViewController:navigationController1 animated:YES completion:nil];
+        
     }
     
 }
@@ -283,14 +293,9 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
 - (IBAction)addNewListingButtonPressed:(id)sender {
     
-    
-//    EWDBlurExampleVC *secondView = [[EWDBlurExampleVC alloc]init];
-//    [self.navigationController pushViewController:secondView animated:YES];
-    
-    
-    NewInputViewController *secondView = [[NewInputViewController alloc] init];
-    self.inputViewController = secondView;
-    [self.navigationController pushViewController:self.inputViewController animated:YES];
+//    NewInputViewController *secondView = [[NewInputViewController alloc] init];
+//    self.inputViewController = secondView;
+//    [self.navigationController pushViewController:self.inputViewController animated:YES];
 }
 
 - (IBAction)PublicListingButtonPressed:(id)sender {

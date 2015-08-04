@@ -1,17 +1,17 @@
+////
+////  NewInputViewController.h
+////  Serve
+////
+////  Created by Akhil Khemani on 5/19/15.
+////  Copyright (c) 2015 Akhil Khemani. All rights reserved.
+////
 //
-//  NewInputViewController.h
-//  Serve
+//#import <UIKit/UIKit.h>
+//#import "ListingNavigationData.h"
 //
-//  Created by Akhil Khemani on 5/19/15.
-//  Copyright (c) 2015 Akhil Khemani. All rights reserved.
+//@interface NewInputViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
 //
-
-#import <UIKit/UIKit.h>
-#import "ListingNavigationData.h"
-
-@interface NewInputViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
-
-- (id)initWithListing:(ListingNavigationData *)listing;
-- (void)updateListingWith:(ListingNavigationData *)newListing;
-
-@end
+//- (id)initWithListing:(ListingNavigationData *)listing;
+//- (void)updateListingWith:(ListingNavigationData *)newListing;
+//
+//@end

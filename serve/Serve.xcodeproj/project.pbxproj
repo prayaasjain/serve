@@ -10,10 +10,12 @@
 		0F23110862C98C056B42C67A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7933C95D924B8547364C7637 /* libPods.a */; };
 		2014A1FB1B16D2B800AA5351 /* food1-gray.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1F91B16D2B800AA5351 /* food1-gray.jpg */; };
 		2014A1FC1B16D2B800AA5351 /* camera-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1FA1B16D2B800AA5351 /* camera-2.png */; };
+		201A14B41B69F02100E12C3A /* TypeField.m in Sources */ = {isa = PBXBuildFile; fileRef = 201A14B31B69F02100E12C3A /* TypeField.m */; };
 		201B33051B075890000930F7 /* food1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 201B33041B075890000930F7 /* food1.jpg */; };
 		202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202AF3731B1AF12600531369 /* ListingItemDetailCell.m */; };
 		202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */; };
 		2031AE9F1B3CE3890000CF40 /* PublicListingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */; };
+		203C7C851B576CA700205994 /* NewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 203C7C841B576CA700205994 /* NewViewController.m */; };
 		2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8D11B0925F100CA99B1 /* AddListingCell.m */; };
 		2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2040C8E01B0935E700CA99B1 /* PickImageViewController.m */; };
 		204BD3681B4553C50059A517 /* no-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 204BD3671B4553C50059A517 /* no-image.png */; };
@@ -55,6 +57,8 @@
 		2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 2091911C1B1A4E83008CCAA9 /* GoogleMapApi.m */; };
 		2094CF251B4B84A5001C4E1F /* ANPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 2094CF241B4B84A5001C4E1F /* ANPopoverSlider.m */; };
 		2094CF281B4B856E001C4E1F /* ANPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2094CF271B4B856E001C4E1F /* ANPopoverView.m */; };
+		209594B81B5A12CB007366AA /* InfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 209594B71B5A12CB007366AA /* InfoWindow.xib */; };
+		209594BB1B5A1462007366AA /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 209594BA1B5A1462007366AA /* MapViewController.m */; };
 		20A4FD8E1B1C101100B92927 /* chicken.png in Resources */ = {isa = PBXBuildFile; fileRef = 20A4FD8D1B1C101100B92927 /* chicken.png */; };
 		20A5D9C91B3BB28A00EA127D /* Listing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5D9C81B3BB28A00EA127D /* Listing.m */; };
 		20AE35901B46909600CCBA42 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 20AE358F1B46909600CCBA42 /* Filter.m */; };
@@ -83,10 +87,12 @@
 		20CA6B551B1410E5005FE7AA /* previous_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B511B1410E5005FE7AA /* previous_32.png */; };
 		20CA6B561B1410E5005FE7AA /* reduce_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B521B1410E5005FE7AA /* reduce_32.png */; };
 		20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */; };
+		20D30E041B6E233600F9D17E /* ImageField.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D30E021B6E233600F9D17E /* ImageField.m */; };
 		20D758151B4CB6E800270A39 /* walk_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20D758141B4CB6E800270A39 /* walk_32.png */; };
 		20D758171B4CB83C00270A39 /* walk2_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20D758161B4CB83C00270A39 /* walk2_32.png */; };
 		20D758191B4CBA1C00270A39 /* car_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20D758181B4CBA1C00270A39 /* car_32.png */; };
 		20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */; };
+		20D8E81B1B68709100E61AA7 /* ImageFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E8191B68709100E61AA7 /* ImageFieldCell.m */; };
 		20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DE790C1B082AB000E3F101 /* MyListingsViewController.m */; };
 		20EE2B111B01502B00F80CAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B101B01502B00F80CAC /* main.m */; };
 		20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B131B01502B00F80CAC /* AppDelegate.m */; };
@@ -140,6 +146,8 @@
 /* Begin PBXFileReference section */
 		2014A1F91B16D2B800AA5351 /* food1-gray.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "food1-gray.jpg"; path = "Resources/food1-gray.jpg"; sourceTree = SOURCE_ROOT; };
 		2014A1FA1B16D2B800AA5351 /* camera-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-2.png"; path = "Resources/camera-2.png"; sourceTree = SOURCE_ROOT; };
+		201A14B21B69F02100E12C3A /* TypeField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeField.h; sourceTree = "<group>"; };
+		201A14B31B69F02100E12C3A /* TypeField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeField.m; sourceTree = "<group>"; };
 		201B33041B075890000930F7 /* food1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food1.jpg; sourceTree = "<group>"; };
 		202AF3721B1AF12600531369 /* ListingItemDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingItemDetailCell.h; sourceTree = "<group>"; };
 		202AF3731B1AF12600531369 /* ListingItemDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingItemDetailCell.m; sourceTree = "<group>"; };
@@ -149,6 +157,8 @@
 		2031AE9E1B3CE3890000CF40 /* PublicListingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicListingViewController.h; sourceTree = "<group>"; };
 		2031AEA21B3CE4690000CF40 /* ServeConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeConstants.h; sourceTree = "<group>"; };
 		2031AEA31B3CE5D80000CF40 /* Serve-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Serve-Prefix.pch"; sourceTree = "<group>"; };
+		203C7C831B576CA700205994 /* NewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewViewController.h; sourceTree = "<group>"; };
+		203C7C841B576CA700205994 /* NewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewViewController.m; sourceTree = "<group>"; };
 		2040C8D01B0925F100CA99B1 /* AddListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddListingCell.h; sourceTree = "<group>"; };
 		2040C8D11B0925F100CA99B1 /* AddListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddListingCell.m; sourceTree = "<group>"; };
 		2040C8DF1B0935E700CA99B1 /* PickImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickImageViewController.h; sourceTree = "<group>"; };
@@ -213,6 +223,9 @@
 		2094CF241B4B84A5001C4E1F /* ANPopoverSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANPopoverSlider.m; sourceTree = "<group>"; };
 		2094CF261B4B856E001C4E1F /* ANPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANPopoverView.h; sourceTree = "<group>"; };
 		2094CF271B4B856E001C4E1F /* ANPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANPopoverView.m; sourceTree = "<group>"; };
+		209594B71B5A12CB007366AA /* InfoWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoWindow.xib; sourceTree = "<group>"; };
+		209594B91B5A1462007366AA /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		209594BA1B5A1462007366AA /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		20A4FD8D1B1C101100B92927 /* chicken.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chicken.png; sourceTree = "<group>"; };
 		20A5D9C71B3BB28A00EA127D /* Listing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Listing.h; path = ../Listing.h; sourceTree = "<group>"; };
 		20A5D9C81B3BB28A00EA127D /* Listing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Listing.m; path = ../Listing.m; sourceTree = "<group>"; };
@@ -245,11 +258,15 @@
 		20CA6B521B1410E5005FE7AA /* reduce_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reduce_32.png; path = assets_test/reduce_32.png; sourceTree = "<group>"; };
 		20CA6B571B141790005FE7AA /* NewPickUpInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPickUpInfoViewController.h; sourceTree = "<group>"; };
 		20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPickUpInfoViewController.m; sourceTree = "<group>"; };
+		20D30E021B6E233600F9D17E /* ImageField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageField.m; sourceTree = "<group>"; };
+		20D30E031B6E233600F9D17E /* ImageField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageField.h; sourceTree = "<group>"; };
 		20D758141B4CB6E800270A39 /* walk_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walk_32.png; sourceTree = "<group>"; };
 		20D758161B4CB83C00270A39 /* walk2_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walk2_32.png; sourceTree = "<group>"; };
 		20D758181B4CBA1C00270A39 /* car_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = car_32.png; sourceTree = "<group>"; };
 		20D8E7501B1D4A9100AA5241 /* ServeCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeCoreDataController.h; sourceTree = "<group>"; };
 		20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeCoreDataController.m; sourceTree = "<group>"; };
+		20D8E8191B68709100E61AA7 /* ImageFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFieldCell.m; sourceTree = "<group>"; };
+		20D8E81A1B68709100E61AA7 /* ImageFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFieldCell.h; sourceTree = "<group>"; };
 		20DE790B1B082AB000E3F101 /* MyListingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyListingsViewController.h; sourceTree = "<group>"; };
 		20DE790C1B082AB000E3F101 /* MyListingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyListingsViewController.m; sourceTree = "<group>"; };
 		20EE2B0B1B01502B00F80CAC /* Serve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Serve.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -373,6 +390,8 @@
 				20CA6B581B141790005FE7AA /* NewPickUpInfoViewController.m */,
 				204BD37F1B4609BA0059A517 /* FilterTableViewController.h */,
 				204BD3801B4609BA0059A517 /* FilterTableViewController.m */,
+				203C7C831B576CA700205994 /* NewViewController.h */,
+				203C7C841B576CA700205994 /* NewViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -380,6 +399,10 @@
 		203592191B044ADE00850472 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				20D30E021B6E233600F9D17E /* ImageField.m */,
+				20D30E031B6E233600F9D17E /* ImageField.h */,
+				20D8E8191B68709100E61AA7 /* ImageFieldCell.m */,
+				20D8E81A1B68709100E61AA7 /* ImageFieldCell.h */,
 				20836EA61B3F55D50046FEAC /* PublicListingCell.m */,
 				20836EA71B3F55D50046FEAC /* PublicListingCell.h */,
 				20AFA22F1B2523C000635B51 /* SelfListingCell.h */,
@@ -396,8 +419,13 @@
 				204BD3891B462DDA0059A517 /* CustomAccessory.m */,
 				2094CF231B4B84A5001C4E1F /* ANPopoverSlider.h */,
 				2094CF241B4B84A5001C4E1F /* ANPopoverSlider.m */,
+				201A14B21B69F02100E12C3A /* TypeField.h */,
+				201A14B31B69F02100E12C3A /* TypeField.m */,
 				2094CF261B4B856E001C4E1F /* ANPopoverView.h */,
 				2094CF271B4B856E001C4E1F /* ANPopoverView.m */,
+				209594B71B5A12CB007366AA /* InfoWindow.xib */,
+				209594B91B5A1462007366AA /* MapViewController.h */,
+				209594BA1B5A1462007366AA /* MapViewController.m */,
 			);
 			name = CustomCells;
 			sourceTree = "<group>";
@@ -730,6 +758,7 @@
 				20CA6B541B1410E5005FE7AA /* next_32.png in Resources */,
 				20A4FD8E1B1C101100B92927 /* chicken.png in Resources */,
 				204BD37C1B4607390059A517 /* sliderhandle@2x.png in Resources */,
+				209594B81B5A12CB007366AA /* InfoWindow.xib in Resources */,
 				20D758171B4CB83C00270A39 /* walk2_32.png in Resources */,
 				2014A1FC1B16D2B800AA5351 /* camera-2.png in Resources */,
 				20F3E2481B5245C3003B2D7D /* FacebookDown.png in Resources */,
@@ -830,11 +859,14 @@
 				2055FD3E1B27EF4D00B85F77 /* AFHTTPRequestOperation.m in Sources */,
 				20F3E2531B52698C003B2D7D /* ServeLoginViewController.m in Sources */,
 				2040C8D21B0925F100CA99B1 /* AddListingCell.m in Sources */,
+				203C7C851B576CA700205994 /* NewViewController.m in Sources */,
 				2040C8E11B0935E700CA99B1 /* PickImageViewController.m in Sources */,
 				207873351B3B99BE00C3C86B /* AFImageRequestOperation.m in Sources */,
 				20CA6B591B141790005FE7AA /* NewPickUpInfoViewController.m in Sources */,
 				207873281B3B973900C3C86B /* AFJSONRequestOperation.m in Sources */,
+				20D8E81B1B68709100E61AA7 /* ImageFieldCell.m in Sources */,
 				20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */,
+				20D30E041B6E233600F9D17E /* ImageField.m in Sources */,
 				207873361B3B99BE00C3C86B /* AFNetworkActivityIndicatorManager.m in Sources */,
 				202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */,
 				20EE2B111B01502B00F80CAC /* main.m in Sources */,
@@ -849,6 +881,7 @@
 				20836EB41B3FBDC20046FEAC /* NSManagedObject+JSON.m in Sources */,
 				2091911D1B1A4E83008CCAA9 /* GoogleMapApi.m in Sources */,
 				20A5D9C91B3BB28A00EA127D /* Listing.m in Sources */,
+				209594BB1B5A1462007366AA /* MapViewController.m in Sources */,
 				2055FD431B27EF4D00B85F77 /* AFURLConnectionOperation.m in Sources */,
 				207873251B3B969500C3C86B /* AFJSONUtilities.m in Sources */,
 				207873221B3B965C00C3C86B /* AFHTTPClient.m in Sources */,
@@ -861,6 +894,7 @@
 				2094CF281B4B856E001C4E1F /* ANPopoverView.m in Sources */,
 				20EE2B3F1B01511700F80CAC /* InputViewController.m in Sources */,
 				207873441B3BA50500C3C86B /* ServeSyncEngine.m in Sources */,
+				201A14B41B69F02100E12C3A /* TypeField.m in Sources */,
 				20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

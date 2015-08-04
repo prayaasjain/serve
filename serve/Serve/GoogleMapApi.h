@@ -10,7 +10,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface GoogleMapApi : NSObject
+@interface GoogleMapApi : NSObject<GMSMapViewDelegate>
 
 + (GMSMapView *)displayMapwithAddress:(NSString *)address forFrame:(CGRect)frame;
 
