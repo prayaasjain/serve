@@ -255,8 +255,6 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[pickerView]-leftMargin-|" options:0 metrics:metrics views:views]];
     
     
-//    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[titleLabel]-[titleInput]-fieldSpacing-[cuisineLabel]-fieldSpacing-[servesLabel]-[pickerView]-fieldSpacing-[typeLabel]-[cuisineInput]-fieldSpacing-[descLabel]-[descInput]-|" options:0 metrics: metrics views:views]];
-    
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageField]-fieldSpacing-[titleLabel]-[titleInput]-fieldSpacing-[servesLabel]-[pickerView]-fieldSpacing-[typeLabel]-[typeField]-fieldSpacing-[descLabel]-[descInput]-|" options:0 metrics: metrics views:views]];
     
     NSLayoutConstraint *titleInputWidthConstraint = [NSLayoutConstraint

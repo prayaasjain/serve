@@ -488,11 +488,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Serve/NewViewController.m"
-            timestampString = "460280896.341167"
+            timestampString = "460354682.771468"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
+            startingLineNumber = "371"
+            endingLineNumber = "371"
             landmarkName = "-setUpConstraints"
             landmarkType = "5">
          </BreakpointContent>
