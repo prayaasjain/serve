@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "ServeListingProtocol.h"
 
 
-@interface Listing : NSManagedObject <MKAnnotation>
+@interface Listing : NSManagedObject <MKAnnotation,ServeListingProtocol>
 
 @property (nonatomic, retain) NSData * image;
 @property (nonatomic, retain) NSDate * updatedAt;
@@ -34,5 +35,9 @@
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * syncStatus;
 @property (nonatomic, retain) NSNumber * serveCount;
+
+//-(id<ServeListingProtocol>)createNewIteminContext:(NSManagedObjectContext*)context;
+
++ (id<ServeListingProtocol>)createNewListinginContext:(NSManagedObjectContext *)context;
 
 @end

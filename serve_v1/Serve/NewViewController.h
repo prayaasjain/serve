@@ -7,9 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ServeListingProtocol.h"
+#import "MyListingsViewController.h"
+
+@class NewViewController;
+
+@protocol NewViewControllerDelegate <NSObject>
+
+- (void)newViewController:(NewViewController *)viewController didSaveItem:(id<ServeListingProtocol>)savedItem;
+- (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item;
+
+@end
 
 @interface NewViewController : UIViewController<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 
+@property (weak, nonatomic) id<NewViewControllerDelegate> delegate;
+
 - (BOOL)shouldPresentPhotoCaptureController;
+
+- (instancetype)initWithExistingItem:(id<ServeListingProtocol>)item;
+- (instancetype)initWithNewItem;
 
 @end

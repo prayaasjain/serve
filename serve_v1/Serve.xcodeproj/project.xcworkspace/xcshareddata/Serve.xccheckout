@@ -14,7 +14,7 @@
 		<string>https://github.com/prayaasjain/serve.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>serve/Serve.xcodeproj</string>
+	<string>serve_v1/Serve.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>E0631F18DCD24F008E1874891F01615A195CE79C</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>E0631F18DCD24F008E1874891F01615A195CE79C</string>
 			<key>IDESourceControlWCCName</key>
-			<string>ServeNew%20fresh</string>
+			<string>ServeNew</string>
 		</dict>
 	</array>
 </dict>

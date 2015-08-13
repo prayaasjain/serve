@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>45B33D90-7E6F-477A-A904-23819FC5D1B1</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>SignificantDates</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>E0631F18DCD24F008E1874891F01615A195CE79C</key>
 		<string>https://github.com/prayaasjain/serve.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Research/SignificantDates-Final/SignificantDates.xcodeproj/project.xcworkspace</string>
+	<string>Research/SignificantDates-Final/SignificantDates.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>E0631F18DCD24F008E1874891F01615A195CE79C</key>

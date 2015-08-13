@@ -20,11 +20,12 @@
 
 @end
 
-@interface ReviewSubmitViewController : UIViewController<UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate>
+@interface ReviewSubmitViewController : UIViewController<UIActionSheetDelegate,UITextViewDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,MKMapViewDelegate>
 
-- (id)initWithListing:(ListingNavigationData *)listing;
-- (void)updateListingWith:(ListingNavigationData *)newListing;
+//- (id)initWithListing:(ListingNavigationData *)listing;
+//- (void)updateListingWith:(ListingNavigationData *)newListing;
 
+- (id)initWithListing:(id<ServeListingProtocol>)listing;
 @property (nonatomic, assign) id<SaveAndSyncDelegate> ssdelegate;
 
 @end

@@ -1,15 +1,15 @@
+////
+////  InputViewController.h
+////  Serve
+////
+////  Created by Akhil Khemani on 5/11/15.
+////  Copyright (c) 2015 Akhil Khemani. All rights reserved.
+////
 //
-//  InputViewController.h
-//  Serve
+//#import <UIKit/UIKit.h>
+//#import "PickImageViewController.h"
 //
-//  Created by Akhil Khemani on 5/11/15.
-//  Copyright (c) 2015 Akhil Khemani. All rights reserved.
+//@interface InputViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate>
 //
-
-#import <UIKit/UIKit.h>
-#import "PickImageViewController.h"
-
-@interface InputViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate>
-
-@end
-
+//@end
+//

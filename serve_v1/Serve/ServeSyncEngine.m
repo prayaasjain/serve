@@ -9,6 +9,8 @@
 #import "ServeSyncEngine.h"
 #import "ServeCoreDataController.h"
 #import "NSManagedObject+JSON.h"
+#import "ServeListingProtocol.h"
+#import "Listing.h"
 
 NSString * const kServeSyncEngineInitialCompleteKey = @"ServeSyncEngineInitialSyncCompleted";
 NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngineSyncCompleted";
@@ -37,6 +39,12 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     
     return sharedEngine;
 }
+
+//- (void)deleteItem:(id <ServeListingProtocol>)item {
+//    Listing *listing = (Listing *)item;
+//    [listing setSyncStatus:[NSNumber numberWithInt:ServeObjectDeleted]];
+//}
+
 
 - (void)registerNSManagedObjectClassToSync:(Class)aClass {
     if (!self.registeredClassesToSync) {
@@ -137,7 +145,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     NSManagedObjectContext *managedObjectContext = [[ServeCoreDataController sharedInstance] backgroundManagedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:className];
     NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"syncStatus = %d", syncStatus];
-    NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"author = %@", @"akhil"];
+    NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"author = %@", @"Akhil"];
     
     NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:predicate1, predicate2,nil]];
     

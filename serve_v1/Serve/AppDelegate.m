@@ -16,10 +16,11 @@
 #import "NewInputViewController.h"
 #import "NewPickUpInfoViewController.h"
 #import "PublicListingViewController.h"
+#import "AddressViewController.h"
 #import "FilterTableViewController.h"
 #import "MapViewController.h"
 #import "NewViewController.h"
-//#import <GoogleMaps/GoogleMaps.h>
+#import "InboxTableViewController.h"
 #import "Listing.h"
 #import "ServeSyncEngine.h"
 #import "Filter.h"
@@ -63,102 +64,107 @@
 //
 //        else
         {
-            
-//            MyListingsViewController *myListingsViewController = [[MyListingsViewController alloc]init];
-//            self.window.rootViewController = myListingsViewController;
-//            
-//            navigationController = [[UINavigationController alloc]
-//                                initWithRootViewController:myListingsViewController];
-            
-//            PublicListingViewController *myListingsViewController = [[PublicListingViewController alloc]init];
-//            //NewViewController *myListingsViewController = [[NewViewController alloc]init];
-//            self.window.rootViewController = myListingsViewController;
-//            
-//            navigationController = [[UINavigationController alloc]
-//                                    initWithRootViewController:myListingsViewController];
+           
+            [self initTabController];
+
         }
     
-    //
-    
-        self.tabBarController = [[UITabBarController alloc] init];
-        // Change the tab bar background
-        [[UITabBarItem appearance] setTitleTextAttributes:@{
+
+//    PickUpInfoViewController *pickUpViewController = [[PickUpInfoViewController alloc]init];
+    //self.window.rootViewController = filterTableViewController;
+    return YES;
+}
+
+
+- (void)initTabController
+{
+    self.tabBarController = [[UITabBarController alloc] init];
+    // Change the tab bar background
+    [[UITabBarItem appearance] setTitleTextAttributes:@{
                                                         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f],
                                                         NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:48/255.0 blue:92/255.0 alpha:1.0],}
                                              forState:UIControlStateNormal];
     
-        [[UITabBarItem appearance] setTitleTextAttributes:@{
+    [[UITabBarItem appearance] setTitleTextAttributes:@{
                                                         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f],
                                                         NSForegroundColorAttributeName : [UIColor colorWithRed:0/255.0 green:138/255.0 blue:196/255.0 alpha:1.0],}
                                              forState:UIControlStateSelected];
     
-        MyListingsViewController *myListingsViewController = [[MyListingsViewController alloc]init];
-        PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
-        //NewInputViewController *newInputViewController = [[NewInputViewController alloc]init];
-        NewViewController *newViewController = [[NewViewController alloc]init];
+    MyListingsViewController *myListingsViewController = [[MyListingsViewController alloc]init];
+    PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
+    NewViewController *newViewController = [[NewViewController alloc]init];
+    InboxTableViewController *inboxTableViewController = [[InboxTableViewController alloc]init];
+    AddressViewController *addressViewController = [[AddressViewController alloc]init];
+    ReviewSubmitViewController *reviewController = [[ReviewSubmitViewController alloc]init];
     
-        UIImage *mylistingsImage = [UIImage imageNamed:@"add_list2.png"];
-        UIImage *mylistingsImageSelected = [UIImage imageNamed:@"add_list2_selected.png"];
-        mylistingsImage = [mylistingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        mylistingsImageSelected = [mylistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        myListingsViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"My Listings" image:mylistingsImage selectedImage:mylistingsImageSelected];
+    UIImage *mylistingsImage = [UIImage imageNamed:@"add_list2.png"];
+    UIImage *mylistingsImageSelected = [UIImage imageNamed:@"add_list2_selected.png"];
+    mylistingsImage = [mylistingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    mylistingsImageSelected = [mylistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    myListingsViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"My Listings" image:mylistingsImage selectedImage:mylistingsImageSelected];
     
-        UIImage *publiclistingsImage = [UIImage imageNamed:@"plate_filled.png"];
-        UIImage *publiclistingsImageSelected = [UIImage imageNamed:@"plate_filled_selected.png"];
-        publiclistingsImage = [publiclistingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        publiclistingsImageSelected = [publiclistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        publicListingViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Available Food" image:publiclistingsImage selectedImage:publiclistingsImageSelected];
+    UIImage *publiclistingsImage = [UIImage imageNamed:@"plate_filled.png"];
+    UIImage *publiclistingsImageSelected = [UIImage imageNamed:@"plate_filled_selected.png"];
+    publiclistingsImage = [publiclistingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    publiclistingsImageSelected = [publiclistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    publicListingViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Available Food" image:publiclistingsImage selectedImage:publiclistingsImageSelected];
     
-        UIImage *addlistingsImage = [UIImage imageNamed:@"addgreen.png"];
-        UIImage *addlistingsImageSelected = [UIImage imageNamed:@"addgreen.png"];
-        addlistingsImage = [addlistingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        addlistingsImageSelected = [addlistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        //newInputViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Add Listing" image:addlistingsImage selectedImage:addlistingsImageSelected];
+    UIImage *addlistingsImage = [UIImage imageNamed:@"addgreen.png"];
+    UIImage *addlistingsImageSelected = [UIImage imageNamed:@"addgreen.png"];
+    addlistingsImage = [addlistingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    addlistingsImageSelected = [addlistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    //newInputViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Add Listing" image:addlistingsImage selectedImage:addlistingsImageSelected];
     
-        UIImage *settingsImage = [UIImage imageNamed:@"user.png"];
-        UIImage *settingsImageSelected = [UIImage imageNamed:@"user_selected.png"];
-        settingsImage = [settingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        settingsImageSelected = [settingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        newViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage selectedImage:settingsImageSelected];
-
-        UINavigationController *navigationController1 = nil;
-        navigationController1 = [[UINavigationController alloc] initWithRootViewController:myListingsViewController];
-   
-        UINavigationController *navigationController2 = nil;
-        navigationController2 = [[UINavigationController alloc] initWithRootViewController:publicListingViewController];
+    UIImage *inboxImage = [UIImage imageNamed:@"inbox.png"];
+    UIImage *inboxImageSelected = [UIImage imageNamed:@"inbox_selected.png"];
+    inboxImage = [inboxImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    inboxImageSelected = [inboxImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    inboxTableViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Messages" image:inboxImage selectedImage:inboxImageSelected];
     
-        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                   [UIColor whiteColor],NSForegroundColorAttributeName,
-                                                   nil];
-        navigationController1.navigationBar.barTintColor = [UIColor darkGrayColor];//#007AFF
-        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-        navigationController1.toolbar.barTintColor = [UIColor darkGrayColor];
-        //navigationController1.toolbar.translucent = YES ;
-        navigationController2.navigationBar.barTintColor = [UIColor darkGrayColor];//#007AFF
-        navigationController2.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-        navigationController2.toolbar.barTintColor = [UIColor darkGrayColor];
-       // navigationController2.toolbar.translucent = YES ;
+    UIImage *settingsImage = [UIImage imageNamed:@"user.png"];
+    UIImage *settingsImageSelected = [UIImage imageNamed:@"user_selected.png"];
+    settingsImage = [settingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    settingsImageSelected = [settingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    reviewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage selectedImage:settingsImageSelected];
     
-        NSArray *myViewControllers = [[NSArray alloc] initWithObjects:
+    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:myListingsViewController];
+    UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:publicListingViewController];
+    UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:inboxTableViewController];
+    UINavigationController *navigationController4 = [[UINavigationController alloc] initWithRootViewController:reviewController];
+    
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor whiteColor],NSForegroundColorAttributeName,
+                                               nil];
+    navigationController1.navigationBar.barTintColor = [UIColor darkGrayColor];//#007AFF
+    navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    //navigationController1.toolbar.translucent = YES ;
+    navigationController2.navigationBar.barTintColor = [UIColor darkGrayColor];//#007AFF
+    navigationController2.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    navigationController3.navigationBar.barTintColor = [UIColor darkGrayColor];//#007AFF
+    navigationController3.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    navigationController4.navigationBar.barTintColor = [UIColor darkGrayColor];//#007AFF
+    navigationController4.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    
+    NSArray *myViewControllers = [[NSArray alloc] initWithObjects:
                                   navigationController1,
-                                  navigationController2,newViewController, nil];
+                                  navigationController2,navigationController3,navigationController4, nil];
     
-
     
-        //set the view controllers for the tab bar controller
-        [self.tabBarController setViewControllers:myViewControllers];
-        [self.tabBarController setSelectedIndex:0];
     
-        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        //add the tab bar controllers view to the window
-        //[self.window addSubview:self.tabBarController.view];
+    //set the view controllers for the tab bar controller
+    [self.tabBarController setViewControllers:myViewControllers];
+    [self.tabBarController setSelectedIndex:0];
     
-        [self.window setRootViewController:self.tabBarController];
-
-        [self.window makeKeyAndVisible];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //add the tab bar controllers view to the window
+    //[self.window addSubview:self.tabBarController.view];
+    
+    [self.window setRootViewController:self.tabBarController];
+    
+    [self.window makeKeyAndVisible];
     
     //Raised center button for tabbar
-//    UIImage *buttonImage = [UIImage imageNamed:@"plate_filled.png"];
+//    UIImage *buttonImage = [UIImage imageNamed:@"addgreen.png"];
 //    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    button.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height);
 //    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -176,41 +182,10 @@
 //    
 //    [self.window addSubview:button];
     
-    
-    
-    //
-    
-    
-    
-//    PickUpInfoViewController *pickUpViewController = [[PickUpInfoViewController alloc]init];
-//    InputViewController *inputViewController = [[InputViewController alloc]init];
-//    PickImageViewController *imageViewController =[[PickImageViewController alloc]init];
-//    ReviewSubmitViewController *reviewSubmitViewController = [[ReviewSubmitViewController alloc]init];
-//    NewInputViewController *newInputViewController = [[NewInputViewController alloc]init];
-//    NewPickUpInfoViewController *newPickUpinfoViewController = [[NewPickUpInfoViewController alloc]init];
-//    PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
-//    FilterTableViewController *filterTableViewController = [[FilterTableViewController alloc]init];
-    //self.window.rootViewController = pickUpViewController;
-    //self.window.rootViewController = inputViewController;
-    //self.window.rootViewController = imageViewController;
-    //self.window.rootViewController = reviewSubmitViewController;
-    //self.window.rootViewController = newInputViewController;
-    //self.window.rootViewController = newPickUpinfoViewController;
-    //self.window.rootViewController = publicListingViewController;
-    //self.window.rootViewController = filterTableViewController;
-    
-    
-//    CATransition* transition = [CATransition animation];
-//    transition.duration = 0.5;
-//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
-//    //transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
-//    [navigationController.view.layer addAnimation:transition forKey:nil];
-//    [navigationController popViewControllerAnimated:NO];
 
-    //self.window.rootViewController = navigationController;
-    return YES;
 }
+
+
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url

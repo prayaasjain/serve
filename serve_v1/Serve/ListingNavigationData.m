@@ -1,13 +1,13 @@
+////
+////  Listing.m
+////  Serve
+////
+////  Created by Prayaas Jain on 5/31/15.
+////  Copyright (c) 2015 Akhil Khemani. All rights reserved.
+////
 //
-//  Listing.m
-//  Serve
+//#import "ListingNavigationData.h"
 //
-//  Created by Prayaas Jain on 5/31/15.
-//  Copyright (c) 2015 Akhil Khemani. All rights reserved.
+//@implementation ListingNavigationData
 //
-
-#import "ListingNavigationData.h"
-
-@implementation ListingNavigationData
-
-@end
+//@end

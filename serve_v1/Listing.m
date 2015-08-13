@@ -9,6 +9,7 @@
 #import "Listing.h"
 #import "NSManagedObject+JSON.h"
 #import "ServeSyncEngine.h"
+#import "ServeCoreDataController.h"
 
 
 @implementation Listing
@@ -72,6 +73,44 @@
     return coord;
 }
 
+//-(void)setName:(NSString *)name
+//{
+//    self.name = name;
+//}
+
+//-(id<ServeListingProtocol>)createNewIteminContext:(NSManagedObjectContext*)context;
+//{
+//    
+//    Listing *listingItem =[Listing createNewListinginContext:context];
+//    
+//    return listingItem;
+//}
+
++ (id<ServeListingProtocol>)createNewListinginContext:(NSManagedObjectContext *)context
+{
+    Listing *newItem = nil;
+    
+    newItem = [NSEntityDescription insertNewObjectForEntityForName:@"Listing" inManagedObjectContext:context];
+    
+    if (newItem)
+    {
+        //newItem.image = [UIImage imageNamed:@"food1-gray.jpg"];
+        newItem.author = @"Akhil";
+        newItem.uploadedToServer = [NSNumber numberWithBool:NO];
+        newItem.deleteFromServer = [NSNumber numberWithBool:NO];
+        newItem.type = 0;
+        newItem.desc = @"";
+        newItem.serveCount = [NSNumber numberWithInt:2];
+        newItem.syncStatus = [NSNumber numberWithInt:ServeObjectCreated];
+    }
+    
+    return newItem;
+}
+
+//- (void)deleteItem:(id <ServeListingProtocol>)item inContext:(NSManagedObjectContext *)context{
+//    Listing *listing = (Listing *)item;
+//    [listing setSyncStatus:[NSNumber numberWithInt:ServeObjectDeleted]];
+//}
 
 
 @end

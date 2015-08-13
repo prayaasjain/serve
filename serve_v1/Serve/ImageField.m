@@ -7,11 +7,13 @@
 //
 
 #import "ImageField.h"
+#import "UIColor+Utils.h"
 
 @interface ImageField()
 
 @property (strong, nonatomic) UIButton *button;
-@property (strong, nonatomic) UIView *horizontalSeparator;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIImageView *cameraButton;
 @property (nonatomic, assign) NSInteger selectedType;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, retain) NSMutableArray* localImageArray;
@@ -35,7 +37,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        
         self.scrollView  = [[UIScrollView alloc] init];
         self.scrollView.translatesAutoresizingMaskIntoConstraints  = NO;
         self.scrollView.scrollEnabled = NO;
@@ -49,7 +50,14 @@
         self.imageOne.image = [UIImage imageNamed:@"addPhoto1.png"];
         [self.imageOne setUserInteractionEnabled:YES];
         self.imageOne.translatesAutoresizingMaskIntoConstraints = NO;
-
+        
+        self.initialView = [[UIView alloc]initWithFrame:CGRectZero];
+        self.initialView.backgroundColor = [UIColor whiteColor];
+        self.initialView.translatesAutoresizingMaskIntoConstraints  = NO;
+        
+        self.cameraButton = [[UIImageView alloc]initWithFrame:CGRectZero];
+        self.cameraButton.image = [UIImage imageNamed:@"camera_big.png"];
+        self.cameraButton.translatesAutoresizingMaskIntoConstraints = NO;
         
         self.imageTwo = [[UIImageView alloc]initWithFrame:CGRectZero];
         //self.imageTwo.contentMode = UIViewContentModeScale;
@@ -81,25 +89,29 @@
         [self.imageFour setUserInteractionEnabled:YES];
         self.imageFour.translatesAutoresizingMaskIntoConstraints = NO;
         
+        self.titleLabel = [UILabel new];
+        [self.titleLabel setText:@"ADD PHOTOS"];
+        [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:12.0f]];
+        self.titleLabel.textColor = [UIColor servetextLabelGrayColor];
+        self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        
         [self.imageTwo setHidden:YES];
         [self.imageFour setHidden:YES];
         [self.imageThree setHidden:YES];
         //switch off the scrolling till the third image is not switched on ? Maybe ?
         
-
-        self.horizontalSeparator = [[UIView alloc]initWithFrame:CGRectZero];
-        //self.horizontalSeparator.backgroundColor = [UIColor lightGrayColor];
-        self.horizontalSeparator.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        self.horizontalSeparator.layer.borderWidth = 0.3f;
-        self.horizontalSeparator.translatesAutoresizingMaskIntoConstraints = NO;
-        
         [self.scrollView addSubview:self.imageOne];
         [self.scrollView addSubview:self.imageTwo];
         [self.scrollView addSubview:self.imageThree];
         [self.scrollView addSubview:self.imageFour];
+        [self.scrollView addSubview:self.initialView];
         
         self.scrollView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.scrollView];
+        [self.scrollView addSubview:self.initialView];
+        [self.initialView addSubview:self.titleLabel];
+        [self.initialView addSubview:self.cameraButton];
         
         self.localImageArray = [[NSMutableArray alloc]init];
         
@@ -118,6 +130,8 @@
                  @"imageTwo":self.imageTwo,
                  @"imageThree":self.imageThree,
                  @"imageFour":self.imageFour,
+                 @"initView":self.initialView,
+                 @"cameraButton":self.cameraButton
                  };
     
     id metrics = @{@"topMargin": @16, @"bottommargin":@50,@"fieldheight":@60,@"descheight":@160,@"leftMargin":@16,@"rightMargin":@10,@"fieldSpacing":@40};
@@ -125,6 +139,7 @@
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics: metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics: metrics views:views]];
     
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[initView]|" options:0 metrics: metrics views:views]];
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[imageOne]-[imageTwo]-[imageThree]-[imageFour]|" options:0 metrics:metrics views:views]];
 
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[imageOne]|" options:0 metrics: metrics views:views]];
@@ -154,7 +169,38 @@
                                                      relatedBy:NSLayoutRelationEqual toItem:self.imageOne
                                                      attribute:NSLayoutAttributeHeight multiplier:1 constant:0];
     
+    NSLayoutConstraint *initialViewHeightConstraint = [NSLayoutConstraint
+                                                    constraintWithItem:self.initialView attribute:NSLayoutAttributeHeight
+                                                    relatedBy:NSLayoutRelationEqual toItem:self
+                                                    attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint *cameraButtonCenterXConstraint = [NSLayoutConstraint
+                                                       constraintWithItem:self.cameraButton attribute:NSLayoutAttributeCenterX
+                                                       relatedBy:NSLayoutRelationEqual toItem:self
+                                                       attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint *cameraButtonCenterYConstraint = [NSLayoutConstraint
+                                                         constraintWithItem:self.cameraButton attribute:NSLayoutAttributeCenterY
+                                                         relatedBy:NSLayoutRelationEqual toItem:self
+                                                         attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint *titleLabelLeftMarginConstraint = [NSLayoutConstraint
+                                                         constraintWithItem:self.titleLabel attribute:NSLayoutAttributeLeftMargin
+                                                         relatedBy:NSLayoutRelationEqual toItem:self.initialView
+                                                         attribute:NSLayoutAttributeLeftMargin multiplier:1.0 constant:10];
+    
+    NSLayoutConstraint *titleLabelTopMarginConstraint = [NSLayoutConstraint
+                                                         constraintWithItem:self.titleLabel attribute:NSLayoutAttributeTopMargin
+                                                         relatedBy:NSLayoutRelationEqual toItem:self.initialView
+                                                         attribute:NSLayoutAttributeTopMargin multiplier:1.0 constant:10];
+    
+    
     [self.scrollView addConstraints:@[imageOneWidthConstraint,imageOneHeightConstraint,imageTwoWidthConstraint,imageThreeWidthConstraint,imageFourWidthConstraint]];
+    
+    [self addConstraints:@[titleLabelTopMarginConstraint,titleLabelLeftMarginConstraint]];
+    
+    [self addConstraints:@[initialViewHeightConstraint,cameraButtonCenterXConstraint,cameraButtonCenterYConstraint]];
+   
 }
 
 -(void)addPhotoWithPhotosArray:(NSArray*)photoArray
@@ -163,7 +209,8 @@
     
     switch(photoArray.count)
     {
-        case 1: [self.imageTwo setHidden:NO];
+        case 1: [self.initialView setHidden:YES];
+                [self.imageTwo setHidden:NO];
                 [self.imageOne setImage:[photoArray objectAtIndex:0]];
                 break;
         case 2: [self.imageThree setHidden:NO];

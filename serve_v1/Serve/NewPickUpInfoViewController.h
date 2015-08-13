@@ -14,8 +14,8 @@
 
 @property (strong, nonatomic) ReviewSubmitViewController *reviewSubmitViewController;
 
-- (id)initWithListing:(ListingNavigationData *)listing;
-- (void)updateListingWith:(ListingNavigationData *)newListing;
+//- (id)initWithListing:(ListingNavigationData *)listing;
+//- (void)updateListingWith:(ListingNavigationData *)newListing;
 
 @end
 

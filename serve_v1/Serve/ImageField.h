@@ -14,6 +14,7 @@
 @property (strong, nonatomic) UIImageView *imageTwo;
 @property (strong, nonatomic) UIImageView *imageThree;
 @property (strong, nonatomic) UIImageView *imageFour;
+@property (nonatomic, strong) UIView *initialView;
 
 -(void)addPhotoWithPhotosArray:(NSArray*)photoArray;
 

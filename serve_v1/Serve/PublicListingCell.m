@@ -57,6 +57,11 @@
 
         self.imageView = [[UIImageView alloc]init];
         self.imageView.layer.cornerRadius = 5;
+        self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.imageView.layer.borderColor = [[UIColor blackColor] CGColor];
+        self.imageView.layer.borderWidth = .5;
+        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        [self.imageView setClipsToBounds:YES];
         
         [self addSubview:self.imageView];
         [self addSubview:self.titleLabel];
@@ -81,7 +86,7 @@
         self.addressLabel.frame = CGRectMake(self.contentView.frame.size.width/3+15,45,300, 30);
         self.availablityLabel.frame = CGRectMake(self.contentView.frame.size.width/3+15,75,300, 30);
 
-        self.imageView.frame= CGRectMake(5,5,self.contentView.frame.size.width/3,self.contentView.frame.size.height-5);
+
         [self.serveIcon setFrame:CGRectMake(340, 30, 128.0/9, 99.0/9)];
         self.serveCountLabel.frame = CGRectMake(355, 30, 128.0/9, 99.0/9);
     
@@ -93,8 +98,54 @@
         self.availablityLabel.text = @"Available 4:30 pm - 6:30 pm";
         self.addressLabel.text = self.addressString;
     
-    
+
+        [self setUpConstraints];
 }
 
+-(void)setUpConstraints
+{
+//    id views = @{@"titleLabel":self.titleLabel,
+//                 @"typeServesLabel":self.typeServesLabel,
+//                 @"availablityLabel":self.availablityLabel,
+//                 @"imageView":self.imageView,
+//                 };
+    
+    //    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[imageOne]|" options:0 metrics: metrics views:views]];
+    //
+    //    id metrics = @{@"topMargin": @16, @"bottommargin":@50,@"fieldheight":@60,@"descheight":@160,@"leftMargin":@16,@"rightMargin":@10,@"fieldSpacing":@40};
+    //
+    //    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics: metrics views:views]];
+    //    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics: metrics views:views]];
+    //
+    //    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[initView]|" options:0 metrics: metrics views:views]];
+    //    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[imageOne]-[imageTwo]-[imageThree]-[imageFour]|" options:0 metrics:metrics views:views]];
+    //
+    //
+    //    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[imageTwo]|" options:0 metrics: metrics views:views]];
+    //    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[imageThree]|" options:0 metrics: metrics views:views]];
+    //    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[imageFour]|" options:0 metrics: metrics views:views]];
+    
+    NSLayoutConstraint *imageViewHeightConstraint = [NSLayoutConstraint
+                                                     constraintWithItem:self.imageView attribute:NSLayoutAttributeHeight
+                                                     relatedBy:NSLayoutRelationEqual toItem:self
+                                                     attribute:NSLayoutAttributeHeight multiplier:0.8 constant:0];
+    NSLayoutConstraint *imageViewWidthConstraint = [NSLayoutConstraint
+                                                    constraintWithItem:self.imageView attribute:NSLayoutAttributeWidth
+                                                    relatedBy:NSLayoutRelationEqual toItem:self
+                                                    attribute:NSLayoutAttributeHeight multiplier:0.8 constant:0];
+    NSLayoutConstraint *imageViewLeftConstraint = [NSLayoutConstraint
+                                                   constraintWithItem:self.imageView attribute:NSLayoutAttributeLeft
+                                                   relatedBy:NSLayoutRelationEqual toItem:self
+                                                   attribute:NSLayoutAttributeLeft multiplier:1 constant:10];
+    
+    NSLayoutConstraint *imageViewTopConstraint = [NSLayoutConstraint
+                                                  constraintWithItem:self.imageView attribute:NSLayoutAttributeTop
+                                                  relatedBy:NSLayoutRelationEqual toItem:self
+                                                  attribute:NSLayoutAttributeTop multiplier:1 constant:10];
+    
+    [self addConstraints:@[imageViewHeightConstraint,imageViewWidthConstraint,imageViewLeftConstraint,imageViewTopConstraint]];
+    
+    
+}
 
 @end

@@ -13,6 +13,9 @@
 //#import "GoogleMapApi.h"
 #import "ServeSyncEngine.h"
 #import "FilterTableViewController.h"
+#import "ServeListingProtocol.h"
+#import "ReviewSubmitViewController.h"
+#import "UIColor+Utils.h"
 
 static NSString * const publicListingCellIdentifier = @"publicListingCellIdentifier";
 
@@ -32,6 +35,9 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 @property (nonatomic, strong) MKMapView *map;
 @property (nonatomic, strong) UIBarButtonItem *filterBarButton;
 @property (nonatomic, strong) UIBarButtonItem *flipViewBarButton;
+@property (nonatomic, strong) UIButton *flipViewButton;
+@property (nonatomic, strong) UIButton *filterButton;
+
 @property (nonatomic, strong) UIRefreshControl *refresh;
 
 
@@ -162,12 +168,6 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 }
 
 - (IBAction)filterButtonPressed:(id)sender {
-    
-    //FilterTableViewController *secondView = [[FilterTableViewController alloc] init];
-    //self.inputViewController = secondView;
-    //[self.navigationController pushViewController:secondView animated:YES];
-    
-    
     //Animation way one
 //    FilterTableViewController *secondView = [[FilterTableViewController alloc] init];
 //    [UIView animateWithDuration:0.75
@@ -187,10 +187,15 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
     
     FilterTableViewController *secondView = [[FilterTableViewController alloc] init];
-    [self.navigationController pushViewController:secondView animated:NO];
-
-    //[[self navigationController] popViewControllerAnimated:NO];
-
+    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:secondView];
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor serveRedButtonColor],NSForegroundColorAttributeName,
+                                               nil];
+    navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+    navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    navigationController1.toolbar.barTintColor = [UIColor darkGrayColor];
+    [self presentViewController:navigationController1 animated:YES completion:nil];
+    
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
@@ -298,29 +303,27 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     NSArray *items2 = [NSArray arrayWithObjects:cancelButton,itemSpace,refreshButton,itemSpace,itemSpace, nil];
     self.toolbarItems = items2;
 
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    //button.frame = CGRectZero;
-    button.frame = CGRectMake(0, 0, 50, 28);
-
-    button.layer.borderColor = [UIColor whiteColor].CGColor;
-    button.layer.borderWidth = .2f;
-    button.layer.cornerRadius = 5;
-    [button setTitle:@"Map" forState:UIControlStateNormal];
-    [button.titleLabel setTextColor:[UIColor whiteColor]];
-    [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [button addTarget:self action:@selector(switchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    self.flipViewBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.flipViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.flipViewButton.frame = CGRectMake(0, 0, 50, 28);
+    self.flipViewButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.flipViewButton.layer.borderWidth = .2f;
+    self.flipViewButton.layer.cornerRadius = 5;
+    [self.flipViewButton setTitle:@"Map" forState:UIControlStateNormal];
+    [self.flipViewButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [self.flipViewButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
+    [self.flipViewButton addTarget:self action:@selector(switchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.flipViewBarButton = [[UIBarButtonItem alloc] initWithCustomView:self.flipViewButton];
     
-    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button2.frame = CGRectMake(0, 0, 50, 28);
-    button2.layer.borderColor = [UIColor whiteColor].CGColor;
-    button2.layer.borderWidth = .2f;
-    button2.layer.cornerRadius = 5;
-    [button2 setTitle:@"Filter" forState:UIControlStateNormal];
-    [button2.titleLabel setTextColor:[UIColor whiteColor]];
-    [button2.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [button2 addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    self.filterBarButton = [[UIBarButtonItem alloc] initWithCustomView:button2];
+    self.filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.filterButton.frame = CGRectMake(0, 0, 50, 28);
+    self.filterButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.filterButton.layer.borderWidth = .2f;
+    self.filterButton.layer.cornerRadius = 5;
+    [self.filterButton setTitle:@"Filter" forState:UIControlStateNormal];
+    [self.filterButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [self.filterButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
+    [self.filterButton addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.filterBarButton = [[UIBarButtonItem alloc] initWithCustomView:self.filterButton];
     
     self.navigationItem.leftBarButtonItem = self.filterBarButton;
     self.navigationItem.rightBarButtonItem = self.flipViewBarButton;
@@ -340,6 +343,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
                         completion:NULL];
         self.listMode = NO;
         self.view = self.mapView;
+        [self.flipViewButton setTitle:@"List" forState:UIControlStateNormal];
     }
     else {
         [UIView transitionFromView:self.mapView toView:self.listView
@@ -348,24 +352,18 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
                         completion:NULL];
         self.listMode = YES;
         self.view = self.listView;
+        [self.flipViewButton setTitle:@"Map" forState:UIControlStateNormal];
     }
 
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    //NSLog(@"Count : %lu",(unsigned long)[self.serverItems count]);
-    if(self.homeTable == self.searchDisplayController.searchResultsTableView){
-        return 1;
-    }
-    
-    else{
-        return [self.serverItems count];}
+
+        return [self.serverItems count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -384,16 +382,11 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
             cell1 = [[PublicListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:publicListingCellIdentifier];
         }
 
-        cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell1.selectionStyle = UITableViewCellSelectionStyleBlue;
         cell1.titleLabel.text = item.name;
         cell1.serveCount = item.serveCount;
         cell1.addressString = item.address1;
-        
-        NSLog(@"AKHIL latitude : |%@|",item.latitude);
-        NSLog(@"AKHIL latitude : |%@|",item.longitude);
-        
-        //cell1.imageView.image = [UIImage imageNamed:@"food1.jpg"];
-        
+    
         if(item.image)
         {
             cell1.imageView.image = [UIImage imageWithData:item.image];
@@ -410,7 +403,33 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"selected");
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UIViewController *viewController = nil;
+    id<ServeListingProtocol> listing = [self.serverItems objectAtIndex:indexPath.row];
+    ReviewSubmitViewController *listingDetailsViewController = [[ReviewSubmitViewController alloc]initWithListing:listing];
+    
+    
+//    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:listingDetailsViewController];
+//    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                               [UIColor whiteColor],NSForegroundColorAttributeName,
+//                                               nil];
+//    navigationController1.navigationBar.barTintColor = [UIColor darkGrayColor];//#007AFF
+//    navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+//    navigationController1.toolbar.barTintColor = [UIColor darkGrayColor];
+//    [self presentViewController:navigationController1 animated:YES completion:nil];
+    
+    
+    UINavigationController *navigationController1 = nil;
+    navigationController1 = [[UINavigationController alloc] initWithRootViewController:listingDetailsViewController];
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
+                                               nil];
+    navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+    navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    [self presentViewController:navigationController1 animated:YES completion:nil];
+
+   
 }
 
 -(NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
@@ -429,7 +448,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         [request setSortDescriptors:[NSArray arrayWithObject:
                                      [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         
-        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"author != %@", @"akhil"];
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"author != %@", @"Akhil"];
         NSPredicate *finalPredicate;
     
         if(searchString!=nil)
@@ -450,7 +469,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 
 
 
-/////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSFetchedResultsController *)fetchedResultsController {
     if (_fetchedResultsController) return _fetchedResultsController;
@@ -537,12 +556,6 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     });
     }
 
-//// called from AppDelegate, to set the UIMD, and set up the NSFRC
-//- (void)setManagedDocument:(UIManagedDocument *)managedDocument
-//{
-//    _managedDocument = managedDocument;
-//    
-//}
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation
 {
@@ -558,7 +571,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     return annotationView;
 }
 
-//////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

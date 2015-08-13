@@ -17,7 +17,7 @@
 #import "ServeSyncEngine.h"
 #import "ServeLoginViewController.h"
 #import "AppDelegate.h"
-#import "NewViewController.h"
+#import "UIColor+Utils.h"
 
 //const CGFloat iconWidth = 25.0f;
 //const CGFloat iconHeight = 25.0f;
@@ -25,7 +25,7 @@
 static NSString * const addListingCellIdentifier = @"addListingCell";
 static NSString * const selfListingCellIdentifier = @"selfListingCell";
 
-@interface MyListingsViewController ()
+@interface MyListingsViewController ()<NewViewControllerDelegate>
 @property (nonatomic ,strong) UITableView* homeTable;
 
 - (IBAction)addNewListingButtonPressed:(id)sender;
@@ -56,7 +56,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self setUpActionSheets];
     [self setUpNavigationController];
     
-    self.managedObjectContext = [[ServeCoreDataController sharedInstance] newManagedObjectContext];
+    self.managedObjectContext = [[ServeCoreDataController sharedInstance] masterManagedObjectContext];
     [self loadRecordsFromCoreData];
  
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 500, 640)
@@ -70,6 +70,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     [self.homeTable registerClass:[AddListingCell class] forCellReuseIdentifier:addListingCellIdentifier];
     [self.homeTable registerClass:[SelfListingCell class] forCellReuseIdentifier:selfListingCellIdentifier];
     self.homeTable.tableFooterView = [UIView new];
+    //self.homeTable.editing = YES;
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
@@ -92,55 +93,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     self.navigationItem.hidesBackButton = YES;
     [self.navigationItem setTitle:@"My Listings"];
     [self.view setBackgroundColor:[UIColor darkGrayColor]];
-    
     self.navigationController.toolbarHidden = YES;
-    
-    UIBarButtonItem *itemSpace = [[UIBarButtonItem alloc]
-                                  initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                  target:nil
-                                  action:nil];
-    
-    
-    //add button
-    UIImage *image = [UIImage imageNamed:@"plus.png"];
-    UIButton *addButton =  [UIButton buttonWithType:UIButtonTypeCustom];
-    [addButton setImage:image forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(addNewListingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [addButton setFrame:CGRectMake(0, -40, iconWidth*3, iconHeight*3)];
-    UIBarButtonItem *addBarButton = [[UIBarButtonItem alloc] initWithCustomView:addButton];
-    
-    /////
-    
-    //userButton
-    UIImage *userImage = [UIImage imageNamed:@"person.png"];
-    UIButton *userButton =  [UIButton buttonWithType:UIButtonTypeCustom];
-    [userButton setImage:userImage forState:UIControlStateNormal];
-    [userButton addTarget:self action:@selector(showActionSheet:) forControlEvents:UIControlEventTouchUpInside];
-    [userButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
-    UIBarButtonItem *userBarButton = [[UIBarButtonItem alloc] initWithCustomView:userButton];
-    /////
-    
-    //messageButton
-    UIImage *messageImage = [UIImage imageNamed:@"message1.png"];
-    UIButton *messageButton =  [UIButton buttonWithType:UIButtonTypeCustom];
-    [messageButton setImage:messageImage forState:UIControlStateNormal];
-    [messageButton addTarget:self action:@selector(refreshButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [messageButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
-    UIBarButtonItem *messageBarButton = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
-    /////
-    
-    //myListButton
-    UIImage *myListImage = [UIImage imageNamed:@"listing.png"];
-    UIButton *myListButton =  [UIButton buttonWithType:UIButtonTypeCustom];
-    [myListButton setImage:myListImage forState:UIControlStateNormal];
-    [myListButton setFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
-    [myListButton addTarget:self action:@selector(PublicListingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *myListBarButton = [[UIBarButtonItem alloc] initWithCustomView:myListButton];
-    /////
-    
-    NSArray *items = [NSArray arrayWithObjects:myListBarButton,itemSpace, addBarButton,itemSpace, messageBarButton,itemSpace, userBarButton, nil];
-    self.toolbarItems = items;
-    
 }
 
 
@@ -215,7 +168,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     if (cell == nil) {
         cell = [[AddListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addListingCellIdentifier];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
   
     SelfListingCell *cell1 = (SelfListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
     if(self.selfListings.count)
@@ -265,9 +218,122 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
 
+#pragma mark - swipe cell to delete 
+
+/*
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
+           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    UITableViewCellEditingStyle result = UITableViewCellEditingStyleNone;
+    
+    if ([tableView isEqual:self.homeTable]){
+        result = UITableViewCellEditingStyleDelete;
+    }
+    return result;
+}
+
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewRowAction *editAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Edit" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        
+        
+        
+    }];
+    editAction.backgroundColor = [UIColor blueColor];;
+    
+    
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        
+        
+    }];
+    
+    return @[deleteAction,editAction];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return YES - we will be able to delete all rows
+    return YES;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Your Label";
+}
+
+- (void) setEditing:(BOOL)editing
+           animated:(BOOL)animated{
+    
+    [super setEditing:editing
+             animated:animated];
+    
+    [self.homeTable setEditing:editing
+                        animated:animated];
+    
+    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        NSManagedObject *listing = [self.selfListings objectAtIndex:indexPath.row];
+//        [self.managedObjectContext performBlockAndWait:^{
+//            // 1
+//            if ([[listing valueForKey:@"objectId"] isEqualToString:@""] || [listing valueForKey:@"objectId"] == nil) {
+//                [self.managedObjectContext deleteObject:listing];
+//            } else {
+//                [listing setValue:[NSNumber numberWithInt:ServeObjectDeleted] forKey:@"syncStatus"];
+//            }
+//            NSError *error = nil;
+//            BOOL saved = [self.managedObjectContext save:&error];
+//            if (!saved) {
+//                NSLog(@"Error saving main context: %@", error);
+//            }
+//            
+//            [[ServeCoreDataController sharedInstance] saveMasterContext];
+//            [self loadRecordsFromCoreData];
+//            [self.homeTable reloadData];
+//        }];
+    }
+}
+
+*/
+
+#pragma mark save , cancel and submit
+
+
+- (void)newViewController:(NewViewController *)viewController didSaveItem:(id<ServeListingProtocol>)savedItem
+{
+     NSLog(@"Reached here successfully");
+    
+    [self.managedObjectContext performBlockAndWait:^
+     {
+         NSError *error = nil;
+         BOOL saved = [self.managedObjectContext save:&error];
+         if (!saved) {
+             // do some real error handling
+             NSLog(@"Could not save Date due to %@", error);
+         }
+         [[ServeCoreDataController sharedInstance] saveMasterContext];
+     }
+     ];
+
+    [self.homeTable reloadData];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [[ServeSyncEngine sharedEngine] startUpSync];
+
+}
+
+- (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item
+{
+    [self.managedObjectContext deleteObject:(Listing*)item];
+    [[ServeCoreDataController sharedInstance] saveMasterContext];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(indexPath.section == 0)
     {
@@ -276,35 +342,28 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 //            self.inputViewController = secondView;
 //        }
         
-        self.inputViewController= [[NewViewController alloc] init];
+        self.inputViewController= [[NewViewController alloc] initWithNewItem];
         self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
-        
-        
+        self.inputViewController.delegate = self;
         UINavigationController *navigationController1 = nil;
         navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
-
+        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
+                                                   nil];
+        navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
         [self presentViewController:navigationController1 animated:YES completion:nil];
         
     }
-    
+
 }
 
 
 
 - (IBAction)addNewListingButtonPressed:(id)sender {
     
-//    NewInputViewController *secondView = [[NewInputViewController alloc] init];
-//    self.inputViewController = secondView;
-//    [self.navigationController pushViewController:self.inputViewController animated:YES];
 }
 
-- (IBAction)PublicListingButtonPressed:(id)sender {
-    if(self.publicListingViewController == nil){
-        PublicListingViewController *secondView = [[PublicListingViewController alloc] init];
-        self.publicListingViewController = secondView;
-    }
-    [self.navigationController pushViewController:self.publicListingViewController animated:YES];
-}
 
 - (IBAction)refreshButtonTouched:(id)sender {
     [[ServeSyncEngine sharedEngine] startUpSync];
@@ -319,7 +378,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
         [request setSortDescriptors:[NSArray arrayWithObject:
                                      [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"author = %@", @"akhil"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"author = %@", @"Akhil"];
         [request setPredicate:predicate];
         
         self.selfListings = [self.managedObjectContext executeFetchRequest:request error:&error];
@@ -362,6 +421,9 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
         [self checkSyncStatus];
     }
 }
+
+
+
 
 @end
 
