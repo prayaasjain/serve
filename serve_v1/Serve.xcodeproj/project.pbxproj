@@ -63,7 +63,6 @@
 		20A4FD8E1B1C101100B92927 /* chicken.png in Resources */ = {isa = PBXBuildFile; fileRef = 20A4FD8D1B1C101100B92927 /* chicken.png */; };
 		20A5D9C91B3BB28A00EA127D /* Listing.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5D9C81B3BB28A00EA127D /* Listing.m */; };
 		20AE35901B46909600CCBA42 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 20AE358F1B46909600CCBA42 /* Filter.m */; };
-		20AFA2311B2523C000635B51 /* SelfListingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20AFA2301B2523C000635B51 /* SelfListingCell.m */; };
 		20AFA23D1B2542F200635B51 /* cloud-tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFA23C1B2542F200635B51 /* cloud-tick.png */; };
 		20AFA23F1B2549E700635B51 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFA23E1B2549E700635B51 /* person.png */; };
 		20AFA2411B254B1000635B51 /* message2.png in Resources */ = {isa = PBXBuildFile; fileRef = 20AFA2401B254B1000635B51 /* message2.png */; };
@@ -239,8 +238,6 @@
 		20A5D9C81B3BB28A00EA127D /* Listing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Listing.m; path = ../Listing.m; sourceTree = "<group>"; };
 		20AE358E1B46909600CCBA42 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
 		20AE358F1B46909600CCBA42 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
-		20AFA22F1B2523C000635B51 /* SelfListingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfListingCell.h; sourceTree = "<group>"; };
-		20AFA2301B2523C000635B51 /* SelfListingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfListingCell.m; sourceTree = "<group>"; };
 		20AFA23C1B2542F200635B51 /* cloud-tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cloud-tick.png"; path = "../cloud-tick.png"; sourceTree = "<group>"; };
 		20AFA23E1B2549E700635B51 /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person.png; sourceTree = "<group>"; };
 		20AFA2401B254B1000635B51 /* message2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message2.png; sourceTree = "<group>"; };
@@ -413,8 +410,6 @@
 				20D8E81A1B68709100E61AA7 /* ImageFieldCell.h */,
 				20836EA61B3F55D50046FEAC /* PublicListingCell.m */,
 				20836EA71B3F55D50046FEAC /* PublicListingCell.h */,
-				20AFA22F1B2523C000635B51 /* SelfListingCell.h */,
-				20AFA2301B2523C000635B51 /* SelfListingCell.m */,
 				202AF3721B1AF12600531369 /* ListingItemDetailCell.h */,
 				202AF3731B1AF12600531369 /* ListingItemDetailCell.m */,
 				2091910C1B19901B008CCAA9 /* MapCell.h */,
@@ -851,7 +846,6 @@
 				20836EA81B3F55D50046FEAC /* PublicListingCell.m in Sources */,
 				20AE35901B46909600CCBA42 /* Filter.m in Sources */,
 				207873381B3B99BE00C3C86B /* AFXMLRequestOperation.m in Sources */,
-				20AFA2311B2523C000635B51 /* SelfListingCell.m in Sources */,
 				20836EB41B3FBDC20046FEAC /* NSManagedObject+JSON.m in Sources */,
 				20A5D9C91B3BB28A00EA127D /* Listing.m in Sources */,
 				209594BB1B5A1462007366AA /* MapViewController.m in Sources */,

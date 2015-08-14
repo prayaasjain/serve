@@ -147,7 +147,7 @@
     
     NSArray *myViewControllers = [[NSArray alloc] initWithObjects:
                                   navigationController1,
-                                  navigationController2,navigationController3,navigationController4, nil];
+                                  navigationController2,inboxTableViewController,navigationController4, nil];
     
     
     

@@ -12,18 +12,18 @@
 #import "AddListingCell.h"
 #import "ServeCoreDataController.h"
 #import "Listing.h"
-#import "SelfListingCell.h"
 #import "PublicListingViewController.h"
 #import "ServeSyncEngine.h"
 #import "ServeLoginViewController.h"
 #import "AppDelegate.h"
 #import "UIColor+Utils.h"
+#import "PublicListingCell.h"
 
 //const CGFloat iconWidth = 25.0f;
 //const CGFloat iconHeight = 25.0f;
 
 static NSString * const addListingCellIdentifier = @"addListingCell";
-static NSString * const selfListingCellIdentifier = @"selfListingCell";
+static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifier";
 
 @interface MyListingsViewController ()<NewViewControllerDelegate>
 @property (nonatomic ,strong) UITableView* homeTable;
@@ -58,9 +58,8 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] masterManagedObjectContext];
     [self loadRecordsFromCoreData];
- 
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 500, 640)
-                                                  style:UITableViewStylePlain];
+    
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
     self.homeTable.scrollsToTop = NO;
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
@@ -68,7 +67,6 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     self.homeTable.separatorColor=[UIColor grayColor];
     self.homeTable.tableFooterView = [UIView new];
     [self.homeTable registerClass:[AddListingCell class] forCellReuseIdentifier:addListingCellIdentifier];
-    [self.homeTable registerClass:[SelfListingCell class] forCellReuseIdentifier:selfListingCellIdentifier];
     self.homeTable.tableFooterView = [UIView new];
     //self.homeTable.editing = YES;
     [self.view addSubview:self.homeTable];
@@ -170,20 +168,20 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
     }
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
   
-    SelfListingCell *cell1 = (SelfListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
+    
+    
+    PublicListingCell *cell1 = (PublicListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
+    
     if(self.selfListings.count)
     {
         Listing *item  = [self.selfListings objectAtIndex:indexPath.row];
         
         if (cell1 == nil) {
-            cell1 = [[SelfListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier];
+        cell1 = [[PublicListingCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier withListing:item];
         }
 
         cell1.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell1.titleLabel.text = item.name;
-        //cell1.syncStatusValue = item.syncStatus;
-        cell1.serveCount = item.serveCount;
-   
+  
         if(item.image)
         {
             cell1.imageView.image = [UIImage imageWithData:item.image];
@@ -192,11 +190,13 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
         {
             cell1.imageView.image = [UIImage imageNamed:@"no-image.png"];
         }
+        cell1.serveCountLabel.text = [[item serveCount] stringValue];
+        cell1.titleLabel.text = [item name];
         
-        cell1.typeString = item.type;
-
-    }
+        
+        cell1.addressLabel.text = @"1235,Wildwood Ave,Sunnyvale";//[item address1];
     
+    }
     
     if (indexPath.section == 0) {
         return cell;
@@ -413,7 +413,7 @@ static NSString * const selfListingCellIdentifier = @"selfListingCell";
 }
 
 - (void)removeActivityIndicatorFromRefreshButon {
-    //self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItem = nil;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

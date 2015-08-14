@@ -75,7 +75,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     self.homeTable.dataSource = self;
     self.homeTable.separatorInset = UIEdgeInsetsMake(-10, 0, 0, 0);
     self.homeTable.separatorColor=[UIColor grayColor];
-    [self.homeTable registerClass:[PublicListingCell class] forCellReuseIdentifier:publicListingCellIdentifier];
+    //[self.homeTable registerClass:[PublicListingCell class] forCellReuseIdentifier:publicListingCellIdentifier];
     [self.listView addSubview:self.homeTable];
     [self.listView setBackgroundColor:[UIColor whiteColor]];
     
@@ -379,14 +379,14 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         Listing *item  = [self.serverItems objectAtIndex:indexPath.row];
         
         if (cell1 == nil) {
-            cell1 = [[PublicListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:publicListingCellIdentifier];
+            //cell1 = [[PublicListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:publicListingCellIdentifier];
+            
+            cell1 = [[PublicListingCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:publicListingCellIdentifier withListing:item];
+
         }
 
         cell1.selectionStyle = UITableViewCellSelectionStyleBlue;
-        cell1.titleLabel.text = item.name;
-        cell1.serveCount = item.serveCount;
-        cell1.addressString = item.address1;
-    
+
         if(item.image)
         {
             cell1.imageView.image = [UIImage imageWithData:item.image];
@@ -395,8 +395,10 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         {
             cell1.imageView.image = [UIImage imageNamed:@"no-image.png"];
         }
+        cell1.serveCountLabel.text = [[item serveCount] stringValue];
+        cell1.titleLabel.text = [item name];
+        cell1.addressLabel.text = [item address1];
         
-        cell1.typeString = item.type;
     }
         return cell1;
 }

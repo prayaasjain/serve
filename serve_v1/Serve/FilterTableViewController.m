@@ -446,6 +446,10 @@ NSMutableIndexSet *expandedSections;
     NSLog(@"Slider value :%d",(int)_slider.value);
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 
 - (void)loadRecordsFromCoreData {
     [self.managedObjectContext performBlockAndWait:^{
