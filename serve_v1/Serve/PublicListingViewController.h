@@ -10,6 +10,8 @@
 
 @interface PublicListingViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchResultsUpdating,UISearchBarDelegate,MKMapViewDelegate,NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) NSArray *serverItems;
+@property (nonatomic, strong) NSMutableArray *serverItems;
+
+@property (nonatomic, strong) MKMapView *map;
 
 @end

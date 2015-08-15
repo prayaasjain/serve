@@ -68,7 +68,7 @@
         [self.map setRegion:region animated:YES];
         [self.map regionThatFits:region];
         //////////
-
+        
         self.availabiltyLabel = [[UILabel alloc]init];
         self.availabiltyLabel.textColor = [UIColor darkGrayColor];
         self.availabiltyLabel.font = [UIFont fontWithName:@"Arial" size:10.0f];

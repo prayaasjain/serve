@@ -33,6 +33,7 @@
 		204BD38A1B462DDA0059A517 /* CustomAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = 204BD3891B462DDA0059A517 /* CustomAccessory.m */; };
 		2055FD3E1B27EF4D00B85F77 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2055FD2C1B27EF4D00B85F77 /* AFHTTPRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2055FD431B27EF4D00B85F77 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2055FD371B27EF4D00B85F77 /* AFURLConnectionOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2075758B1B7EB53400C7C680 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2075758A1B7EB53400C7C680 /* CustomAnnotation.m */; };
 		20784B6C1B707CA600535AD9 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 20784B6B1B707CA600535AD9 /* UIColor+Utils.m */; };
 		207873221B3B965C00C3C86B /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 207873211B3B965C00C3C86B /* AFHTTPClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		207873251B3B969500C3C86B /* AFJSONUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 207873241B3B969500C3C86B /* AFJSONUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -185,6 +186,8 @@
 		2055FD311B27EF4D00B85F77 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
 		2055FD361B27EF4D00B85F77 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
 		2055FD371B27EF4D00B85F77 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		207575891B7EB53400C7C680 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
+		2075758A1B7EB53400C7C680 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		20784B6A1B707CA600535AD9 /* UIColor+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Utils.h"; sourceTree = "<group>"; };
 		20784B6B1B707CA600535AD9 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
 		207873201B3B965C00C3C86B /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -474,6 +477,8 @@
 			children = (
 				20784B6A1B707CA600535AD9 /* UIColor+Utils.h */,
 				20784B6B1B707CA600535AD9 /* UIColor+Utils.m */,
+				207575891B7EB53400C7C680 /* CustomAnnotation.h */,
+				2075758A1B7EB53400C7C680 /* CustomAnnotation.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -861,6 +866,7 @@
 				202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */,
 				2094CF281B4B856E001C4E1F /* ANPopoverView.m in Sources */,
 				20EE2B3F1B01511700F80CAC /* InputViewController.m in Sources */,
+				2075758B1B7EB53400C7C680 /* CustomAnnotation.m in Sources */,
 				207873441B3BA50500C3C86B /* ServeSyncEngine.m in Sources */,
 				209681251B75D1F700BC00BA /* AddressViewController.m in Sources */,
 				201A14B41B69F02100E12C3A /* TypeField.m in Sources */,

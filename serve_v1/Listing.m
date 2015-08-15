@@ -61,30 +61,27 @@
     return self.name;
 }
 
-
-- (NSString *)subtitle {
-    return self.address1;
+- (NSString *) subtitle {
+    return self.objectId;
 }
 
 - (CLLocationCoordinate2D)coordinate {
     CLLocationCoordinate2D coord;
     coord.latitude = [self.latitude doubleValue]; // or self.latitudeValue à la MOGen
     coord.longitude = [self.longitude doubleValue];
+    NSLog(@"Akhil");
     return coord;
 }
 
-//-(void)setName:(NSString *)name
-//{
-//    self.name = name;
-//}
++ (NSString *)objectId {
+    return self.objectId;
+}
 
-//-(id<ServeListingProtocol>)createNewIteminContext:(NSManagedObjectContext*)context;
-//{
-//    
-//    Listing *listingItem =[Listing createNewListinginContext:context];
-//    
-//    return listingItem;
-//}
+-(void)setTitle:(NSString *)name
+{
+    self.name = name;
+}
+
 
 + (id<ServeListingProtocol>)createNewListinginContext:(NSManagedObjectContext *)context
 {
