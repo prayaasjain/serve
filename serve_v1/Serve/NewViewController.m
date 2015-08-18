@@ -68,6 +68,7 @@ const int allowedNumberOfCharactersInTitle = 10;
 @property (nonatomic, retain) NSMutableArray* imageArray;
 
 @property (nonatomic, strong) UIView *lockOverlayView;
+@property (nonatomic,assign)  NSInteger currentMode;
 
 
 
@@ -86,12 +87,36 @@ const int allowedNumberOfCharactersInTitle = 10;
 @synthesize typeField;
 @synthesize listingItem = _listingItem;
 
+//
+//- (instancetype)initWithNewItem {
+//    
+//    id<ServeListingProtocol>newItem = [Listing createNewListinginContext:[[ServeCoreDataController sharedInstance] masterManagedObjectContext]];
+//    
+//    return [self initWithExistingItem:newItem];
+//}
+//
+//- (instancetype)initWithExistingItem:(id<ServeListingProtocol>)item {
+//    
+//    if (self = [super initWithNibName:nil bundle:nil]) {
+//        
+//        self.listingItem = item;
+//    }
+//    
+//    return self;
+//}
+
 
 - (instancetype)initWithNewItem {
     
-    id<ServeListingProtocol>newItem = [Listing createNewListinginContext:[[ServeCoreDataController sharedInstance] masterManagedObjectContext]];
+    if (self = [super initWithNibName:nil bundle:nil])
+    {
+        id<ServeListingProtocol>newItem = [Listing createNewListinginContext:[[ServeCoreDataController sharedInstance] masterManagedObjectContext]];
+        
+        self.listingItem = newItem;
+        self.currentMode = CreateMode;
+    }
     
-    return [self initWithExistingItem:newItem];
+    return self;
 }
 
 - (instancetype)initWithExistingItem:(id<ServeListingProtocol>)item {
@@ -99,6 +124,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     if (self = [super initWithNibName:nil bundle:nil]) {
         
         self.listingItem = item;
+        self.currentMode = EditMode;
     }
     
     return self;
@@ -124,6 +150,8 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.scrollView addSubview:self.myPickerView];
     [self.scrollView addSubview:self.typeField];
     [self.scrollView addSubview:self.selectorView];
+    
+    
     [self.scrollView addSubview:self.lockOverlayView];
 }
 
@@ -133,6 +161,7 @@ const int allowedNumberOfCharactersInTitle = 10;
      self.titleInput.layer.cornerRadius = 5;
      self.submitView.layer.cornerRadius = 5;
     [self.lockOverlayView setFrame:self.scrollView.frame];
+    
 }
 
 - (void)setUpViewControllerObjects {
@@ -178,6 +207,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.titleInput.layer.cornerRadius = self.titleInput.frame.size.width/2;
     [self setTextFieldProperties:self.titleInput withPlaceholder:titlePlaceholder withTag:TitleInputTag];
     
+    
     self.descInput = [[UITextView alloc]init];
     self.descInput.text = descriptionPlaceholder;
     self.descInput.delegate = self;
@@ -189,6 +219,23 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.descInput.tag = DescInputTag;
     [self.descInput setReturnKeyType:UIReturnKeyDefault];
     [self.descInput setKeyboardAppearance:UIKeyboardAppearanceDark];
+    
+    
+    if(self.currentMode == CreateMode)
+    {
+        self.descInput.text = descriptionPlaceholder;
+        self.titleInput.text = titlePlaceholder;
+        [self.lockOverlayView setHidden:YES];
+    }
+    else
+    {
+        self.titleInput.text = [self.listingItem name];
+        self.descInput.text = [self.listingItem desc];
+        
+    }
+    
+    
+    
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f,
                                                                      0.0f,
                                                                      self.view.window.frame.size.width,
@@ -313,7 +360,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     [button2 setTitle:@"Save" forState:UIControlStateNormal];
     [button2 setTitleColor:[UIColor serveRedButtonColor] forState:UIControlStateNormal];
     [button2.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    //[button2 addTarget:self action:@selector(filterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [button2 addTarget:self action:@selector(saveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *saveBarButton = [[UIBarButtonItem alloc] initWithCustomView:button2];
     
     self.navigationItem.leftBarButtonItem = cancelBarButton;
@@ -494,6 +541,13 @@ const int allowedNumberOfCharactersInTitle = 10;
     //imageViewWidthConstraint,imageViewHeightConstraint
 }
 
+- (IBAction)saveButtonPressed:(id)sender {
+    
+    NSLog(@"AKhil");
+    
+    [self.lockOverlayView setHidden:YES];
+    
+}
 //akhil
 - (IBAction)submitButtonPressed:(id)sender {
     
@@ -515,7 +569,7 @@ const int allowedNumberOfCharactersInTitle = 10;
 }
 
 - (IBAction)cancelButtonPressed:(id)sender {
-    [self.delegate newViewController:self didCancelItemEdit:self.listingItem];
+    [self.delegate newViewController:self didCancelItemEdit:self.listingItem inMode:self.currentMode];
 }
 
 
@@ -526,7 +580,7 @@ const int allowedNumberOfCharactersInTitle = 10;
 }
 
 - (void)setTextFieldProperties:(UITextField *)inputView withPlaceholder:(NSString*)placeholder withTag:(NSInteger)tag {
-    inputView.text = placeholder;
+    //inputView.text = placeholder;
     inputView.textColor = [UIColor lightGrayColor];
     inputView.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
     inputView.textAlignment = NSTextAlignmentCenter;

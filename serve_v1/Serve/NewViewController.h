@@ -10,12 +10,21 @@
 #import "ServeListingProtocol.h"
 #import "MyListingsViewController.h"
 
+typedef enum : NSInteger
+{
+    EditMode = 0,
+    CreateMode
+    
+} Mode;
+
 @class NewViewController;
 
 @protocol NewViewControllerDelegate <NSObject>
 
 - (void)newViewController:(NewViewController *)viewController didSaveItem:(id<ServeListingProtocol>)savedItem;
-- (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item;
+//- (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item;
+
+- (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item inMode:(NSInteger)mode;
 
 @end
 

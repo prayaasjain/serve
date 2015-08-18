@@ -166,7 +166,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
     if (cell == nil) {
         cell = [[AddListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addListingCellIdentifier];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
   
     
     
@@ -192,7 +192,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
         }
         cell1.serveCountLabel.text = [[item serveCount] stringValue];
         cell1.titleLabel.text = [item name];
-        
+        cell1.selectionStyle = UITableViewCellSelectionStyleBlue;
         
         cell1.addressLabel.text = @"1235,Wildwood Ave,Sunnyvale";//[item address1];
     
@@ -325,10 +325,14 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 }
 
-- (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item
+- (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item inMode:(NSInteger)mode
 {
-    [self.managedObjectContext deleteObject:(Listing*)item];
-    [[ServeCoreDataController sharedInstance] saveMasterContext];
+    if(mode==CreateMode)
+    {
+        [self.managedObjectContext deleteObject:(Listing*)item];
+        [[ServeCoreDataController sharedInstance] saveMasterContext];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
