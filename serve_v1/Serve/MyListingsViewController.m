@@ -358,7 +358,9 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
     
     else
     {
-        self.inputViewController= [[NewViewController alloc] initWithExistingItem:[self.selfListings objectAtIndex:indexPath]];
+        
+        id<ServeListingProtocol> listing = [self.selfListings objectAtIndex:indexPath.row];
+        self.inputViewController= [[NewViewController alloc] initWithExistingItem:listing];
         self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
         self.inputViewController.delegate = self;
         UINavigationController *navigationController1 = nil;

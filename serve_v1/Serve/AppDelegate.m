@@ -155,6 +155,8 @@
     [self.tabBarController setViewControllers:myViewControllers];
     [self.tabBarController setSelectedIndex:0];
     
+    self.tabBarController.delegate = self;
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //add the tab bar controllers view to the window
     //[self.window addSubview:self.tabBarController.view];
@@ -186,6 +188,28 @@
 }
 
 
+-(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+    
+    NSLog(@"Akhil%lu",(unsigned long)self.tabBarController.selectedIndex);
+    if(self.tabBarController.selectedIndex == 3)
+    {
+        return NO;
+    }
+    
+//    NSLog(@"Ak%lu",(unsigned long)self.tabBarController.selectedIndex);
+    
+     return YES;
+}
+
+
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    NSLog(@"Ak%lu",(unsigned long)self.tabBarController.selectedIndex);
+    
+    
+}
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url

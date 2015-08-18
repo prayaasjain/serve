@@ -12,7 +12,7 @@
 #import "InputViewController.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>//,PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UITabBarControllerDelegate>//,PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *navigationController;
