@@ -355,6 +355,21 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
         [self presentViewController:navigationController1 animated:YES completion:nil];
         
     }
+    
+    else
+    {
+        self.inputViewController= [[NewViewController alloc] initWithExistingItem:[self.selfListings objectAtIndex:indexPath]];
+        self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
+        self.inputViewController.delegate = self;
+        UINavigationController *navigationController1 = nil;
+        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
+        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
+                                                   nil];
+        navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+        [self presentViewController:navigationController1 animated:YES completion:nil];
+    }
 
 }
 

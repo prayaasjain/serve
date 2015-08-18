@@ -83,6 +83,7 @@
 		20B5A8DC1B15718500818741 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8DB1B15718500818741 /* QuartzCore.framework */; };
 		20B5A8DE1B15718E00818741 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B5A8DD1B15718E00818741 /* SystemConfiguration.framework */; };
 		20C1E1971B3D1A5A0064761D /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C1E1961B3D1A5A0064761D /* refresh.png */; };
+		20C8A4831B82B1DB003C0598 /* APPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C8A4811B82B1DB003C0598 /* APPViewController.m */; };
 		20CA6B531B1410E5005FE7AA /* add_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B4F1B1410E5005FE7AA /* add_32.png */; };
 		20CA6B541B1410E5005FE7AA /* next_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B501B1410E5005FE7AA /* next_32.png */; };
 		20CA6B551B1410E5005FE7AA /* previous_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 20CA6B511B1410E5005FE7AA /* previous_32.png */; };
@@ -260,6 +261,8 @@
 		20B5A8DB1B15718500818741 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		20B5A8DD1B15718E00818741 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		20C1E1961B3D1A5A0064761D /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
+		20C8A4811B82B1DB003C0598 /* APPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPViewController.m; sourceTree = "<group>"; };
+		20C8A4821B82B1DB003C0598 /* APPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPViewController.h; sourceTree = "<group>"; };
 		20CA6B4F1B1410E5005FE7AA /* add_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_32.png; path = assets_test/add_32.png; sourceTree = "<group>"; };
 		20CA6B501B1410E5005FE7AA /* next_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next_32.png; path = assets_test/next_32.png; sourceTree = "<group>"; };
 		20CA6B511B1410E5005FE7AA /* previous_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = previous_32.png; path = assets_test/previous_32.png; sourceTree = "<group>"; };
@@ -376,6 +379,8 @@
 		203592181B044A8300850472 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				20C8A4811B82B1DB003C0598 /* APPViewController.m */,
+				20C8A4821B82B1DB003C0598 /* APPViewController.h */,
 				2018743D1B74828900BA2C58 /* InboxTableViewController.h */,
 				2018743B1B74828100BA2C58 /* InboxTableViewController.m */,
 				2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */,
@@ -857,6 +862,7 @@
 				2055FD431B27EF4D00B85F77 /* AFURLConnectionOperation.m in Sources */,
 				207873251B3B969500C3C86B /* AFJSONUtilities.m in Sources */,
 				2018743C1B74828100BA2C58 /* InboxTableViewController.m in Sources */,
+				20C8A4831B82B1DB003C0598 /* APPViewController.m in Sources */,
 				207873221B3B965C00C3C86B /* AFHTTPClient.m in Sources */,
 				204BD38A1B462DDA0059A517 /* CustomAccessory.m in Sources */,
 				20EF27941B0C24FC0082A828 /* NewInputViewController.m in Sources */,

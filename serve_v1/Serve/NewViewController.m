@@ -67,6 +67,9 @@ const int allowedNumberOfCharactersInTitle = 10;
 @property (nonatomic, strong) UIView *submitView;
 @property (nonatomic, retain) NSMutableArray* imageArray;
 
+@property (nonatomic, strong) UIView *lockOverlayView;
+
+
 
 
 //@property (strong, nonatomic) id<ServeListingProtocol> listingItem;
@@ -102,6 +105,11 @@ const int allowedNumberOfCharactersInTitle = 10;
 }
 
 - (void)viewDidLoad {
+    
+    self.lockOverlayView = [[UIView alloc]init];
+    self.lockOverlayView.backgroundColor = [UIColor blackColor];
+    self.lockOverlayView.alpha = 0.5;
+    
     [self setUpViewControllerObjects];
     [self setUpNavigationController];
     [self.view addSubview:self.scrollView];
@@ -116,6 +124,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.scrollView addSubview:self.myPickerView];
     [self.scrollView addSubview:self.typeField];
     [self.scrollView addSubview:self.selectorView];
+    [self.scrollView addSubview:self.lockOverlayView];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -123,6 +132,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self setUpConstraints];
      self.titleInput.layer.cornerRadius = 5;
      self.submitView.layer.cornerRadius = 5;
+    [self.lockOverlayView setFrame:self.scrollView.frame];
 }
 
 - (void)setUpViewControllerObjects {
@@ -135,27 +145,31 @@ const int allowedNumberOfCharactersInTitle = 10;
                                    action:@selector(dismissKeyboard)];
     [self.scrollView addGestureRecognizer:tap];
     
-    self.titleLabel  = [UILabel new];
     [self.titleLabel setText:@"TITLE"];
+    [self.servesLabel setText:@"SERVES"];
+    [self.typeLabel setText:@"TYPE"];
+    [self.descLabel setText:@"DESCRIPTION"];
+    
     [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+    [self.servesLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+    [self.typeLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+    [self.descLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+    
+    self.descInput.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
+    
+    self.titleLabel  = [UILabel new];
     self.titleLabel.textColor = [UIColor servetextLabelGrayColor];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.servesLabel  = [UILabel new];
-    [self.servesLabel setText:@"SERVES"];
-    [self.servesLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
     self.servesLabel.textColor = [UIColor servetextLabelGrayColor];
     self.servesLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.typeLabel  = [UILabel new];
-    [self.typeLabel setText:@"TYPE"];
-    [self.typeLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
     self.typeLabel.textColor = [UIColor servetextLabelGrayColor];
     self.typeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.descLabel = [UILabel new];
-    [self.descLabel setText:@"DESCRIPTION"];
-    [self.descLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
     self.descLabel.textColor = [UIColor servetextLabelGrayColor];
     self.descLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -168,7 +182,6 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.descInput.text = descriptionPlaceholder;
     self.descInput.delegate = self;
     self.descInput.textColor = [UIColor lightGrayColor];
-    self.descInput.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];;
     self.descInput.textAlignment = NSTextAlignmentCenter;
     self.descInput.translatesAutoresizingMaskIntoConstraints = NO;
     self.descInput.layer.cornerRadius = 5;//changed from 15
@@ -239,7 +252,6 @@ const int allowedNumberOfCharactersInTitle = 10;
     
     
     self.imageArray = [[NSMutableArray alloc]init];
-    
     self.imageField= [[ImageField alloc]initWithFrame:CGRectZero];
     self.imageField.backgroundColor = [UIColor whiteColor];
     self.imageField.translatesAutoresizingMaskIntoConstraints  = NO;

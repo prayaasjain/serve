@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddressViewController : UIViewController<MKMapViewDelegate>
+@interface AddressViewController : UIViewController<MKMapViewDelegate,UITableViewDelegate,UITableViewDataSource,UISearchResultsUpdating,UISearchBarDelegate>
 
 @end

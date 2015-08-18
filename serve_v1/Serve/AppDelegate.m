@@ -125,12 +125,12 @@
     UIImage *settingsImageSelected = [UIImage imageNamed:@"user_selected.png"];
     settingsImage = [settingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     settingsImageSelected = [settingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    reviewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage selectedImage:settingsImageSelected];
+    addressViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage selectedImage:settingsImageSelected];
     
     UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:myListingsViewController];
     UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:publicListingViewController];
     UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:inboxTableViewController];
-    UINavigationController *navigationController4 = [[UINavigationController alloc] initWithRootViewController:reviewController];
+    UINavigationController *navigationController4 = [[UINavigationController alloc] initWithRootViewController:addressViewController];
     
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                [UIColor whiteColor],NSForegroundColorAttributeName,

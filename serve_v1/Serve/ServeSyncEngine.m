@@ -149,6 +149,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     
     NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:predicate1, predicate2,nil]];
     
+    //Akhil commenting to test update in Parse
     [fetchRequest setPredicate:compoundPredicate];
 
     [managedObjectContext performBlockAndWait:^{
@@ -380,6 +381,61 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
     }];
 }
 
+//- (void)deleteObjectsOnServer {
+//    NSMutableArray *operations = [NSMutableArray array];
+//    //
+//    // Iterate over all registered classes to sync
+//    //
+//    for (NSString *className in self.registeredClassesToSync) {
+//        //
+//        // Fetch all records from Core Data whose syncStatus is equal to SDObjectDeleted
+//        //
+//        NSArray *objectsToDelete = [self managedObjectsForClass:className withSyncStatus:ServeObjectDeleted];
+//        //
+//        // Iterate over all fetched records from Core Data
+//        //
+//        for (NSManagedObject *objectToDelete in objectsToDelete) {
+//            //
+//            // Create a request for each record
+//            //
+//            NSMutableURLRequest *request = [[ServeAFParseAPIClient sharedClient]
+//                                            DELETERequestForClass:className
+//                                            forObjectWithId:[objectToDelete valueForKey:@"objectId"]];
+//            
+//            AFHTTPRequestOperation *operation = [[ServeAFParseAPIClient sharedClient] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                NSLog(@"Success deletion: %@", responseObject);
+//                //
+//                // In the operations completion block delete the NSManagedObject from Core data locally since it has been
+//                // deleted on the server
+//                //
+//                [[[ServeCoreDataController sharedInstance] backgroundManagedObjectContext] deleteObject:objectToDelete];
+//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                NSLog(@"Failed to delete: %@", error);
+//            }];
+//            
+//            //
+//            // Add each operation to the operations array
+//            //
+//            [operations addObject:operation];
+//        }
+//    }
+//    
+//    [[ServeAFParseAPIClient sharedClient] enqueueBatchOfHTTPRequestOperations:operations progressBlock:^(NSUInteger numberOfCompletedOperations, NSUInteger totalNumberOfOperations) {
+//        
+//    } completionBlock:^(NSArray *operations) {
+//        if ([operations count] > 0) {
+//            //
+//            // Save the background context after all operations have completed
+//            //
+//            [[ServeCoreDataController sharedInstance] saveBackgroundContext];
+//        }
+//        
+//        //
+//        // Execute the sync completed operations
+//        //
+//        [self executeSyncCompletedOperations];
+//    }];
+//}
 
 - (void)startSync {
     if (!self.syncInProgress) {
