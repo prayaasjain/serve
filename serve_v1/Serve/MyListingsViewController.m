@@ -156,20 +156,32 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100.0f;
+    
+    if(indexPath.section == 0)
+    {
+        return 70.0f;
+    }
+    
+    else
+    {
+        return 100.0f;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ///
-    // Similar to UITableViewCell, but
-    AddListingCell *cell = (AddListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:addListingCellIdentifier];
+    UITableViewCell *cell;// = [[UITableViewCell alloc]init];
+    //AddListingCell *cell = (AddListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:addListingCellIdentifier];
     if (cell == nil) {
-        cell = [[AddListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addListingCellIdentifier];
+        //cell = [[AddListingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addListingCellIdentifier];
+        cell = [[UITableViewCell alloc]init];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    cell.textLabel.text = @"+ Add New Listing";
+    
+    //Akhil here
+    //cell.selectionStyle = UITableViewCellSelectionStyleBlue;
   
-    
-    
+
     PublicListingCell *cell1 = (PublicListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
     
     if(self.selfListings.count)
@@ -180,7 +192,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
         cell1 = [[PublicListingCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier withListing:item];
         }
 
-        cell1.selectionStyle = UITableViewCellSelectionStyleNone;
+        //cell1.selectionStyle = UITableViewCellSelectionStyleNone;
   
         if(item.image)
         {
@@ -192,7 +204,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
         }
         cell1.serveCountLabel.text = [[item serveCount] stringValue];
         cell1.titleLabel.text = [item name];
-        cell1.selectionStyle = UITableViewCellSelectionStyleBlue;
+        //cell1.selectionStyle = UITableViewCellSelectionStyleBlue;
         
         cell1.addressLabel.text = @"1235,Wildwood Ave,Sunnyvale";//[item address1];
     
@@ -327,13 +339,13 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 - (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item inMode:(NSInteger)mode
 {
+    [self dismissViewControllerAnimated:YES completion:nil];
     if(mode==CreateMode)
     {
         [self.managedObjectContext deleteObject:(Listing*)item];
         [[ServeCoreDataController sharedInstance] saveMasterContext];
     }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 

@@ -8,9 +8,11 @@
 
 #import "CustomAnnotation.h"
 
+
 @implementation CustomAnnotation
 
 @synthesize coordinate;
+@synthesize listing;
 
 - (id)initWithLocation:(CLLocationCoordinate2D)coord {
     self = [super init];
@@ -19,5 +21,11 @@
     }
     return self;
 }
+
+
+//- (CLLocationCoordinate2D)coordinate {
+//    NSLog(@"Akhil2");
+//    return coordinate;
+//}
 
 @end

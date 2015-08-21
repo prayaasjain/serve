@@ -351,9 +351,14 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 - (void)initializePins {
     
     NSMutableArray *tempoPins = [[NSMutableArray alloc]init];
+    NSMutableArray *tempoPins2 = [[NSMutableArray alloc]init];
     self.mapPins = nil;
     
     for (Listing *item in self.serverItems) {
+        
+//        CLLocationCoordinate2D location2 = CLLocationCoordinate2DMake([item.latitude doubleValue], [item.longitude doubleValue]);
+//        [item setCoordinate:location2];
+        
         
         //MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
         CLLocationCoordinate2D location ;
@@ -362,35 +367,40 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         [annotation setObjectId:[item objectId]];
         [annotation setTitle:[item name]];
         //[annotation setImage:[UIImage imageWithData:[item image]]];
-        
+        annotation.listing = item;
         [tempoPins addObject:annotation];
+        
+        //[tempoPins2 addObject:item];
     }
     
     self.mapPins = [[NSMutableArray alloc] initWithArray:tempoPins];
-    [self.map addAnnotations:self.mapPins];
+    [self.map addAnnotations:tempoPins];
+    
+    
+
     
     
     
-   // [self.map addAnnotations:self.serverItems];
+  //  [self.map addAnnotations:self.serverItems];
 
 }
 
 - (void)selectAnnotationUsingSearchResults {
-//    
-//    Listing *selectedItem = [self.serverItems firstObject];
-//    
-//    for (id annotation in self.mapPins)
-//    {
-//        if ([annotation isKindOfClass:[Listing class]]&&[[annotation objectId] isEqualToString:[selectedItem objectId]])
-//        {
-//            [self.map selectAnnotation:annotation animated:YES];
-//            self.selectedAnnotation = annotation;
-//            
-//        }
-//    }
     
     Listing *selectedItem = [self.serverItems firstObject];
-    [self.map selectAnnotation:selectedItem animated:YES];
+    
+    for (id annotation in self.mapPins)
+    {
+        if ([annotation isKindOfClass:[CustomAnnotation class]]&&[[annotation objectId] isEqualToString:[selectedItem objectId]])
+        {
+            [self.map selectAnnotation:annotation animated:YES];
+            self.selectedAnnotation = annotation;
+            
+        }
+    }
+    
+//    Listing *selectedItem = [self.serverItems firstObject];
+//    [self.map selectAnnotation:selectedItem animated:YES];
  
 }
 
@@ -440,8 +450,24 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
+    CustomAnnotation *tempAnnotation = (CustomAnnotation *)view.annotation;
+    Listing *temp = tempAnnotation.listing;
+        
+    id<ServeListingProtocol>listing = temp;
+    NSLog(@" %@",[listing name]);
+
+    ReviewSubmitViewController *listingDetailsViewController = [[ReviewSubmitViewController alloc]initWithListing:listing];
+
+    UINavigationController *navigationController1 = nil;
+    navigationController1 = [[UINavigationController alloc] initWithRootViewController:listingDetailsViewController];
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
+                                               nil];
+    navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+    navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    [self presentViewController:navigationController1 animated:YES completion:nil];
+
     
-    NSLog(@"A");
 
 }
 

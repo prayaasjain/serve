@@ -7,6 +7,7 @@
 //
 
 #import "AddressViewController.h"
+#import "UIColor+Utils.h"
 
 @interface AddressViewController ()
 
@@ -51,7 +52,7 @@
     [self configureSearch];
     
     
-    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
+    self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
     //self.homeTable.scrollsToTop = NO;
     self.homeTable.delegate = self;
     self.homeTable.dataSource = self;
@@ -59,7 +60,7 @@
     self.homeTable.separatorColor=[UIColor grayColor];
     
     [self.homeTable setHidden:YES];
-    [self.homeTable setBackgroundColor:[UIColor clearColor]];
+    [self.homeTable setBackgroundColor:[UIColor serveAppFontColor]];
     self.homeTable.separatorColor=[UIColor blackColor];
     //self.homeTable.backgroundView.alpha = 0.4;
     
@@ -201,7 +202,7 @@
 #pragma mark - Table View delegates
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 10.0f;
+    return 0.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -235,7 +236,14 @@
     {
         MKMapItem *result = [self.searchResults objectAtIndex:indexPath.row];
         cell1.textLabel.text = [[result placemark] title];
-        cell1.backgroundColor = [UIColor colorWithRed:0. green:0.39 blue:0.106 alpha:0.7];//fix this color
+        cell1.backgroundColor = [UIColor serveAppFontColor];
+        
+        cell1.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0f];
+        cell1.textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        cell1.textLabel.numberOfLines = 0;
+        cell1.textLabel.textColor = [UIColor blackColor];
+        
+        //[UIColor colorWithRed:0. green:0.39 blue:0.106 alpha:0.7];//fix this color
         
     
     }

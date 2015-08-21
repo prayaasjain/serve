@@ -13,6 +13,7 @@
 +(id)servetextLabelGrayColor;
 + (id)serveBackgroundColor;
 + (id)serveRedButtonColor;
++(id)serveAppFontColor;
 
 + (UIColor *)serveUIColorFromRGB:(NSUInteger)rgbValue;
 

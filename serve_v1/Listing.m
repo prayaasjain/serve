@@ -37,6 +37,7 @@
 @dynamic syncStatus;
 @dynamic serveCount;
 
+@synthesize coordinate;
 
 - (NSDictionary *)JSONToCreateObjectOnServer {
 
@@ -70,17 +71,27 @@
     coord.latitude = [self.latitude doubleValue]; // or self.latitudeValue à la MOGen
     coord.longitude = [self.longitude doubleValue];
     NSLog(@"Akhil");
+    
+    //coordinate = coord;
+    
     return coord;
+}
+
+- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate
+{
+    
+    coordinate = newCoordinate;
+    
+    NSLog(@"Prayaas ");
 }
 
 + (NSString *)objectId {
     return self.objectId;
 }
 
--(void)setTitle:(NSString *)name
-{
-    self.name = name;
-}
+//-(void)setTitle:(NSString *)name {
+//    self.name = name;
+//}
 
 
 + (id<ServeListingProtocol>)createNewListinginContext:(NSManagedObjectContext *)context

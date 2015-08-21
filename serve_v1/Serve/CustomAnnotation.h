@@ -7,17 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Listing.h"
 
 @interface CustomAnnotation :NSObject <MKAnnotation>
-{
-    CLLocationCoordinate2D coordinate;
-}
 
 @property(nonatomic,strong) NSString *objectId;
 @property (nonatomic,strong) NSString *title;
-@property(nonatomic,strong) UIImage *image;
+//@property(nonatomic,strong) UIImage *image;
+@property (nonatomic,strong)Listing *listing;
 
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+//@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 - (id)initWithLocation:(CLLocationCoordinate2D)coord;
 

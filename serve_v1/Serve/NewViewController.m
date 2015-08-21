@@ -53,7 +53,9 @@ const int allowedNumberOfCharactersInTitle = 10;
 @property (nonatomic, strong) UILabel *servesLabel;
 @property (nonatomic, strong) UILabel *typeLabel;
 @property (nonatomic, strong) UILabel *descLabel;
+@property (nonatomic, strong) UILabel *addressLabel;
 @property (nonatomic, strong) UITextField *titleInput;
+@property (nonatomic, strong) UITextView *addressInput;
 @property (nonatomic, strong) UIButton *addServeButton;
 @property (nonatomic, strong) UIButton *reduceServeButton;
 @property (nonatomic, strong) UITextView *descInput;
@@ -150,6 +152,8 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.scrollView addSubview:self.myPickerView];
     [self.scrollView addSubview:self.typeField];
     [self.scrollView addSubview:self.selectorView];
+    [self.scrollView addSubview:self.addressLabel];
+    [self.scrollView addSubview:self.addressInput];
     
     
     [self.scrollView addSubview:self.lockOverlayView];
@@ -160,6 +164,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self setUpConstraints];
      self.titleInput.layer.cornerRadius = 5;
      self.submitView.layer.cornerRadius = 5;
+     self.addressInput.layer.cornerRadius = 5;
     [self.lockOverlayView setFrame:self.scrollView.frame];
     
 }
@@ -173,16 +178,6 @@ const int allowedNumberOfCharactersInTitle = 10;
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     [self.scrollView addGestureRecognizer:tap];
-    
-    [self.titleLabel setText:@"TITLE"];
-    [self.servesLabel setText:@"SERVES"];
-    [self.typeLabel setText:@"TYPE"];
-    [self.descLabel setText:@"DESCRIPTION"];
-    
-    [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
-    [self.servesLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
-    [self.typeLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
-    [self.descLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
     
     self.descInput.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
     
@@ -202,10 +197,30 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.descLabel.textColor = [UIColor servetextLabelGrayColor];
     self.descLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
+    self.addressLabel  = [UILabel new];
+    self.addressLabel.textColor = [UIColor servetextLabelGrayColor];
+    self.addressLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
     self.titleInput = [[UITextField alloc]init];
     [self.titleInput setBackgroundColor:[UIColor whiteColor]];
-    self.titleInput.layer.cornerRadius = self.titleInput.frame.size.width/2;
     [self setTextFieldProperties:self.titleInput withPlaceholder:titlePlaceholder withTag:TitleInputTag];
+    
+    self.addressInput = [[UITextView alloc]init];
+    [self.addressInput setBackgroundColor:[UIColor whiteColor]];
+    self.addressInput.textColor = [UIColor lightGrayColor];
+    self.addressInput.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
+    self.addressInput.textAlignment = NSTextAlignmentCenter;
+    self.addressInput.translatesAutoresizingMaskIntoConstraints = NO;
+    self.addressInput.layer.cornerRadius = 0;
+    self.addressInput.clipsToBounds = YES;
+    self.addressInput.delegate = self;
+    //self.addressInput.editable = NO;
+    self.addressInput.contentInset = UIEdgeInsetsMake(5, 5, 10, 10);
+    UITapGestureRecognizer *addresstap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressInputTapped:)];
+    [self.addressInput addGestureRecognizer:addresstap];
+    [self.addressInput setEditable:NO];
+    [self.addressInput setUserInteractionEnabled:YES];
+    
     
     
     self.descInput = [[UITextView alloc]init];
@@ -220,17 +235,30 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.descInput setReturnKeyType:UIReturnKeyDefault];
     [self.descInput setKeyboardAppearance:UIKeyboardAppearanceDark];
     
+    [self.titleLabel setText:@"TITLE"];
+    [self.servesLabel setText:@"SERVES"];
+    [self.typeLabel setText:@"TYPE"];
+    [self.descLabel setText:@"DESCRIPTION"];
+    [self.addressLabel setText:@"ADDRESS"];
+    
+    [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+    [self.servesLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+    [self.typeLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+    [self.descLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+    [self.addressLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
     
     if(self.currentMode == CreateMode)
     {
         self.descInput.text = descriptionPlaceholder;
         self.titleInput.text = titlePlaceholder;
+        self.addressInput.text = @"1235,Wildwood Ave,Sunnyvale, CA-94089";
         [self.lockOverlayView setHidden:YES];
     }
     else
     {
         self.titleInput.text = [self.listingItem name];
         self.descInput.text = [self.listingItem desc];
+        self.addressInput.text = [self.listingItem address1];
         
     }
     
@@ -319,7 +347,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.pickerSelectionIndicatorInstalled = nil;
     self.pickerViewArray = [NSArray arrayWithObjects:
                             @"1", @"2", @"3",
-                            @"4", @"5", @"6", @"7",@"8",@"9",@"10",@">10",
+                            @"4", @"5", @"6", @"7",@"8",@"9",@"10",@">",
                             nil];
     //self.myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 150)];
     self.myPickerView = [[UIPickerView alloc]initWithFrame:CGRectZero];
@@ -379,7 +407,9 @@ const int allowedNumberOfCharactersInTitle = 10;
                  @"servesLabel":self.servesLabel,
                  @"typeLabel":self.typeLabel,
                  @"descLabel":self.descLabel,
-                 @"descInput":self.descInput
+                 @"descInput":self.descInput,
+                 @"addressLabel":self.addressLabel,
+                 @"addressInput":self.addressInput
                  }
     ;
     
@@ -388,22 +418,24 @@ const int allowedNumberOfCharactersInTitle = 10;
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics: metrics views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics: metrics views:views]];
-    
-    //[scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[imageView]-rightMargin-|" options:0 metrics:metrics views:views]];
-    
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageField]|" options:0 metrics:metrics views:views]];
-    
-    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[titleInput]-leftMargin-|" options:0 metrics:metrics views:views]];
-    
-    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[descInput]-leftMargin-|" options:0 metrics:metrics views:views]];
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[typeField]-leftMargin-|" options:0 metrics:metrics views:views]];
-    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[pickerView]-leftMargin-|" options:0 metrics:metrics views:views]];
-    
-    
-    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageField]-fieldSpacing-[titleLabel]-[titleInput]-fieldSpacing-[descLabel]-[descInput]-fieldSpacing-[typeLabel]-[typeField]-fieldSpacing-[servesLabel]-[pickerView]-bottomMargin-|" options:0 metrics: metrics views:views]];
+
+    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageField]-fieldSpacing-[titleLabel]-[titleInput]-fieldSpacing-[descLabel]-[descInput]-fieldSpacing-[typeLabel]-[typeField]-fieldSpacing-[servesLabel]-[pickerView]-fieldSpacing-[addressLabel]-[addressInput]-bottomMargin-|" options:0 metrics: metrics views:views]];
     
     NSLayoutConstraint *titleInputWidthConstraint = [NSLayoutConstraint
                                                      constraintWithItem:self.titleInput attribute:NSLayoutAttributeWidth
+                                                     relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                     attribute:NSLayoutAttributeWidth multiplier:0.9 constant:0];
+    
+    NSLayoutConstraint *titleInputCenterXConstraint = [NSLayoutConstraint
+                                                         constraintWithItem:self.titleInput attribute:NSLayoutAttributeCenterX
+                                                         relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                         attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+    
+    
+    NSLayoutConstraint *addressInputWidthConstraint = [NSLayoutConstraint
+                                                     constraintWithItem:self.addressInput attribute:NSLayoutAttributeWidth
                                                      relatedBy:NSLayoutRelationEqual toItem:self.scrollView
                                                      attribute:NSLayoutAttributeWidth multiplier:0.9 constant:0];
     
@@ -417,10 +449,21 @@ const int allowedNumberOfCharactersInTitle = 10;
                                                       relatedBy:NSLayoutRelationEqual toItem:self.scrollView
                                                       attribute:NSLayoutAttributeHeight multiplier:.10 constant:0];
     
+    NSLayoutConstraint *addressInputHeightConstraint = [NSLayoutConstraint
+                                                      constraintWithItem:self.addressInput attribute:NSLayoutAttributeHeight
+                                                      relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                      attribute:NSLayoutAttributeHeight multiplier:.10 constant:0];
+    
+    
     NSLayoutConstraint *descInputHeightConstraint = [NSLayoutConstraint
                                                      constraintWithItem:self.descInput attribute:NSLayoutAttributeHeight
                                                      relatedBy:NSLayoutRelationEqual toItem:self.scrollView
                                                      attribute:NSLayoutAttributeHeight multiplier:.20 constant:0];
+    
+    NSLayoutConstraint *descInputCenterXConstraint = [NSLayoutConstraint
+                                                         constraintWithItem:self.descInput attribute:NSLayoutAttributeCenterX
+                                                         relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                         attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
     
     NSLayoutConstraint *pickerWidthConstraint = [NSLayoutConstraint
                                                  constraintWithItem:self.myPickerView attribute:NSLayoutAttributeWidth
@@ -431,6 +474,12 @@ const int allowedNumberOfCharactersInTitle = 10;
                                                   constraintWithItem:self.myPickerView attribute:NSLayoutAttributeHeight
                                                   relatedBy:NSLayoutRelationEqual toItem:self.titleInput
                                                   attribute:NSLayoutAttributeHeight multiplier:1 constant:0];
+    
+    NSLayoutConstraint *pickerCenterXConstraint = [NSLayoutConstraint
+                                                  constraintWithItem:self.myPickerView attribute:NSLayoutAttributeCenterX
+                                                  relatedBy:NSLayoutRelationEqual toItem:self.titleInput
+                                                  attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+    
     
     NSLayoutConstraint *typeFieldWidthConstraint = [NSLayoutConstraint
                                                     constraintWithItem:self.typeField attribute:NSLayoutAttributeWidth
@@ -475,6 +524,17 @@ const int allowedNumberOfCharactersInTitle = 10;
                                                        constraintWithItem:self.titleLabel attribute:NSLayoutAttributeCenterX
                                                        relatedBy:NSLayoutRelationEqual toItem:self.scrollView
                                                        attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint *addressLabelCenterXConstraint = [NSLayoutConstraint
+                                                       constraintWithItem:self.addressLabel attribute:NSLayoutAttributeCenterX
+                                                       relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                       attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+    NSLayoutConstraint *addressInputCenterXConstraint = [NSLayoutConstraint
+                                                         constraintWithItem:self.addressInput attribute:NSLayoutAttributeCenterX
+                                                         relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                         attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+    
+    
     NSLayoutConstraint *typeLabelCenterXConstraint = [NSLayoutConstraint
                                                       constraintWithItem:self.typeLabel attribute:NSLayoutAttributeCenterX
                                                       relatedBy:NSLayoutRelationEqual toItem:self.scrollView
@@ -504,39 +564,27 @@ const int allowedNumberOfCharactersInTitle = 10;
                                                          relatedBy:NSLayoutRelationEqual toItem:self.view
                                                          attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
     
-    NSLayoutConstraint *submitButtonCenterYConstraint = [NSLayoutConstraint
-                                                         constraintWithItem:self.submitView attribute:NSLayoutAttributeCenterY
-                                                         relatedBy:NSLayoutRelationEqual toItem:self.view
-                                                         attribute:NSLayoutAttributeCenterY multiplier:1.88 constant:0];
     
     NSLayoutConstraint *submitButtonBottomConstraint = [NSLayoutConstraint
                                                         constraintWithItem:self.submitView attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual toItem:self.view
                                                         attribute:NSLayoutAttributeBottom multiplier:1 constant:-10];
     
-    NSLayoutConstraint *submitButtonLeftConstraint = [NSLayoutConstraint
-                                                      constraintWithItem:self.submitView attribute:NSLayoutAttributeLeft
-                                                      relatedBy:NSLayoutRelationEqual toItem:self.view
-                                                      attribute:NSLayoutAttributeLeft multiplier:1 constant:16];
     
     
-    //    NSLayoutConstraint *submitButtonCenterYConstraint = [NSLayoutConstraint
-    //                                                         constraintWithItem:self.submitView attribute:NSLayoutAttributeCenterY
-    //                                                         relatedBy:NSLayoutRelationEqual toItem:self.view
-    //                                                         attribute:NSLayoutAttributeBottom multiplier:1 constant:-40];
+    [self.view addConstraints:@[submitButtonWidthConstraint,submitButtonHeightConstraint,submitButtonBottomConstraint, submitButtonCenterXConstraint]];
     
-    
-    [self.view addConstraints:@[submitButtonWidthConstraint,submitButtonHeightConstraint,
-                                //submitButtonCenterXConstraint,submitButtonCenterYConstraint,
-                                submitButtonBottomConstraint, submitButtonLeftConstraint
-                                ]];
-    
-    [self.scrollView addConstraints:@[titleInputWidthConstraint,descInputWidthConstraint,descInputHeightConstraint,titleInputHeightConstraint,selectorViewCenterXConstraint,selectorViewCenterYConstraint,
-                                      selectorViewWidthConstraint,selectorViewHeightConstraint,titleLabelCenterXConstraint,typeLabelCenterXConstraint,servesLabelCenterXConstraint,descLabelCenterXConstraint,
-                                      typeFieldWidthConstraint,typeFieldHeightConstraint,pickerHeightConstraint,
-                                      imageFieldHeightConstraint
+    [self.scrollView addConstraints:@[titleInputWidthConstraint,titleInputHeightConstraint,titleInputCenterXConstraint,
+                                      titleLabelCenterXConstraint,
+                                      typeLabelCenterXConstraint,typeFieldWidthConstraint,typeFieldHeightConstraint,
+                                      descInputWidthConstraint,descInputHeightConstraint,descInputCenterXConstraint, descLabelCenterXConstraint,
+                                      selectorViewCenterXConstraint,selectorViewCenterYConstraint,selectorViewWidthConstraint,selectorViewHeightConstraint,
+                                      servesLabelCenterXConstraint,imageFieldHeightConstraint,
+                                      pickerHeightConstraint,pickerWidthConstraint,pickerCenterXConstraint
                                       //
                                       ]];
+    
+    [self.scrollView addConstraints:@[addressLabelCenterXConstraint,addressInputHeightConstraint,addressInputWidthConstraint,addressInputCenterXConstraint]];
     
     //imageViewWidthConstraint,imageViewHeightConstraint
 }
@@ -554,6 +602,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.listingItem setName:self.titleInput.text];
     [self.listingItem setServeCount:[NSNumber numberWithInt:self.serveCount]];
     [self.listingItem setDesc:self.descInput.text];
+    [self.listingItem setAddress1:self.addressInput.text];
     
     if(self.imageArray.count)
     {
@@ -572,7 +621,9 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.delegate newViewController:self didCancelItemEdit:self.listingItem inMode:self.currentMode];
 }
 
-
+-(IBAction)addressInputTapped:(id)sender {
+    NSLog(@"AKhilHAHAHHA");
+}
 
 - (void)dismissKeyboard {
     [self.titleInput resignFirstResponder];

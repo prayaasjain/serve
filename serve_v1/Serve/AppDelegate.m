@@ -29,6 +29,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import "UIColor+Utils.h"
 
 
 @interface AppDelegate ()
@@ -80,9 +81,14 @@
 {
     self.tabBarController = [[UITabBarController alloc] init];
     // Change the tab bar background
+//    [[UITabBarItem appearance] setTitleTextAttributes:@{
+//                                                        NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f],
+//                                                        NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:48/255.0 blue:92/255.0 alpha:1.0],}
+//                                             forState:UIControlStateNormal];
+    
     [[UITabBarItem appearance] setTitleTextAttributes:@{
                                                         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f],
-                                                        NSForegroundColorAttributeName: [UIColor colorWithRed:0/255.0 green:48/255.0 blue:92/255.0 alpha:1.0],}
+                                                        NSForegroundColorAttributeName: [UIColor servetextLabelGrayColor],}
                                              forState:UIControlStateNormal];
     
     [[UITabBarItem appearance] setTitleTextAttributes:@{
@@ -191,11 +197,11 @@
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
     
-    NSLog(@"Akhil%lu",(unsigned long)self.tabBarController.selectedIndex);
-    if(self.tabBarController.selectedIndex == 3)
-    {
-        return NO;
-    }
+//    NSLog(@"Akhil%lu",(unsigned long)self.tabBarController.selectedIndex);
+//    if(self.tabBarController.selectedIndex == 3)
+//    {
+//        return NO;
+//    }
     
 //    NSLog(@"Ak%lu",(unsigned long)self.tabBarController.selectedIndex);
     

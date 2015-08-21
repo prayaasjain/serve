@@ -33,7 +33,10 @@
 
 }
 
-
++(id)serveAppFontColor
+{
+    return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:0.4];
+}
 
 
 @end
