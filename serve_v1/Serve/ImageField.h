@@ -18,4 +18,7 @@
 
 -(void)addPhotoWithPhotosArray:(NSArray*)photoArray;
 
+- (id)initWithFrame:(CGRect)frame andImages:(NSArray *)images;
+-(void)resetImageFieldWithImageArray:(NSArray *)imageArray;
+
 @end

@@ -209,6 +209,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         if(item.image)
         {
             cell1.imageView.image = [UIImage imageWithData:item.image];
+            //cell1.contentMode = UIViewContentModeScaleAspectFill;
         }
         else
         {

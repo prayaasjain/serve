@@ -14,6 +14,7 @@ typedef enum {
     ServeObjectSynced = 0,
     ServeObjectCreated,//1
     ServeObjectDeleted,//2
+    ServeObjectUpdated
 } ServeObjectSyncStatus;
 
 @interface ServeSyncEngine : NSObject

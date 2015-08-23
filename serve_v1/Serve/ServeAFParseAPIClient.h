@@ -16,5 +16,7 @@
 - (NSMutableURLRequest *)GETRequestForAllRecordsOfClass:(NSString *)className updatedAfterDate:(NSDate *)updatedDate;
 
 - (NSMutableURLRequest *)POSTRequestForClass:(NSString *)className parameters:(NSDictionary *)parameters;
+- (NSMutableURLRequest *)DELETERequestForClass:(NSString *)className forObjectWithId:(NSString *)objectId;
+- (NSMutableURLRequest *)UPDATERequestForClass:(NSString *)className forObjectWithId:(NSString *)objectId withParameters:(NSDictionary *)parameters;
 
 @end

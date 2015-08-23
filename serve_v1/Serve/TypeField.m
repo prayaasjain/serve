@@ -7,6 +7,7 @@
 //
 
 #import "TypeField.h"
+#import "UIColor+Utils.h"
 
 @interface TypeField()
 
@@ -99,7 +100,7 @@
         self.imageOne = [[UIImageView alloc]initWithFrame:CGRectZero];
         //self.imageOne.contentMode = UIViewContentModeScaleAspectFill;
         //[self.imageOne setClipsToBounds:YES];
-        self.imageOne.image = [UIImage imageNamed:@"veg_selected.png"];
+        self.imageOne.image = [UIImage imageNamed:@"veg_selected_b.png"];
         [self.imageOne setUserInteractionEnabled:YES];
         self.imageOne.translatesAutoresizingMaskIntoConstraints = NO;
         
@@ -126,7 +127,7 @@
         self.vegLabel.textAlignment = NSTextAlignmentCenter;
         self.vegLabel.clipsToBounds = YES;
         self.vegLabel.text = @"VEGETARIAN";
-        self.vegLabel.textColor = [UIColor redColor];
+        self.vegLabel.textColor = [UIColor servePrimaryColor];
         self.vegLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
         self.nonVegLabel = [[UILabel alloc]init];
@@ -235,9 +236,9 @@
 {
     if (self.selectedType == veg && tag!=veg)
     {
-        self.imageTwo.image = [UIImage imageNamed:@"nonVeg_selected.png"];
+        self.imageTwo.image = [UIImage imageNamed:@"nonVeg_selected_b.png"];
         self.imageOne.image = [UIImage imageNamed:@"veg.png"];
-        self.nonVegLabel.textColor = [UIColor redColor];
+        self.nonVegLabel.textColor = [UIColor servePrimaryColor];
         self.vegLabel.textColor = [UIColor lightGrayColor];
         self.selectedType = nonveg;
     }
@@ -245,9 +246,9 @@
     if (self.selectedType == nonveg && tag!=nonveg)
     {
         self.imageTwo.image = [UIImage imageNamed:@"nonVeg.png"];
-        self.imageOne.image = [UIImage imageNamed:@"veg_selected.png"];
+        self.imageOne.image = [UIImage imageNamed:@"veg_selected_b.png"];
         self.nonVegLabel.textColor = [UIColor lightGrayColor];
-        self.vegLabel.textColor = [UIColor redColor];
+        self.vegLabel.textColor = [UIColor servePrimaryColor];
         self.selectedType = veg;
     }
 

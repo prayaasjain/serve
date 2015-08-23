@@ -51,7 +51,7 @@
     
     ////
     self.requestView = [[UIView alloc]initWithFrame:CGRectZero];
-    self.requestView.backgroundColor = [UIColor serveRedButtonColor];
+    self.requestView.backgroundColor = [UIColor servePrimaryColor];
     self.requestView.translatesAutoresizingMaskIntoConstraints  = NO;
     UILabel *submitLabel = [[UILabel alloc]initWithFrame:CGRectZero];
     submitLabel.text = @"REQUEST for PICKUP";
@@ -141,7 +141,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 0, 50, 28);
     [button setTitle:@"Back" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor serveRedButtonColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor servePrimaryColor] forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
     [button addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithCustomView:button];

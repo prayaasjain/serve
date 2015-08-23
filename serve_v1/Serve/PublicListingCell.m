@@ -103,7 +103,7 @@
     self.serveIcon.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.serveCountLabel = [[UILabel alloc] init];
-    self.serveCountLabel.textColor = [UIColor serveRedButtonColor];
+    self.serveCountLabel.textColor = [UIColor servePrimaryColor];
     self.serveCountLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f];
     self.serveCountLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -117,8 +117,6 @@
     self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.imageView.layer.borderColor = [[UIColor blackColor] CGColor];
     self.imageView.layer.borderWidth = .5;
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.imageView setClipsToBounds:YES];
     
 }
 

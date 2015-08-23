@@ -8,7 +8,6 @@
 
 #import "MyListingsViewController.h"
 #import "NewInputViewController.h"
-#import "InputViewController.h"
 #import "AddListingCell.h"
 #import "ServeCoreDataController.h"
 #import "Listing.h"
@@ -57,7 +56,8 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
     [self setUpNavigationController];
     
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] masterManagedObjectContext];
-    [self loadRecordsFromCoreData];
+    //  NSLog(@"from viewdidload");
+    //[self loadRecordsFromCoreData];
     
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
     self.homeTable.scrollsToTop = NO;
@@ -80,6 +80,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
     [self checkSyncStatus];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:@"ServeSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
+          NSLog(@"from viewdidappear");
         [self loadRecordsFromCoreData];
         [self.homeTable reloadData];
     }];
@@ -139,17 +140,18 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //return
     
-    if (section == 0) {
-            return 1;
-        }
-    
-    else{
+//    if (section == 0) {
+//            return 1;
+//        }
+//    
+//    else
+    {
         return [self.selfListings count];
     }
     
@@ -157,12 +159,12 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(indexPath.section == 0)
-    {
-        return 70.0f;
-    }
-    
-    else
+//    if(indexPath.section == 0)
+//    {
+//        return 70.0f;
+//    }
+//    
+//    else
     {
         return 100.0f;
     }
@@ -210,26 +212,59 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
     
     }
     
-    if (indexPath.section == 0) {
-        return cell;
-    }
-    else{
+//    if (indexPath.section == 0) {
+//        return cell;
+//    }
+//    else
+    {
         return cell1;
     }
 
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if(section==0)
-    {
-       return 10.0f;
-    }
-    else
+//    if(section==0)
+//    {
+//       return 10.0f;
+//    }
+//    else
     {
         return 0.0f;
     }
 }
 
+- (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
+    return 70.0;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    return @"Settings";
+}
+
+- (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section {
+    
+//    UIImageView *profileImageView = [[UIImageView alloc]initWithFrame:CGRectMake(140, 70, 70, 70)];
+//    [profileImageView setImage:[UIImage imageNamed:@"food1.jpg"]];
+//    
+//    profileImageView.layer.cornerRadius = 35;
+//    //profileImageView.translatesAutoresizingMaskIntoConstraints = NO;
+//    profileImageView.layer.borderColor = [[UIColor blackColor] CGColor];
+//    profileImageView.layer.borderWidth = .5;
+//    profileImageView.contentMode = UIViewContentModeScaleAspectFill;
+//    [profileImageView setClipsToBounds:YES];
+    
+    UITextView *textView = [[UITextView alloc]initWithFrame:CGRectZero];
+    textView.backgroundColor = [UIColor clearColor];
+    textView.text = @"+ ADD NEW LISTING";
+    textView.editable = NO;
+    
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectZero];
+    headerView.backgroundColor = [UIColor serveBackgroundColor];
+    [headerView addSubview:textView];
+    [textView sizeToFit];
+ 
+    return headerView;
+}
 
 #pragma mark - swipe cell to delete 
 
@@ -316,7 +351,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 - (void)newViewController:(NewViewController *)viewController didSaveItem:(id<ServeListingProtocol>)savedItem
 {
-     NSLog(@"Reached here successfully");
+    NSLog(@"Reached here successfully");
     
     [self.managedObjectContext performBlockAndWait:^
      {
@@ -337,6 +372,30 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 }
 
+- (void)newViewController:(NewViewController *)viewController deleteItem:(id<ServeListingProtocol>)item
+{
+    [self.managedObjectContext performBlockAndWait:^{
+        if ([[item objectId] isEqualToString:@""] || [item objectId] == nil) {
+            [self.managedObjectContext deleteObject:item];
+        } else {
+            [item setSyncStatus:[NSNumber numberWithInt:ServeObjectDeleted]];
+        }
+        NSError *error = nil;
+        BOOL saved = [self.managedObjectContext save:&error];
+        if (!saved) {
+            NSLog(@"Error saving main context: %@", error);
+        }
+        [[ServeCoreDataController sharedInstance] saveMasterContext];
+
+    }];
+
+    [self.homeTable reloadData];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [[ServeSyncEngine sharedEngine] startUpSync];
+    
+}
+
+
 - (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item inMode:(NSInteger)mode
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -351,28 +410,28 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(indexPath.section == 0)
-    {
-//        if(self.inputViewController == nil){
-//            NewViewController *secondView = [[NewViewController alloc] init];
-//            self.inputViewController = secondView;
-//        }
-        
-        self.inputViewController= [[NewViewController alloc] initWithNewItem];
-        self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
-        self.inputViewController.delegate = self;
-        UINavigationController *navigationController1 = nil;
-        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
-        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                   [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
-                                                   nil];
-        navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
-        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-        [self presentViewController:navigationController1 animated:YES completion:nil];
-        
-    }
-    
-    else
+//    if(indexPath.section == 0)
+//    {
+////        if(self.inputViewController == nil){
+////            NewViewController *secondView = [[NewViewController alloc] init];
+////            self.inputViewController = secondView;
+////        }
+//        
+//        self.inputViewController= [[NewViewController alloc] initWithNewItem];
+//        self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
+//        self.inputViewController.delegate = self;
+//        UINavigationController *navigationController1 = nil;
+//        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
+//        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                                   [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
+//                                                   nil];
+//        navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+//        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+//        [self presentViewController:navigationController1 animated:YES completion:nil];
+//        
+//    }
+//    
+//    else
     {
         
         id<ServeListingProtocol> listing = [self.selfListings objectAtIndex:indexPath.row];
@@ -397,22 +456,25 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
     
 }
 
-
 - (IBAction)refreshButtonTouched:(id)sender {
     [[ServeSyncEngine sharedEngine] startUpSync];
 }
 
 - (void)loadRecordsFromCoreData {
+    
+    NSLog(@"loadRecordsFromCoreData");
     [self.managedObjectContext performBlockAndWait:^{
         [self.managedObjectContext reset];
         NSError *error = nil;
         NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Listing"];
         
         [request setSortDescriptors:[NSArray arrayWithObject:
-                                     [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+                                     [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:YES]]];
+        NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"author = %@", @"Akhil"];
+        NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"syncStatus != %d", ServeObjectDeleted];
+        NSPredicate *predicate3 =[NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:predicate1, predicate2,nil]];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"author = %@", @"Akhil"];
-        [request setPredicate:predicate];
+        [request setPredicate:predicate3];
         
         self.selfListings = [self.managedObjectContext executeFetchRequest:request error:&error];
     }];
@@ -429,9 +491,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 - (void)checkSyncStatus {
     if ([[ServeSyncEngine sharedEngine] syncInProgress]) {
-        [self replaceRefreshButtonWithActivityIndicator];
     } else {
-        [self removeActivityIndicatorFromRefreshButon];
         [self loadRecordsFromCoreData];
         [self.homeTable reloadData];
     }

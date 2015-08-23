@@ -71,6 +71,7 @@ const int allowedNumberOfCharactersInTitle = 10;
 
 @property (nonatomic, strong) UIView *lockOverlayView;
 @property (nonatomic,assign)  NSInteger currentMode;
+@property (nonatomic, strong) UIButton *editButton;
 
 
 
@@ -136,10 +137,12 @@ const int allowedNumberOfCharactersInTitle = 10;
     
     self.lockOverlayView = [[UIView alloc]init];
     self.lockOverlayView.backgroundColor = [UIColor blackColor];
-    self.lockOverlayView.alpha = 0.5;
+    self.lockOverlayView.alpha = 0.1;
+    self.lockOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self setUpViewControllerObjects];
     [self setUpNavigationController];
+    [self setUpViewControllerObjects];
+
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.submitView];
     [self.scrollView addSubview:self.imageField];
@@ -165,8 +168,6 @@ const int allowedNumberOfCharactersInTitle = 10;
      self.titleInput.layer.cornerRadius = 5;
      self.submitView.layer.cornerRadius = 5;
      self.addressInput.layer.cornerRadius = 5;
-    [self.lockOverlayView setFrame:self.scrollView.frame];
-    
 }
 
 - (void)setUpViewControllerObjects {
@@ -221,8 +222,6 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.addressInput setEditable:NO];
     [self.addressInput setUserInteractionEnabled:YES];
     
-    
-    
     self.descInput = [[UITextView alloc]init];
     self.descInput.text = descriptionPlaceholder;
     self.descInput.delegate = self;
@@ -246,23 +245,6 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.typeLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
     [self.descLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
     [self.addressLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
-    
-    if(self.currentMode == CreateMode)
-    {
-        self.descInput.text = descriptionPlaceholder;
-        self.titleInput.text = titlePlaceholder;
-        self.addressInput.text = @"1235,Wildwood Ave,Sunnyvale, CA-94089";
-        [self.lockOverlayView setHidden:YES];
-    }
-    else
-    {
-        self.titleInput.text = [self.listingItem name];
-        self.descInput.text = [self.listingItem desc];
-        self.addressInput.text = [self.listingItem address1];
-        
-    }
-    
-    
     
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f,
                                                                      0.0f,
@@ -289,7 +271,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     
     
     self.submitView = [[UIView alloc]initWithFrame:CGRectZero];
-    self.submitView.backgroundColor = [UIColor serveRedButtonColor];
+    self.submitView.backgroundColor = [UIColor servePrimaryColor];
     self.submitView.translatesAutoresizingMaskIntoConstraints  = NO;
     UILabel *submitLabel = [[UILabel alloc]initWithFrame:CGRectZero];
     submitLabel.text = @"SUBMIT";
@@ -326,24 +308,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.typeField.translatesAutoresizingMaskIntoConstraints  = NO;
     
     
-    self.imageArray = [[NSMutableArray alloc]init];
-    self.imageField= [[ImageField alloc]initWithFrame:CGRectZero];
-    self.imageField.backgroundColor = [UIColor whiteColor];
-    self.imageField.translatesAutoresizingMaskIntoConstraints  = NO;
-    
-    UITapGestureRecognizer *imageOneTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
-    UITapGestureRecognizer *imageTwoTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
-    UITapGestureRecognizer *imageThreeTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
-    UITapGestureRecognizer *imageFourTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
-    UITapGestureRecognizer *initialTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
-    
-    [self.imageField.imageOne addGestureRecognizer:imageOneTap];
-    [self.imageField.imageTwo addGestureRecognizer:imageTwoTap];
-    [self.imageField.imageThree addGestureRecognizer:imageThreeTap];
-    [self.imageField.imageFour addGestureRecognizer:imageFourTap];
-    [self.imageField.initialView addGestureRecognizer:initialTap];
-    
-    self.serveCount = 2;
+    self.serveCount = 1;
     self.pickerSelectionIndicatorInstalled = nil;
     self.pickerViewArray = [NSArray arrayWithObjects:
                             @"1", @"2", @"3",
@@ -360,13 +325,70 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.myPickerView.translatesAutoresizingMaskIntoConstraints  = NO;
     
     self.selectorView = [[UIView alloc]initWithFrame:CGRectZero];
-    self.selectorView.layer.borderColor = [[UIColor serveRedButtonColor] CGColor];
+    self.selectorView.layer.borderColor = [[UIColor servePrimaryColor] CGColor];
     self.selectorView.layer.borderWidth = 1.0f;
     self.selectorView.layer.cornerRadius = 25.0f;
     self.selectorView.translatesAutoresizingMaskIntoConstraints = NO;
     
+    self.imageArray = [[NSMutableArray alloc]init];
+    if(self.currentMode == CreateMode)
+    {
+        self.descInput.text = descriptionPlaceholder;
+        self.titleInput.text = titlePlaceholder;
+        self.addressInput.text = @"1235,Wildwood Ave,Sunnyvale, CA-94089";
+        [self.lockOverlayView setHidden:YES];
+        [self.editButton setHidden:YES];
+    }
+    else
+    {
+        self.titleInput.text = [self.listingItem name];
+        self.descInput.text = [self.listingItem desc];
+        self.addressInput.text = [self.listingItem address1];
+        NSInteger pickerRow = [[self.listingItem serveCount] integerValue] -1;
+        [self.myPickerView selectRow:pickerRow inComponent:0 animated:NO];
+        [self prepareImageArrayForEditMode];
+        [self.submitView setHidden:YES];
+    }
+    
+    self.imageField= [[ImageField alloc]initWithFrame:CGRectZero andImages:self.imageArray];
+    self.imageField.backgroundColor = [UIColor whiteColor];
+    self.imageField.translatesAutoresizingMaskIntoConstraints  = NO;
+    
+    UITapGestureRecognizer *imageOneTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
+    UITapGestureRecognizer *imageTwoTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
+    UITapGestureRecognizer *imageThreeTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
+    UITapGestureRecognizer *imageFourTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
+    UITapGestureRecognizer *initialTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoCaptureButtonAction:)];
+    
+    [self.imageField.imageOne addGestureRecognizer:imageOneTap];
+    [self.imageField.imageTwo addGestureRecognizer:imageTwoTap];
+    [self.imageField.imageThree addGestureRecognizer:imageThreeTap];
+    [self.imageField.imageFour addGestureRecognizer:imageFourTap];
+    [self.imageField.initialView addGestureRecognizer:initialTap];
+    
     
 }
+
+
+-(void)prepareImageArrayForEditMode
+{
+    if(self.listingItem.image) {
+        [self.imageArray addObject:[UIImage imageWithData:self.listingItem.image]];
+    
+        if(self.listingItem.image2) {
+            [self.imageArray addObject:[UIImage imageWithData:self.listingItem.image2]];
+        
+            if(self.listingItem.image3) {
+                [self.imageArray addObject:[UIImage imageWithData:self.listingItem.image3]];
+                
+                if(self.listingItem.image4) {
+                    [self.imageArray addObject:[UIImage imageWithData:self.listingItem.image4]];
+                }
+            }
+        }
+    }
+}
+
 
 - (void)setUpNavigationController {
     
@@ -378,21 +400,29 @@ const int allowedNumberOfCharactersInTitle = 10;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 0, 50, 28);
     [button setTitle:@"Cancel" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor serveRedButtonColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor servePrimaryColor] forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
     [button addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *cancelBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button2.frame = CGRectMake(0, 0, 50, 28);
-    [button2 setTitle:@"Save" forState:UIControlStateNormal];
-    [button2 setTitleColor:[UIColor serveRedButtonColor] forState:UIControlStateNormal];
-    [button2.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [button2 addTarget:self action:@selector(saveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *saveBarButton = [[UIBarButtonItem alloc] initWithCustomView:button2];
-    
     self.navigationItem.leftBarButtonItem = cancelBarButton;
-    self.navigationItem.rightBarButtonItem = saveBarButton;
+    
+    
+    if(self.currentMode == EditMode){
+    self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.editButton.frame = CGRectMake(0, 0, 70, 20);
+    [self.editButton setTitle:@"E" forState:UIControlStateNormal];
+    [self.editButton setTitleColor:[UIColor servePrimaryColor] forState:UIControlStateNormal];
+    [self.editButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
+    [self.editButton addTarget:self action:@selector(saveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.editButton setImage: [UIImage imageNamed:@"lock_b.png"] forState:UIControlStateNormal];
+    [self.editButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
+    UIBarButtonItem *editBarButton = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
+    self.navigationItem.rightBarButtonItem = editBarButton;
+    }
+    
+ 
+    
     
 }
 
@@ -409,7 +439,8 @@ const int allowedNumberOfCharactersInTitle = 10;
                  @"descLabel":self.descLabel,
                  @"descInput":self.descInput,
                  @"addressLabel":self.addressLabel,
-                 @"addressInput":self.addressInput
+                 @"addressInput":self.addressInput,
+                 @"lockOverlay":self.lockOverlayView
                  }
     ;
     
@@ -418,6 +449,10 @@ const int allowedNumberOfCharactersInTitle = 10;
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics: metrics views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]|" options:0 metrics: metrics views:views]];
+    
+    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[lockOverlay]|" options:0 metrics: metrics views:views]];
+    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[lockOverlay]|" options:0 metrics: metrics views:views]];
+    
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageField]|" options:0 metrics:metrics views:views]];
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[typeField]-leftMargin-|" options:0 metrics:metrics views:views]];
 
@@ -585,35 +620,72 @@ const int allowedNumberOfCharactersInTitle = 10;
                                       ]];
     
     [self.scrollView addConstraints:@[addressLabelCenterXConstraint,addressInputHeightConstraint,addressInputWidthConstraint,addressInputCenterXConstraint]];
-    
-    //imageViewWidthConstraint,imageViewHeightConstraint
+
 }
 
 - (IBAction)saveButtonPressed:(id)sender {
-    
-    NSLog(@"AKhil");
-    
     [self.lockOverlayView setHidden:YES];
     
+    [self.editButton setImage: [UIImage imageNamed:@"unlock_b.png"] forState:UIControlStateNormal];
+    [self.submitView setHidden:NO];
+
+    
+    //[self.delegate newViewController:self deleteItem:self.listingItem];
 }
-//akhil
+
 - (IBAction)submitButtonPressed:(id)sender {
-    
-    [self.listingItem setName:self.titleInput.text];
-    [self.listingItem setServeCount:[NSNumber numberWithInt:self.serveCount]];
-    [self.listingItem setDesc:self.descInput.text];
-    [self.listingItem setAddress1:self.addressInput.text];
-    
-    if(self.imageArray.count)
+//    if(self.currentMode == EditMode){
+//        //[self.delegate newViewController:self deleteItem:self.listingItem];
+//        
+//        [self.listingItem setName:@"AHAHAHHAHA"];
+//        [self.listingItem setServeCount:[NSNumber numberWithInt:5]];
+//        [self.listingItem setSyncStatus:[NSNumber numberWithInt:3]];
+////        [self.listingItem setDesc:self.descInput.text];
+////        [self.listingItem setAddress1:self.addressInput.text];
+////        if(self.imageArray.count)
+////        {
+////            [self.listingItem setImage:[NSData dataWithData:UIImageJPEGRepresentation([self.imageArray objectAtIndex:0], 1.0)]];
+////        }
+//        [self.delegate newViewController:self didSaveItem:self.listingItem];
+//    }
+//    else
     {
-        [self.listingItem setImage:[NSData dataWithData:UIImageJPEGRepresentation([self.imageArray objectAtIndex:0], 1.0)]];
+        [self.listingItem setName:self.titleInput.text];
+        [self.listingItem setServeCount:[NSNumber numberWithInt:self.serveCount]];
+        [self.listingItem setDesc:self.descInput.text];
+        [self.listingItem setAddress1:self.addressInput.text];
+        
+        NSUInteger imageCount = [self.imageArray count];
+        
+        if(imageCount>0)
+        {
+            [self.listingItem setImage:[NSData dataWithData:UIImageJPEGRepresentation([self.imageArray objectAtIndex:0], 1.0)]];
+            
+            if(imageCount>1) {
+                [self.listingItem setImage2:[NSData dataWithData:UIImageJPEGRepresentation([self.imageArray objectAtIndex:1], 1.0)]];
+
+                if(imageCount>2) {
+                    [self.listingItem setImage3:[NSData dataWithData:UIImageJPEGRepresentation([self.imageArray objectAtIndex:2], 1.0)]];
+                
+                    if(imageCount>3) {
+                        [self.listingItem setImage4:[NSData dataWithData:UIImageJPEGRepresentation([self.imageArray objectAtIndex:3], 1.0)]];
+                        
+                    }
+                }
+            }
+        }
+        
+        BOOL hasChanged = YES;
+        
+        if(hasChanged && self.currentMode==EditMode)
+        {
+            [self.listingItem setSyncStatus:[NSNumber numberWithInt:3]];
+        }
+        
+        [self.delegate newViewController:self didSaveItem:self.listingItem];
     }
     
-    NSUUID  *UUID = [NSUUID UUID];
-    NSString* stringUUID = [UUID UUIDString];
-    [self.listingItem setObjectId:stringUUID];
 
-    [self.delegate newViewController:self didSaveItem:self.listingItem];
 
 }
 
@@ -660,7 +732,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     //NSLog(@"%d", view.tag);//By tag, you can find out where you had typed.
 }
 
-#pragma mark - UIPickerView ServeCountView
+#pragma mark - UIPickerView Delegates
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
 
@@ -679,7 +751,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     
     if([self.myPickerView selectedRowInComponent:component] == row) //this is the selected one, change its color
     {
-        self.pickerLabel.textColor = [UIColor serveRedButtonColor];//[UIColor colorWithRed:0.0745 green:0.357 blue:1.0 alpha:1];
+        self.pickerLabel.textColor = [UIColor servePrimaryColor];//[UIColor colorWithRed:0.0745 green:0.357 blue:1.0 alpha:1];
     }
     
     if (![self pickerSelectionIndicatorInstalled])
@@ -809,7 +881,8 @@ const int allowedNumberOfCharactersInTitle = 10;
     UIImage *image2 = [info objectForKey:UIImagePickerControllerOriginalImage];
     
     [self.imageArray addObject:image];
-    [self.imageField addPhotoWithPhotosArray:self.imageArray];
+    
+    [self.imageField resetImageFieldWithImageArray:self.imageArray];
     
 }
 

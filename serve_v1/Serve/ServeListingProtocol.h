@@ -30,6 +30,9 @@
 @protocol ServeListingProtocol <NSObject>
 
 @property (nonatomic, strong) NSData * image;
+@property (nonatomic, strong) NSData * image2;
+@property (nonatomic, strong) NSData * image3;
+@property (nonatomic, strong) NSData * image4;
 @property (nonatomic, strong) NSDate * updatedAt;
 @property (nonatomic, strong) NSDate * createdAt;
 @property (nonatomic, strong) NSNumber * uploadedToServer;

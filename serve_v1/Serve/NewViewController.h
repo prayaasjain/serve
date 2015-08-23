@@ -22,8 +22,7 @@ typedef enum : NSInteger
 @protocol NewViewControllerDelegate <NSObject>
 
 - (void)newViewController:(NewViewController *)viewController didSaveItem:(id<ServeListingProtocol>)savedItem;
-//- (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item;
-
+- (void)newViewController:(NewViewController *)viewController deleteItem:(id<ServeListingProtocol>)item;
 - (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item inMode:(NSInteger)mode;
 
 @end

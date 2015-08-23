@@ -68,4 +68,18 @@ static NSString * const kSDFParseRestAPIKey = @"TakBT8h7x9x59VevnG6upfDcBNYt2Gr6
     return request;
 }
 
+- (NSMutableURLRequest *)DELETERequestForClass:(NSString *)className forObjectWithId:(NSString *)objectId {
+    NSMutableURLRequest *request = nil;
+    request = [self requestWithMethod:@"DELETE" path:[NSString stringWithFormat:@"classes/%@/%@", className, objectId] parameters:nil];
+    return request;
+}
+
+- (NSMutableURLRequest *)UPDATERequestForClass:(NSString *)className forObjectWithId:(NSString *)objectId withParameters:(NSDictionary *)parameters
+{
+    NSMutableURLRequest *request = nil;
+    request = [self requestWithMethod:@"PUT" path:[NSString stringWithFormat:@"classes/%@/%@", className, objectId] parameters:parameters];
+    return request;
+}
+
+
 @end

@@ -24,12 +24,13 @@
     return [UIColor serveUIColorFromRGB:0xF2F4F5];
 }
 
-+(id)serveRedButtonColor
++(id)servePrimaryColor
 {
-    //return [UIColor serveUIColorFromRGB:0xF4414C];
+//    return [UIColor serveUIColorFromRGB:0xFA5D64];
     
-    return [UIColor serveUIColorFromRGB:0xFA5D64];
     
+    
+    return [UIColor serveUIColorFromRGB:0x3A5795];
 
 }
 

@@ -9,7 +9,6 @@
 #import <Parse/Parse.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "InputViewController.h"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,UITabBarControllerDelegate>//,PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
