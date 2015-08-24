@@ -46,7 +46,7 @@
         self.imageOne.layer.borderColor = [[UIColor servePrimaryColor] CGColor];
         self.imageOne.layer.borderWidth = 0.4f;
         self.imageOne.contentMode = UIViewContentModeScaleAspectFit;
-        
+        [self.imageOne setClipsToBounds:YES];
         [self.imageOne setUserInteractionEnabled:YES];
         self.imageOne.translatesAutoresizingMaskIntoConstraints = NO;
         
@@ -63,6 +63,7 @@
         self.imageTwo.layer.borderWidth = 0.4f;
         self.imageTwo.layer.cornerRadius = 5;
         [self.imageTwo setUserInteractionEnabled:YES];
+        [self.imageTwo setClipsToBounds:YES];
         self.imageTwo.translatesAutoresizingMaskIntoConstraints = NO;
         
         self.imageThree = [[UIImageView alloc]initWithFrame:CGRectZero];

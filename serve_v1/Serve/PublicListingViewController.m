@@ -505,15 +505,15 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 //    //transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
 //    [self.navigationController.view.layer addAnimation:transition forKey:nil];
 //    
-//    FilterTableViewController *secondView = [[FilterTableViewController alloc] init];
-//    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:secondView];
-//    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                               [UIColor serveRedButtonColor],NSForegroundColorAttributeName,
-//                                               nil];
-//    navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
-//    navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-//    navigationController1.toolbar.barTintColor = [UIColor darkGrayColor];
-//    [self presentViewController:navigationController1 animated:YES completion:nil];
+    FilterTableViewController *secondView = [[FilterTableViewController alloc] init];
+    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:secondView];
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor blackColor],NSForegroundColorAttributeName,
+                                               nil];
+    navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+    navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    navigationController1.toolbar.barTintColor = [UIColor servePrimaryColor];
+    [self presentViewController:navigationController1 animated:YES completion:nil];
     
     
 //    

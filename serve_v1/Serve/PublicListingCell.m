@@ -10,7 +10,6 @@
 #import "UIColor+Utils.h"
 
 
-
 @interface PublicListingCell ()
 
 @end
@@ -117,6 +116,7 @@
     self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.imageView.layer.borderColor = [[UIColor blackColor] CGColor];
     self.imageView.layer.borderWidth = .5;
+    [self.imageView setClipsToBounds:YES];
     
 }
 

@@ -22,11 +22,12 @@
 
 #import "UIColor+Utils.h"
 
-@interface ServeRootViewController ()
+@interface ServeRootViewController ()<NewViewControllerDelegate>
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
-@property (strong, nonatomic) NewViewController *addnewListing;
+@property (strong, nonatomic) NewViewController *addnewListingVC;
 @property (strong, nonatomic) MyListingsViewController *mylistingsViewController;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end
 
@@ -35,6 +36,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.managedObjectContext = [[ServeCoreDataController sharedInstance] masterManagedObjectContext];
     [self initTabController];
     // Do any additional setup after loading the view.
 }
@@ -44,10 +47,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
-- (void)initTabController
-{
+- (void)initTabController {
     self.tabBarController = [[UITabBarController alloc] init];
     [[UITabBar appearance] setBarTintColor:[UIColor serveBackgroundColor]];
     
@@ -63,11 +63,10 @@
     
     self.mylistingsViewController = [[MyListingsViewController alloc]init];
     PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
-    //self.addnewListing = [[NewViewController alloc]initWithNewItem];
-    self.addnewListing = [[NewViewController alloc]init];
     InboxTableViewController *inboxTableViewController = [[InboxTableViewController alloc]init];
     AddressViewController *addressViewController = [[AddressViewController alloc]init];
     ReviewSubmitViewController *reviewController = [[ReviewSubmitViewController alloc]init];
+    UIViewController *dummyVC = [[UIViewController alloc]init];
     
     UIImage *mylistingsImage = [UIImage imageNamed:@"home.png"];
     UIImage *mylistingsImageSelected = [UIImage imageNamed:@"home_selected.png"];
@@ -85,9 +84,9 @@
     UIImage *addlistingsImageSelected = [UIImage imageNamed:@"addgreen.png"];
     addlistingsImage = [addlistingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     addlistingsImageSelected = [addlistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    self.addnewListing.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Post an Ad" image:addlistingsImage selectedImage:nil];
-    self.addnewListing.tabBarItem.imageInsets = UIEdgeInsetsMake(-15, 0, 15, 0);
+    dummyVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Post an Ad" image:addlistingsImage selectedImage:nil];
+    dummyVC.tabBarItem.imageInsets = UIEdgeInsetsMake(-15, 0, 15, 0);
+    dummyVC.view.tag = 1;
     
     UIImage *inboxImage = [UIImage imageNamed:@"inbox.png"];
     UIImage *inboxImageSelected = [UIImage imageNamed:@"inbox_selected.png"];
@@ -122,65 +121,104 @@
     
     NSArray *myViewControllers = [[NSArray alloc] initWithObjects:
                                   navigationController1,
-                                  navigationController2,self.addnewListing,inboxTableViewController,navigationController4, nil];
+                                  navigationController2,dummyVC,inboxTableViewController,navigationController4, nil];
     
     
-    
-    //set the view controllers for the tab bar controller
     [self.tabBarController setViewControllers:myViewControllers];
     [self.tabBarController setSelectedIndex:0];
     
     self.tabBarController.delegate = self;
     
     [self.view addSubview:self.tabBarController.view];
-    
 
-    
-    //self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    //add the tab bar controllers view to the window
-    //[self.window addSubview:self.tabBarController.view];
-    //[self.window setRootViewController:self.tabBarController];
-    //[self.window makeKeyAndVisible];
-    
 }
 
 
-
--(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
-{
-    
-    //    if ([viewController isKindOfClass:[NewViewController class]])
-    //    {
-    //        return NO;
-    //    }
-    
-    return YES;
-}
-
-
-
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[NewViewController class]])
+-(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if (viewController.view.tag == 1)
     {
-        
-        self.addnewListing.view.backgroundColor = [UIColor lightGrayColor];
-        //self.addnewListing.delegate = self.mylistingsViewController;
+        self.addnewListingVC= [[NewViewController alloc] initWithNewItem];
+        self.addnewListingVC.view.backgroundColor = [UIColor lightGrayColor];
+        self.addnewListingVC.delegate = self;
         UINavigationController *navigationController1 = nil;
-        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.addnewListing];
+        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.addnewListingVC];
         NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                    [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
                                                    nil];
         navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
         navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-        //[self presentViewController:navigationController1 animated:YES completion:nil];
+        [self presentViewController:navigationController1 animated:YES completion:^{}];
         
-#define ROOTVIEW [[[UIApplication sharedApplication] keyWindow] rootViewController]
-        
-        [self.tabBarController presentViewController:navigationController1 animated:YES completion:^{}];
-        
+        return NO;
+    }
+
+    else
+    {
+        return YES;
     }
     
+}
+
+#pragma mark Newviewcontroller delegate callbacks
+
+- (void)newViewController:(NewViewController *)viewController didSaveItem:(id<ServeListingProtocol>)savedItem {
+ 
+    [self.managedObjectContext performBlockAndWait:^
+     {
+         NSError *error = nil;
+         BOOL saved = [self.managedObjectContext save:&error];
+         if (!saved) {
+             // do some real error handling
+             NSLog(@"Could not save Date due to %@", error);
+         }
+         [[ServeCoreDataController sharedInstance] saveMasterContext];
+     }
+     ];
+    
+    //[self.homeTable reloadData];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    self.addnewListingVC = nil;
+    
+    [self.tabBarController setSelectedIndex:0];
+    [[ServeSyncEngine sharedEngine] startUpSync];
+
+    
+}
+
+//- (void)newViewController:(NewViewController *)viewController deleteItem:(id<ServeListingProtocol>)item {
+//    [self.managedObjectContext performBlockAndWait:^{
+//        if ([[item objectId] isEqualToString:@""] || [item objectId] == nil) {
+//            [self.managedObjectContext deleteObject:item];
+//        } else {
+//            [item setSyncStatus:[NSNumber numberWithInt:ServeObjectDeleted]];
+//        }
+//        NSError *error = nil;
+//        BOOL saved = [self.managedObjectContext save:&error];
+//        if (!saved) {
+//            NSLog(@"Error saving main context: %@", error);
+//        }
+//        [[ServeCoreDataController sharedInstance] saveMasterContext];
+//        
+//    }];
+//    
+//    //[self.homeTable reloadData];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//    
+//    [self.tabBarController setSelectedIndex:0];
+//    [[ServeSyncEngine sharedEngine] startUpSync];
+//    
+//}
+
+- (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item inMode:(NSInteger)mode {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if(mode==CreateMode)
+    {
+        [self.managedObjectContext deleteObject:(Listing*)item];
+        [[ServeCoreDataController sharedInstance] saveMasterContext];
+    }
+    self.addnewListingVC = nil;
+    //[self.tabBarController setSelectedIndex:0];
 }
 
 @end

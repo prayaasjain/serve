@@ -11,6 +11,7 @@
 #import "ServeCoreDataController.h"
 #import "Filter.h"
 #import "ANPopoverSlider.h"
+#import "UIColor+Utils.h"
 
 @interface FilterTableViewController ()
 
@@ -69,22 +70,24 @@ NSMutableIndexSet *expandedSections;
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(280, 0, 50, 28);
-    button.layer.borderColor = [UIColor whiteColor].CGColor;
+    button.layer.borderColor = [[UIColor servePrimaryColor]CGColor];
     button.layer.borderWidth = .2f;
     button.layer.cornerRadius = 5;
     [button setTitle:@"Reset" forState:UIControlStateNormal];
-    [button.titleLabel setTextColor:[UIColor whiteColor]];
+    [button setTitleColor:[UIColor servePrimaryColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
     [button addTarget:self action:@selector(resetButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *flipViewBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     UIButton *button2 = [UIButton buttonWithType:UIButtonTypeCustom];
     button2.frame = CGRectMake(0, 0, 50, 28);
-    button2.layer.borderColor = [UIColor whiteColor].CGColor;
+    button2.layer.borderColor = [[UIColor servePrimaryColor]CGColor];
     button2.layer.borderWidth = .2f;
     button2.layer.cornerRadius = 5;
     [button2 setTitle:@"Cancel" forState:UIControlStateNormal];
-    [button2.titleLabel setTextColor:[UIColor whiteColor]];
+    [button2 setTitleColor:[UIColor servePrimaryColor] forState:UIControlStateNormal];
+    [button2 setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [button2.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
     [button2 addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *filterBarButton = [[UIBarButtonItem alloc] initWithCustomView:button2];

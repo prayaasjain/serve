@@ -11,6 +11,7 @@
 #import "NSManagedObject+JSON.h"
 #import "ServeListingProtocol.h"
 #import "Listing.h"
+#import "AFHTTPRequestOperation.h"
 
 NSString * const kServeSyncEngineInitialCompleteKey = @"ServeSyncEngineInitialSyncCompleted";
 NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngineSyncCompleted";
@@ -230,6 +231,10 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
 }
 
 
+
+
+
+
 - (void)processJSONDataRecordsIntoCoreData {
     
     NSLog(@"Starting to processJSONDataRecordsIntoCoreData");
@@ -393,6 +398,7 @@ NSString * const kServeSyncEngineSyncCompletedNotificationName = @"ServeSyncEngi
             
             AFHTTPRequestOperation *operation = [[ServeAFParseAPIClient sharedClient] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Success deletion: %@", responseObject);
+                 [objectToDelete setValue:@"DELETED" forKey:@"name"];
                 [[[ServeCoreDataController sharedInstance] backgroundManagedObjectContext] deleteObject:objectToDelete];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Failed to delete: %@", error);

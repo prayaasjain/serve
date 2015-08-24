@@ -55,6 +55,7 @@ const int allowedNumberOfCharactersInTitle = 10;
 @property (nonatomic, strong) UILabel *descLabel;
 @property (nonatomic, strong) UILabel *addressLabel;
 @property (nonatomic, strong) UITextField *titleInput;
+@property (nonatomic, strong) UIButton *deleteField;
 @property (nonatomic, strong) UITextView *addressInput;
 @property (nonatomic, strong) UIButton *addServeButton;
 @property (nonatomic, strong) UIButton *reduceServeButton;
@@ -160,6 +161,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     
     
     [self.scrollView addSubview:self.lockOverlayView];
+    [self.scrollView addSubview:self.deleteField];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -307,7 +309,18 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.typeField.backgroundColor = [UIColor whiteColor];
     self.typeField.translatesAutoresizingMaskIntoConstraints  = NO;
     
-    
+    self.deleteField = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.deleteField.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.deleteField.layer.borderWidth = .5f;
+    self.deleteField.layer.cornerRadius = 5;
+    [self.deleteField setTitle:@"DEACTIVATE LISTING" forState:UIControlStateNormal];
+    [self.deleteField setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.deleteField setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    [self.deleteField.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0]];
+     self.deleteField.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.deleteField addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    //[self.deleteField setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+ 
     self.serveCount = 1;
     self.pickerSelectionIndicatorInstalled = nil;
     self.pickerViewArray = [NSArray arrayWithObjects:
@@ -337,7 +350,9 @@ const int allowedNumberOfCharactersInTitle = 10;
         self.titleInput.text = titlePlaceholder;
         self.addressInput.text = @"1235,Wildwood Ave,Sunnyvale, CA-94089";
         [self.lockOverlayView setHidden:YES];
+        //make delete button invisible
         [self.editButton setHidden:YES];
+        [self.deleteField setHidden:YES];
     }
     else
     {
@@ -440,7 +455,8 @@ const int allowedNumberOfCharactersInTitle = 10;
                  @"descInput":self.descInput,
                  @"addressLabel":self.addressLabel,
                  @"addressInput":self.addressInput,
-                 @"lockOverlay":self.lockOverlayView
+                 @"lockOverlay":self.lockOverlayView,
+                 @"deleteField":self.deleteField
                  }
     ;
     
@@ -456,7 +472,7 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageField]|" options:0 metrics:metrics views:views]];
     [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftMargin-[typeField]-leftMargin-|" options:0 metrics:metrics views:views]];
 
-    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageField]-fieldSpacing-[titleLabel]-[titleInput]-fieldSpacing-[descLabel]-[descInput]-fieldSpacing-[typeLabel]-[typeField]-fieldSpacing-[servesLabel]-[pickerView]-fieldSpacing-[addressLabel]-[addressInput]-bottomMargin-|" options:0 metrics: metrics views:views]];
+    [self.scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageField]-fieldSpacing-[titleLabel]-[titleInput]-fieldSpacing-[descLabel]-[descInput]-fieldSpacing-[typeLabel]-[typeField]-fieldSpacing-[servesLabel]-[pickerView]-fieldSpacing-[addressLabel]-[addressInput]-fieldSpacing-[deleteField]|" options:0 metrics: metrics views:views]];
     
     NSLayoutConstraint *titleInputWidthConstraint = [NSLayoutConstraint
                                                      constraintWithItem:self.titleInput attribute:NSLayoutAttributeWidth
@@ -607,6 +623,24 @@ const int allowedNumberOfCharactersInTitle = 10;
     
     
     
+    NSLayoutConstraint *deleteFieldWidthConstraint = [NSLayoutConstraint
+                                                    constraintWithItem:self.deleteField attribute:NSLayoutAttributeWidth
+                                                    relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                    attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
+    
+    NSLayoutConstraint *deleteFieldHeightConstraint = [NSLayoutConstraint
+                                                     constraintWithItem:self.deleteField attribute:NSLayoutAttributeHeight
+                                                     relatedBy:NSLayoutRelationEqual toItem:self.titleInput
+                                                     attribute:NSLayoutAttributeHeight multiplier:0.8 constant:0];
+    
+    NSLayoutConstraint *deleteFieldCenterXConstraint = [NSLayoutConstraint
+                                                       constraintWithItem:self.deleteField attribute:NSLayoutAttributeCenterX
+                                                       relatedBy:NSLayoutRelationEqual toItem:self.scrollView
+                                                       attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+    
+    
+    [self.scrollView addConstraints:@[deleteFieldWidthConstraint,deleteFieldHeightConstraint,deleteFieldCenterXConstraint]];
+    
     [self.view addConstraints:@[submitButtonWidthConstraint,submitButtonHeightConstraint,submitButtonBottomConstraint, submitButtonCenterXConstraint]];
     
     [self.scrollView addConstraints:@[titleInputWidthConstraint,titleInputHeightConstraint,titleInputCenterXConstraint,
@@ -623,14 +657,20 @@ const int allowedNumberOfCharactersInTitle = 10;
 
 }
 
-- (IBAction)saveButtonPressed:(id)sender {
-    [self.lockOverlayView setHidden:YES];
+
+- (IBAction)deleteButtonPressed:(id)sender {
     
+    //present action sheet to contfirm
+    
+    [self.delegate newViewController:self deleteItem:self.listingItem];
+}
+
+- (IBAction)saveButtonPressed:(id)sender {
+    
+    [self.lockOverlayView setHidden:YES];
+    [self.deleteField setHidden:YES];
     [self.editButton setImage: [UIImage imageNamed:@"unlock_b.png"] forState:UIControlStateNormal];
     [self.submitView setHidden:NO];
-
-    
-    //[self.delegate newViewController:self deleteItem:self.listingItem];
 }
 
 - (IBAction)submitButtonPressed:(id)sender {

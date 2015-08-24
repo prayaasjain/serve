@@ -266,6 +266,48 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
     return headerView;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    //    if(indexPath.section == 0)
+    //    {
+    ////        if(self.inputViewController == nil){
+    ////            NewViewController *secondView = [[NewViewController alloc] init];
+    ////            self.inputViewController = secondView;
+    ////        }
+    //
+    //        self.inputViewController= [[NewViewController alloc] initWithNewItem];
+    //        self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
+    //        self.inputViewController.delegate = self;
+    //        UINavigationController *navigationController1 = nil;
+    //        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
+    //        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+    //                                                   [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
+    //                                                   nil];
+    //        navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+    //        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    //        [self presentViewController:navigationController1 animated:YES completion:nil];
+    //
+    //    }
+    //
+    //    else
+    {
+        
+        id<ServeListingProtocol> listing = [self.selfListings objectAtIndex:indexPath.row];
+        self.inputViewController= [[NewViewController alloc] initWithExistingItem:listing];
+        self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
+        self.inputViewController.delegate = self;
+        UINavigationController *navigationController1 = nil;
+        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
+        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
+                                                   nil];
+        navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+        [self presentViewController:navigationController1 animated:YES completion:nil];
+    }
+    
+}
+
 #pragma mark - swipe cell to delete 
 
 /*
@@ -346,8 +388,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 */
 
-#pragma mark save , cancel and submit
-
+#pragma mark Newviewcontroller delegate callbacks
 
 - (void)newViewController:(NewViewController *)viewController didSaveItem:(id<ServeListingProtocol>)savedItem
 {
@@ -408,47 +449,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    if(indexPath.section == 0)
-//    {
-////        if(self.inputViewController == nil){
-////            NewViewController *secondView = [[NewViewController alloc] init];
-////            self.inputViewController = secondView;
-////        }
-//        
-//        self.inputViewController= [[NewViewController alloc] initWithNewItem];
-//        self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
-//        self.inputViewController.delegate = self;
-//        UINavigationController *navigationController1 = nil;
-//        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
-//        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                                   [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
-//                                                   nil];
-//        navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
-//        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-//        [self presentViewController:navigationController1 animated:YES completion:nil];
-//        
-//    }
-//    
-//    else
-    {
-        
-        id<ServeListingProtocol> listing = [self.selfListings objectAtIndex:indexPath.row];
-        self.inputViewController= [[NewViewController alloc] initWithExistingItem:listing];
-        self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
-        self.inputViewController.delegate = self;
-        UINavigationController *navigationController1 = nil;
-        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
-        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                   [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
-                                                   nil];
-        navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
-        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-        [self presentViewController:navigationController1 animated:YES completion:nil];
-    }
 
-}
 
 
 
