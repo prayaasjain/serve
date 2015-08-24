@@ -216,8 +216,8 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.addressInput = [[UITextView alloc]init];
     [self.addressInput setBackgroundColor:[UIColor whiteColor]];
     self.addressInput.textColor = [UIColor lightGrayColor];
-    self.addressInput.font = [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
-    self.addressInput.textAlignment = NSTextAlignmentCenter;
+    self.addressInput.font = [UIFont fontWithName:@"HelveticaNeue" size:14.0f];
+    self.addressInput.textAlignment = NSTextAlignmentLeft;
     self.addressInput.translatesAutoresizingMaskIntoConstraints = NO;
     self.addressInput.layer.cornerRadius = 0;
     self.addressInput.clipsToBounds = YES;
@@ -230,21 +230,21 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.addressInput setUserInteractionEnabled:YES];
     
     UIButton *arrowButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [arrowButton setImage:[UIImage imageNamed:@"trash.png"] forState:UIControlStateNormal];
-    //[clearButton setFrame:CGRectMake(250, 50, 20, 20)];
+    [arrowButton setImage:[UIImage imageNamed:@"right_g.png"] forState:UIControlStateNormal];
     arrowButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.addressInput addSubview:arrowButton];
-    NSLayoutConstraint *arrowButtonLeftConstraint = [NSLayoutConstraint
-                                                        constraintWithItem:arrowButton attribute:NSLayoutAttributeLeft
+    NSLayoutConstraint *arrowButtonCenterXConstraint = [NSLayoutConstraint
+                                                        constraintWithItem:arrowButton attribute:NSLayoutAttributeCenterX
                                                         relatedBy:NSLayoutRelationEqual toItem:self.addressInput
-                                                      attribute:NSLayoutAttributeRight multiplier:1.0 constant:-16];
+                                                      attribute:NSLayoutAttributeCenterX multiplier:1.9
+                                                        constant:0];
     NSLayoutConstraint *arrowButtonCenterYConstraint = [NSLayoutConstraint
                                                         constraintWithItem:arrowButton attribute:NSLayoutAttributeCenterY
                                                         relatedBy:NSLayoutRelationEqual toItem:self.addressInput
                                                         attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
     
-    [self.addressInput addConstraints:@[arrowButtonLeftConstraint,arrowButtonCenterYConstraint]];
+    [self.addressInput addConstraints:@[arrowButtonCenterXConstraint,arrowButtonCenterYConstraint]];
 
     
     
@@ -1128,21 +1128,5 @@ const int allowedNumberOfCharactersInTitle = 10;
      ];
     
 }
-
-
-//- (instancetype)initWithExistingItem:(id<WTTaskProtocol>)item {
-//    if (self = [super initWithNibName:nil bundle:nil]) {
-//        self.item = item;
-//        self.itemStartDate = [self.item ui_startDate];
-//        self.itemDueDate = [self.item ui_dueDate];
-//        self.itemReminderDate = [self.item reminderTime];
-//        self.itemCategoriesString = [self.item ui_categoriesString];
-//        
-//        if (!title) title = NSLocalizedString(@"Edit", nil);
-//    }
-//    
-//    return self;
-//}
-
 
 @end
