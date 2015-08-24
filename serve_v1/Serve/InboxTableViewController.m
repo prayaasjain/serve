@@ -60,61 +60,8 @@
     return cell;
 }
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"id"];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-//                                       reuseIdentifier:@"id"];
-//        cell.accessoryType = UITableViewCellAccessoryNone;
-//        
-//        if ([indexPath section] == 0) {
-//            UITextField *playerTextField = [[UITextField alloc] initWithFrame:CGRectMake(110, 10, 185, 30)];
-//            playerTextField.adjustsFontSizeToFitWidth = YES;
-//            playerTextField.textColor = [UIColor blackColor];
-//            if ([indexPath row] == 0) {
-//                playerTextField.placeholder = @"example@gmail.com";
-//                playerTextField.keyboardType = UIKeyboardTypeEmailAddress;
-//                playerTextField.returnKeyType = UIReturnKeyNext;
-//            }
-//            else {
-//                playerTextField.placeholder = @"Required";
-//                playerTextField.keyboardType = UIKeyboardTypeDefault;
-//                playerTextField.returnKeyType = UIReturnKeyDone;
-//                playerTextField.secureTextEntry = YES;
-//            }
-//            playerTextField.backgroundColor = [UIColor whiteColor];
-//            playerTextField.autocorrectionType = UITextAutocorrectionTypeNo; // no auto correction support
-//            playerTextField.autocapitalizationType = UITextAutocapitalizationTypeNone; // no auto capitalization support
-//            playerTextField.textAlignment = UITextAlignmentLeft;
-//            playerTextField.tag = 0;
-//            //playerTextField.delegate = self;
-//            
-//            playerTextField.clearButtonMode = UITextFieldViewModeNever; // no clear 'x' button to the right
-//            [playerTextField setEnabled: YES];
-//            
-//            [cell.contentView addSubview:playerTextField];
-//            
-//        }
-//    }
-//    if ([indexPath section] == 0) { // Email & Password Section
-//        if ([indexPath row] == 0) { // Email
-//            cell.textLabel.text = @"Email";
-//        }
-//        else {
-//            cell.textLabel.text = @"Password";
-//        }
-//    }
-//    else { // Login button section
-//        cell.textLabel.text = @"Log in";
-//    }
-//    return cell;    
-//}
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 }
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -137,7 +84,11 @@
 }
 
 - (UIView*)tableView:(UITableView*)tableView viewForFooterInSection:(NSInteger)section {
-    return [[UIView alloc] initWithFrame:CGRectZero];
+    
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectZero];
+    footerView.backgroundColor = [UIColor serveBackgroundColor];
+    
+    return footerView;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -147,19 +98,42 @@
 
 - (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section {
     
-    UIImageView *profileImageView = [[UIImageView alloc]initWithFrame:CGRectMake(140, 70, 70, 70)];
+    //CGRectMake(140, 70, 70, 70)
+    UIImageView *profileImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
     [profileImageView setImage:[UIImage imageNamed:@"food1.jpg"]];
-    
     profileImageView.layer.cornerRadius = 35;
-    //profileImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    profileImageView.translatesAutoresizingMaskIntoConstraints = NO;
     profileImageView.layer.borderColor = [[UIColor blackColor] CGColor];
     profileImageView.layer.borderWidth = .5;
     profileImageView.contentMode = UIViewContentModeScaleAspectFill;
     [profileImageView setClipsToBounds:YES];
     
+    
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectZero];
     headerView.backgroundColor = [UIColor serveBackgroundColor];
     [headerView addSubview:profileImageView];
+    
+    NSLayoutConstraint *profileImageCenterYConstraint = [NSLayoutConstraint
+                                                    constraintWithItem:profileImageView attribute:NSLayoutAttributeCenterY
+                                                    relatedBy:NSLayoutRelationEqual toItem:headerView
+                                                    attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+    
+    NSLayoutConstraint *profileImageCenterXConstraint  = [NSLayoutConstraint
+                                                      constraintWithItem:profileImageView attribute:NSLayoutAttributeCenterX
+                                                      relatedBy:NSLayoutRelationEqual toItem:headerView
+                                                          attribute:NSLayoutAttributeCenterX multiplier:0.5 constant:0];
+    
+    NSLayoutConstraint *profileImageWidthConstraint  = [NSLayoutConstraint
+                                                          constraintWithItem:profileImageView attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual toItem:nil
+                                                          attribute:NSLayoutAttributeWidth multiplier:1 constant:70];
+    NSLayoutConstraint *profileImageHeightConstraint  = [NSLayoutConstraint
+                                                        constraintWithItem:profileImageView attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual toItem:profileImageView
+                                                        attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
+    
+    
+    [headerView addConstraints:@[profileImageCenterXConstraint,profileImageCenterYConstraint,profileImageWidthConstraint,profileImageHeightConstraint]];
     
     return headerView;
 }

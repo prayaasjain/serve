@@ -207,7 +207,12 @@ const int allowedNumberOfCharactersInTitle = 10;
     self.titleInput = [[UITextField alloc]init];
     [self.titleInput setBackgroundColor:[UIColor whiteColor]];
     [self setTextFieldProperties:self.titleInput withPlaceholder:titlePlaceholder withTag:TitleInputTag];
+    //self.titleInput.clearButtonMode = UITextFieldViewModeWhileEditing;
+    //[clearButton addTarget:self action:@selector(clearTextField:) forControlEvents:UIControlEventTouchUpInside];
     
+    //self.addressInput.rightViewMode = UITextFieldViewModeAlways; //can be changed to UITextFieldViewModeNever,    UITextFieldViewModeWhileEditing,   UITextFieldViewModeUnlessEditing
+    //[self.addressInput setRightView:clearButton];
+   
     self.addressInput = [[UITextView alloc]init];
     [self.addressInput setBackgroundColor:[UIColor whiteColor]];
     self.addressInput.textColor = [UIColor lightGrayColor];
@@ -223,6 +228,29 @@ const int allowedNumberOfCharactersInTitle = 10;
     [self.addressInput addGestureRecognizer:addresstap];
     [self.addressInput setEditable:NO];
     [self.addressInput setUserInteractionEnabled:YES];
+    
+    UIButton *arrowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [arrowButton setImage:[UIImage imageNamed:@"trash.png"] forState:UIControlStateNormal];
+    //[clearButton setFrame:CGRectMake(250, 50, 20, 20)];
+    arrowButton.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self.addressInput addSubview:arrowButton];
+    NSLayoutConstraint *arrowButtonLeftConstraint = [NSLayoutConstraint
+                                                        constraintWithItem:arrowButton attribute:NSLayoutAttributeLeft
+                                                        relatedBy:NSLayoutRelationEqual toItem:self.addressInput
+                                                      attribute:NSLayoutAttributeRight multiplier:1.0 constant:-16];
+    NSLayoutConstraint *arrowButtonCenterYConstraint = [NSLayoutConstraint
+                                                        constraintWithItem:arrowButton attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual toItem:self.addressInput
+                                                        attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+    
+    [self.addressInput addConstraints:@[arrowButtonLeftConstraint,arrowButtonCenterYConstraint]];
+
+    
+    
+    
+    
+    
     
     self.descInput = [[UITextView alloc]init];
     self.descInput.text = descriptionPlaceholder;
@@ -425,12 +453,16 @@ const int allowedNumberOfCharactersInTitle = 10;
     if(self.currentMode == EditMode){
     self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.editButton.frame = CGRectMake(0, 0, 70, 20);
-    [self.editButton setTitle:@"E" forState:UIControlStateNormal];
     [self.editButton setTitleColor:[UIColor servePrimaryColor] forState:UIControlStateNormal];
+    [self.editButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
     [self.editButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
     [self.editButton addTarget:self action:@selector(saveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.editButton setImage: [UIImage imageNamed:@"lock_b.png"] forState:UIControlStateNormal];
-    [self.editButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self.editButton setImage: [UIImage imageNamed:@"unlock_b.png"] forState:UIControlStateDisabled];
+        
+    [self.editButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, 0)];
+        //UIEdgeInsetsMake(<#CGFloat top#>, <#CGFloat left#>, <#CGFloat bottom#>, <#CGFloat right#>)
+        
     [self.editButton setTitle:@"Edit" forState:UIControlStateNormal];
     UIBarButtonItem *editBarButton = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
     self.navigationItem.rightBarButtonItem = editBarButton;
@@ -669,7 +701,8 @@ const int allowedNumberOfCharactersInTitle = 10;
     
     [self.lockOverlayView setHidden:YES];
     [self.deleteField setHidden:YES];
-    [self.editButton setImage: [UIImage imageNamed:@"unlock_b.png"] forState:UIControlStateNormal];
+    [self.editButton setEnabled:NO];
+    
     [self.submitView setHidden:NO];
 }
 

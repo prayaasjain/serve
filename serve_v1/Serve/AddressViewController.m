@@ -31,7 +31,7 @@
     
     self.searchResults = [[NSMutableArray alloc]init];
     
-    self.map = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    self.map = [[MKMapView alloc] initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, self.view.bounds.size.height-70)];
     self.map.delegate = self;
 
     //////////
@@ -59,7 +59,7 @@
     self.homeTable.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);
     self.homeTable.separatorColor=[UIColor grayColor];
     
-    [self.homeTable setHidden:YES];
+    [self.homeTable setHidden:NO];
     [self.homeTable setBackgroundColor:[UIColor serveAppFontColor]];
     self.homeTable.separatorColor=[UIColor blackColor];
     //self.homeTable.backgroundView.alpha = 0.4;
@@ -78,7 +78,7 @@
     //[self.searchController.searchBar sizeToFit];
     //self.definesPresentationContext = YES;
     self.searchController.hidesNavigationBarDuringPresentation =NO;
-    self.searchController.searchBar.barTintColor = [UIColor clearColor];//this part still not giving ideal results
+    self.searchController.searchBar.barTintColor = [UIColor lightGrayColor];//this part still not giving ideal results
     
     //[self.view addSubview:self.map];
     self.navigationItem.titleView = self.searchController.searchBar;
@@ -199,11 +199,45 @@
 }
 
 
+
 #pragma mark - Table View delegates
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0.0f;
+- (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
+    return 70.0;
 }
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    return @"Settings";
+}
+
+- (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    //    UIImageView *profileImageView = [[UIImageView alloc]initWithFrame:CGRectMake(140, 70, 70, 70)];
+    //    [profileImageView setImage:[UIImage imageNamed:@"food1.jpg"]];
+    //
+    //    profileImageView.layer.cornerRadius = 35;
+    //    //profileImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    //    profileImageView.layer.borderColor = [[UIColor blackColor] CGColor];
+    //    profileImageView.layer.borderWidth = .5;
+    //    profileImageView.contentMode = UIViewContentModeScaleAspectFill;
+    //    [profileImageView setClipsToBounds:YES];
+    
+    UITextView *textView = [[UITextView alloc]initWithFrame:CGRectZero];
+    textView.backgroundColor = [UIColor clearColor];
+    textView.text = @"+ ADD NEW LISTING";
+    textView.editable = NO;
+    
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectZero];
+    headerView.backgroundColor = [UIColor serveBackgroundColor];
+    [headerView addSubview:textView];
+    [textView sizeToFit];
+    
+    
+    
+    
+    return self.searchController.searchBar;;
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 0.01f;
