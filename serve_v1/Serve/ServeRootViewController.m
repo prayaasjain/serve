@@ -22,12 +22,29 @@
 
 #import "UIColor+Utils.h"
 
-@interface ServeRootViewController ()<NewViewControllerDelegate>
+#define SLIDE_TIMING .25
+#define PANEL_OFFSET 100
+
+typedef enum: NSInteger {
+    
+    MyListingView = 0,
+    PublicListingView,
+    NewView,
+    InboxTableView,
+    AddressView,
+    ReviewSubmitView,
+    
+} viewTags;
+
+@interface ServeRootViewController ()<NewViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) NewViewController *addnewListingVC;
 @property (strong, nonatomic) MyListingsViewController *mylistingsViewController;
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) InboxTableViewController *settingsViewController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) UIView *backgroundOverlayView;
+@property (assign, nonatomic) BOOL showingSlideInView;
 
 @end
 
@@ -86,7 +103,7 @@
     addlistingsImageSelected = [addlistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     dummyVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Post an Ad" image:addlistingsImage selectedImage:nil];
     dummyVC.tabBarItem.imageInsets = UIEdgeInsetsMake(-15, 0, 15, 0);
-    dummyVC.view.tag = 1;
+    dummyVC.view.tag = NewView;
     
     UIImage *inboxImage = [UIImage imageNamed:@"inbox.png"];
     UIImage *inboxImageSelected = [UIImage imageNamed:@"inbox_selected.png"];
@@ -106,6 +123,11 @@
     UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:inboxTableViewController];
     UINavigationController *navigationController4 = [[UINavigationController alloc] initWithRootViewController:addressViewController];
     
+    navigationController1.view.tag = MyListingView;
+    navigationController2.view.tag = PublicListingView;
+    navigationController3.view.tag = InboxTableView;
+    navigationController4.view.tag = AddressView;
+    
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                [UIColor whiteColor],NSForegroundColorAttributeName,
                                                nil];
@@ -124,7 +146,7 @@
                                   navigationController2,dummyVC,inboxTableViewController,navigationController4, nil];
     
     
-    [self.tabBarController setViewControllers:myViewControllers];
+    [self.tabBarController setViewControllers:myViewControllers animated:YES];
     [self.tabBarController setSelectedIndex:0];
     
     self.tabBarController.delegate = self;
@@ -135,7 +157,7 @@
 
 
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    if (viewController.view.tag == 1)
+    if (viewController.view.tag == NewView)
     {
         self.addnewListingVC= [[NewViewController alloc] initWithNewItem];
         self.addnewListingVC.view.backgroundColor = [UIColor lightGrayColor];
@@ -149,6 +171,13 @@
         navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
         [self presentViewController:navigationController1 animated:YES completion:^{}];
         
+        return NO;
+    }
+    
+    else if (viewController.view.tag == AddressView)
+    {
+        [self addBackgroundOverlay];
+        [self slideInPanelFromRight];
         return NO;
     }
 
@@ -219,6 +248,189 @@
     }
     self.addnewListingVC = nil;
     //[self.tabBarController setSelectedIndex:0];
+}
+
+#pragma mark -
+#pragma mark ProfileViewController Manager Methods
+
+- (UIView *)getSlideInViewRight {
+    if (_settingsViewController == nil) {
+        //        self.settingsViewController = [[SettingsViewController alloc] init];
+        self.settingsViewController = [[InboxTableViewController alloc] init];
+        
+        [self.view addSubview:self.settingsViewController.view];
+        
+        [self addChildViewController:self.settingsViewController];
+        [_settingsViewController didMoveToParentViewController:self];
+        
+        _settingsViewController.view.frame = CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height);
+    }
+    self.showingSlideInView = YES;
+    
+    UIView *view = self.settingsViewController.view;
+    return view;
+}
+
+- (void)slideInPanelFromRight {
+    UIView *childView = [self getSlideInViewRight];
+    [self.view bringSubviewToFront:childView];
+    
+    [UIView animateWithDuration:SLIDE_TIMING
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         _settingsViewController.view.frame = CGRectMake(0 + self.view.frame.size.width/3, 0, self.view.frame.size.width, self.view.frame.size.height);
+                     }
+                     completion:^(BOOL finished) {
+                         if (finished) {
+                             
+                         }
+                     }
+     ];
+}
+
+- (void)slideOutPanelToRight {
+    [self removeBackgroundOverlay];
+    [UIView animateWithDuration:SLIDE_TIMING
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         _settingsViewController.view.frame = CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height);
+                     }
+                     completion:^(BOOL finished) {
+                         if (finished) {
+                             self.showingSlideInView = NO;
+                         }
+                     }];
+}
+
+- (void)addBackgroundOverlay {
+    if(_backgroundOverlayView == nil) {
+        self.backgroundOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        [_backgroundOverlayView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6]];
+        [self.view addSubview:self.backgroundOverlayView];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(slideOutPanelToRight)];
+        [self.backgroundOverlayView addGestureRecognizer:tap];
+    }
+    
+    [_backgroundOverlayView setAlpha:0.0];
+    [_backgroundOverlayView setHidden:NO];
+    
+    [self.view bringSubviewToFront:self.backgroundOverlayView];
+    
+    [UIView animateWithDuration:SLIDE_TIMING
+                     animations:^{
+                         [_backgroundOverlayView setAlpha:1.0];
+                     }
+                     completion:^(BOOL finished) {
+                         
+                     }
+     ];
+    
+}
+
+- (void)removeBackgroundOverlay {
+    [UIView animateWithDuration:SLIDE_TIMING
+                     animations:^{
+                         [_backgroundOverlayView setAlpha:0.0];
+                     }
+                     completion:^(BOOL finished) {
+                         [_backgroundOverlayView setHidden:YES];
+                     }
+     ];
+}
+
+#pragma mark -
+#pragma mark Swipe Gesture Setup/Actions
+
+#pragma mark - setup
+
+-(void)setupGestures {
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(movePanel:)];
+    [panRecognizer setMinimumNumberOfTouches:1];
+    [panRecognizer setMaximumNumberOfTouches:1];
+    [panRecognizer setDelegate:self];
+    
+    [_backgroundOverlayView addGestureRecognizer:panRecognizer];
+}
+
+-(void)movePanel:(id)sender {
+    [[[(UITapGestureRecognizer*)sender view] layer] removeAllAnimations];
+    
+    CGPoint translatedPoint = [(UIPanGestureRecognizer*)sender translationInView:self.view];
+    CGPoint velocity = [(UIPanGestureRecognizer*)sender velocityInView:[sender view]];
+    
+    if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
+        
+        if (_showingSlideInView) {
+            [self slideOutPanelToRight];
+        }
+        
+        //        UIView *childView = nil;
+        //
+        //        if(velocity.x > 0) {
+        //            if (!_showingSlideInView) {
+        //                childView = [self getLeftView];
+        //            }
+        //        } else {
+        //            if (!_showingLeftPanel) {
+        //                childView = [self getRightView];
+        //            }
+        //
+        //        }
+        //        // make sure the view we're working with is front and center
+        //        [self.view sendSubviewToBack:childView];
+        //        [[sender view] bringSubviewToFront:[(UIPanGestureRecognizer*)sender view]];
+    }
+    
+    if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
+        
+        if(velocity.x > 0) {
+            // NSLog(@"gesture went right");
+        } else {
+            // NSLog(@"gesture went left");
+        }
+        
+        //        if (_showingSlideInView) {
+        //            [self slideOutPanelToRight];
+        //        }
+        //        else {
+        //            if (_showingLeftPanel) {
+        //                [self movePanelRight];
+        //            }  else if (_showingRightPanel) {
+        //                [self movePanelLeft];
+        //            }
+        //        }
+    }
+    
+    if([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateChanged) {
+        if(velocity.x > 0) {
+            // NSLog(@"gesture went right");
+        } else {
+            // NSLog(@"gesture went left");
+        }
+        
+        if (_showingSlideInView) {
+            [self slideOutPanelToRight];
+        }
+        
+        //        // are we more than halfway, if so, show the panel when done dragging by setting this value to YES (1)
+        //        _showPanel = abs([sender view].center.x - _centerViewController.view.frame.size.width/2) > _centerViewController.view.frame.size.width/2;
+        //
+        //        // allow dragging only in x coordinates by only updating the x coordinate with translation position
+        //        [sender view].center = CGPointMake([sender view].center.x + translatedPoint.x, [sender view].center.y);
+        //        [(UIPanGestureRecognizer*)sender setTranslation:CGPointMake(0,0) inView:self.view];
+        //
+        //        // if you needed to check for a change in direction, you could use this code to do so
+        //        if(velocity.x*_preVelocity.x + velocity.y*_preVelocity.y > 0) {
+        //            // NSLog(@"same direction");
+        //        } else {
+        //            // NSLog(@"opposite direction");
+        //        }
+        //        
+        //        _preVelocity = velocity;
+    }
 }
 
 @end
