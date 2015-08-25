@@ -36,14 +36,14 @@
         self.selectedType = veg;
         
         self.imageOne = [[UIImageView alloc]initWithFrame:CGRectZero];
-        //self.imageOne.contentMode = UIViewContentModeScaleAspectFill;
+        self.imageOne.contentMode = UIViewContentModeCenter;
         //[self.imageOne setClipsToBounds:YES];
         self.imageOne.image = [UIImage imageNamed:@"veg_selected.png"];
         [self.imageOne setUserInteractionEnabled:YES];
         self.imageOne.translatesAutoresizingMaskIntoConstraints = NO;
         
         self.imageTwo = [[UIImageView alloc]initWithFrame:CGRectZero];
-        //self.imageTwo.contentMode = UIViewContentModeScaleAspectFill;
+        self.imageTwo.contentMode = UIViewContentModeCenter;
         [self.imageTwo setClipsToBounds:YES];
         self.imageTwo.image = [UIImage imageNamed:@"nonVeg.png"];
         //self.imageTwo.layer.borderColor = [UIColor blackColor].CGColor;
@@ -98,14 +98,14 @@
         self.selectedType = veg;
         
         self.imageOne = [[UIImageView alloc]initWithFrame:CGRectZero];
-        //self.imageOne.contentMode = UIViewContentModeScaleAspectFill;
+        self.imageOne.contentMode = UIViewContentModeCenter;
         //[self.imageOne setClipsToBounds:YES];
         self.imageOne.image = [UIImage imageNamed:@"veg_selected_b.png"];
         [self.imageOne setUserInteractionEnabled:YES];
         self.imageOne.translatesAutoresizingMaskIntoConstraints = NO;
         
         self.imageTwo = [[UIImageView alloc]initWithFrame:CGRectZero];
-        //self.imageTwo.contentMode = UIViewContentModeScaleAspectFill;
+        self.imageTwo.contentMode = UIViewContentModeCenter;
         [self.imageTwo setClipsToBounds:YES];
         self.imageTwo.image = [UIImage imageNamed:@"nonVeg.png"];
         //self.imageTwo.layer.borderColor = [UIColor blackColor].CGColor;
@@ -172,6 +172,15 @@
                                                      relatedBy:NSLayoutRelationEqual toItem:self
                                                      attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
     
+    NSLayoutConstraint *imageOneCenterHeightConstraint = [NSLayoutConstraint
+                                                           constraintWithItem:self.imageOne attribute:NSLayoutAttributeHeight
+                                                           relatedBy:NSLayoutRelationEqual toItem:self
+                                                           attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+    NSLayoutConstraint *imageOneCenterWidthConstraint = [NSLayoutConstraint
+                                                          constraintWithItem:self.imageOne attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual toItem:self
+                                                          attribute:NSLayoutAttributeWidth multiplier:0.5 constant:0];
+    
     NSLayoutConstraint *imageTwoCenterXConstraint = [NSLayoutConstraint
                                                      constraintWithItem:self.imageTwo attribute:NSLayoutAttributeCenterX
                                                      relatedBy:NSLayoutRelationEqual toItem:self
@@ -180,6 +189,15 @@
                                                      constraintWithItem:self.imageTwo attribute:NSLayoutAttributeCenterY
                                                      relatedBy:NSLayoutRelationEqual toItem:self
                                                      attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+    
+    NSLayoutConstraint *imageTwoCenterHeightConstraint = [NSLayoutConstraint
+                                                           constraintWithItem:self.imageTwo attribute:NSLayoutAttributeHeight
+                                                           relatedBy:NSLayoutRelationEqual toItem:self
+                                                           attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+    NSLayoutConstraint *imageTwoCenterWidthConstraint = [NSLayoutConstraint
+                                                          constraintWithItem:self.imageTwo attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual toItem:self
+                                                          attribute:NSLayoutAttributeWidth multiplier:0.5 constant:0];
     
     NSLayoutConstraint *separatorCenterXConstraint = [NSLayoutConstraint
                                                      constraintWithItem:self.horizontalSeparator attribute:NSLayoutAttributeCenterX
@@ -220,10 +238,10 @@
     
     
     
-    [self addConstraints:@[imageOneCenterXConstraint,imageOneCenterYConstraint]];
+    [self addConstraints:@[imageOneCenterXConstraint,imageOneCenterYConstraint,imageOneCenterHeightConstraint,imageOneCenterWidthConstraint]];
     [self addConstraints:@[vegLabelCenterXConstraint,vegLabelCenterYConstraint]];
     
-    [self addConstraints:@[imageTwoCenterXConstraint,imageTwoCenterYConstraint]];
+    [self addConstraints:@[imageTwoCenterXConstraint,imageTwoCenterYConstraint,imageTwoCenterHeightConstraint,imageTwoCenterWidthConstraint]];
     [self addConstraints:@[nonVegLabelCenterXConstraint,nonVegLabelCenterYConstraint]];
     
     [self addConstraints:@[separatorCenterXConstraint,separatorCenterYConstraint,separatorCenterHeightConstraint,separatorCenterWidthConstraint]];
