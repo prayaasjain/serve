@@ -232,9 +232,7 @@
     [headerView addSubview:textView];
     [textView sizeToFit];
     
-    
-    
-    
+
     return self.searchController.searchBar;;
 }
 

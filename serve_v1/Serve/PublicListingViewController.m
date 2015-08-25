@@ -555,6 +555,10 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
 
 @end
 

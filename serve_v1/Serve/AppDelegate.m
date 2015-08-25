@@ -15,7 +15,6 @@
 #import "AddressViewController.h"
 #import "FilterTableViewController.h"
 #import "NewViewController.h"
-#import "InboxTableViewController.h"
 #import "Listing.h"
 #import "ServeSyncEngine.h"
 #import "Filter.h"
@@ -69,6 +68,7 @@
             self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
             [self.window setRootViewController:rvc];
             [self.window makeKeyAndVisible];
+            
             
         }
     

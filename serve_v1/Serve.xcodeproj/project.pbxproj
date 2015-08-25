@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2014A1FB1B16D2B800AA5351 /* food1-gray.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1F91B16D2B800AA5351 /* food1-gray.jpg */; };
 		2014A1FC1B16D2B800AA5351 /* camera-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1FA1B16D2B800AA5351 /* camera-2.png */; };
-		2018743C1B74828100BA2C58 /* InboxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2018743B1B74828100BA2C58 /* InboxTableViewController.m */; };
 		201A14B41B69F02100E12C3A /* TypeField.m in Sources */ = {isa = PBXBuildFile; fileRef = 201A14B31B69F02100E12C3A /* TypeField.m */; };
 		201B33051B075890000930F7 /* food1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 201B33041B075890000930F7 /* food1.jpg */; };
 		202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202AF3731B1AF12600531369 /* ListingItemDetailCell.m */; };
@@ -94,6 +93,7 @@
 		20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E7511B1D4A9100AA5241 /* ServeCoreDataController.m */; };
 		20D8E81B1B68709100E61AA7 /* ImageFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E8191B68709100E61AA7 /* ImageFieldCell.m */; };
 		20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20DE790C1B082AB000E3F101 /* MyListingsViewController.m */; };
+		20E1A0EF1B8C24850059A4F9 /* SlideoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E1A0EE1B8C24850059A4F9 /* SlideoutViewController.m */; };
 		20EE2B111B01502B00F80CAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B101B01502B00F80CAC /* main.m */; };
 		20EE2B141B01502B00F80CAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B131B01502B00F80CAC /* AppDelegate.m */; };
 		20EE2B171B01502B00F80CAC /* Serve.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 20EE2B151B01502B00F80CAC /* Serve.xcdatamodeld */; };
@@ -128,7 +128,6 @@
 		20F3E24F1B5245C3003B2D7D /* Twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 20F3E2401B5245C3003B2D7D /* Twitter.png */; };
 		20F3E2501B5245C3003B2D7D /* TwitterDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 20F3E2411B5245C3003B2D7D /* TwitterDown.png */; };
 		20F3E2531B52698C003B2D7D /* ServeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F3E2521B52698C003B2D7D /* ServeLoginViewController.m */; };
-		D8130E241B1B9D040081E825 /* ListingNavigationData.m in Sources */ = {isa = PBXBuildFile; fileRef = D8130E231B1B9D040081E825 /* ListingNavigationData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,8 +143,6 @@
 /* Begin PBXFileReference section */
 		2014A1F91B16D2B800AA5351 /* food1-gray.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "food1-gray.jpg"; path = "Resources/food1-gray.jpg"; sourceTree = SOURCE_ROOT; };
 		2014A1FA1B16D2B800AA5351 /* camera-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-2.png"; path = "Resources/camera-2.png"; sourceTree = SOURCE_ROOT; };
-		2018743B1B74828100BA2C58 /* InboxTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxTableViewController.m; sourceTree = "<group>"; };
-		2018743D1B74828900BA2C58 /* InboxTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxTableViewController.h; sourceTree = "<group>"; };
 		201A14B21B69F02100E12C3A /* TypeField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeField.h; sourceTree = "<group>"; };
 		201A14B31B69F02100E12C3A /* TypeField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeField.m; sourceTree = "<group>"; };
 		201B33041B075890000930F7 /* food1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food1.jpg; sourceTree = "<group>"; };
@@ -272,6 +269,8 @@
 		20D8E81A1B68709100E61AA7 /* ImageFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFieldCell.h; sourceTree = "<group>"; };
 		20DE790B1B082AB000E3F101 /* MyListingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyListingsViewController.h; sourceTree = "<group>"; };
 		20DE790C1B082AB000E3F101 /* MyListingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyListingsViewController.m; sourceTree = "<group>"; };
+		20E1A0ED1B8C24840059A4F9 /* SlideoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideoutViewController.h; sourceTree = "<group>"; };
+		20E1A0EE1B8C24850059A4F9 /* SlideoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideoutViewController.m; sourceTree = "<group>"; };
 		20EE2B0B1B01502B00F80CAC /* Serve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Serve.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20EE2B0F1B01502B00F80CAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20EE2B101B01502B00F80CAC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -313,8 +312,6 @@
 		20F3E2411B5245C3003B2D7D /* TwitterDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TwitterDown.png; sourceTree = "<group>"; };
 		20F3E2511B52698C003B2D7D /* ServeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServeLoginViewController.h; sourceTree = "<group>"; };
 		20F3E2521B52698C003B2D7D /* ServeLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServeLoginViewController.m; sourceTree = "<group>"; };
-		D8130E221B1B9D040081E825 /* ListingNavigationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingNavigationData.h; sourceTree = "<group>"; };
-		D8130E231B1B9D040081E825 /* ListingNavigationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingNavigationData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,8 +366,6 @@
 			children = (
 				20C8A4811B82B1DB003C0598 /* APPViewController.m */,
 				20C8A4821B82B1DB003C0598 /* APPViewController.h */,
-				2018743D1B74828900BA2C58 /* InboxTableViewController.h */,
-				2018743B1B74828100BA2C58 /* InboxTableViewController.m */,
 				2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */,
 				2031AE9E1B3CE3890000CF40 /* PublicListingViewController.h */,
 				20DE790B1B082AB000E3F101 /* MyListingsViewController.h */,
@@ -387,6 +382,8 @@
 				209681241B75D1F700BC00BA /* AddressViewController.m */,
 				20559AFA1B89AAF8000E8EDF /* ServeRootViewController.h */,
 				20559AFB1B89AAF8000E8EDF /* ServeRootViewController.m */,
+				20E1A0ED1B8C24840059A4F9 /* SlideoutViewController.h */,
+				20E1A0EE1B8C24850059A4F9 /* SlideoutViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -657,8 +654,6 @@
 			isa = PBXGroup;
 			children = (
 				209681221B7570E500BC00BA /* ServeListingProtocol.h */,
-				D8130E221B1B9D040081E825 /* ListingNavigationData.h */,
-				D8130E231B1B9D040081E825 /* ListingNavigationData.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -827,7 +822,6 @@
 				20EE2B111B01502B00F80CAC /* main.m in Sources */,
 				207873411B3B9F2D00C3C86B /* ServeAFParseAPIClient.m in Sources */,
 				20784B6C1B707CA600535AD9 /* UIColor+Utils.m in Sources */,
-				D8130E241B1B9D040081E825 /* ListingNavigationData.m in Sources */,
 				204BD3811B4609BA0059A517 /* FilterTableViewController.m in Sources */,
 				2031AE9F1B3CE3890000CF40 /* PublicListingViewController.m in Sources */,
 				20836EA81B3F55D50046FEAC /* PublicListingCell.m in Sources */,
@@ -837,7 +831,6 @@
 				2055FD431B27EF4D00B85F77 /* AFURLConnectionOperation.m in Sources */,
 				20559AFC1B89AAF8000E8EDF /* ServeRootViewController.m in Sources */,
 				207873251B3B969500C3C86B /* AFJSONUtilities.m in Sources */,
-				2018743C1B74828100BA2C58 /* InboxTableViewController.m in Sources */,
 				20C8A4831B82B1DB003C0598 /* APPViewController.m in Sources */,
 				207873221B3B965C00C3C86B /* AFHTTPClient.m in Sources */,
 				204BD38A1B462DDA0059A517 /* CustomAccessory.m in Sources */,
@@ -853,6 +846,7 @@
 				201A14B41B69F02100E12C3A /* TypeField.m in Sources */,
 				20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */,
 				20559AF91B886863000E8EDF /* Listing.m in Sources */,
+				20E1A0EF1B8C24850059A4F9 /* SlideoutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

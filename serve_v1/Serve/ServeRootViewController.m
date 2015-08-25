@@ -14,24 +14,22 @@
 #import "AddressViewController.h"
 
 #import "NewViewController.h"
-#import "InboxTableViewController.h"
+#import "SlideoutViewController.h"
 #import "Listing.h"
 #import "ServeSyncEngine.h"
-
 #import "ServeCoreDataController.h"
-
 #import "UIColor+Utils.h"
+
 
 #define SLIDE_TIMING .25
 #define PANEL_OFFSET 100
 
 typedef enum: NSInteger {
-    
     MyListingView = 0,
     PublicListingView,
     NewView,
-    InboxTableView,
-    AddressView,
+    addressViewTag,
+    slideOutViewTag,
     ReviewSubmitView,
     
 } viewTags;
@@ -41,7 +39,7 @@ typedef enum: NSInteger {
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) NewViewController *addnewListingVC;
 @property (strong, nonatomic) MyListingsViewController *mylistingsViewController;
-@property (strong, nonatomic) InboxTableViewController *settingsViewController;
+@property (strong, nonatomic) SlideoutViewController *slideViewController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) UIView *backgroundOverlayView;
 @property (assign, nonatomic) BOOL showingSlideInView;
@@ -53,7 +51,7 @@ typedef enum: NSInteger {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.managedObjectContext = [[ServeCoreDataController sharedInstance] masterManagedObjectContext];
     [self initTabController];
     // Do any additional setup after loading the view.
@@ -66,6 +64,7 @@ typedef enum: NSInteger {
 
 - (void)initTabController {
     self.tabBarController = [[UITabBarController alloc] init];
+
     [[UITabBar appearance] setBarTintColor:[UIColor serveBackgroundColor]];
     
     [[UITabBarItem appearance] setTitleTextAttributes:@{
@@ -80,7 +79,7 @@ typedef enum: NSInteger {
     
     self.mylistingsViewController = [[MyListingsViewController alloc]init];
     PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
-    InboxTableViewController *inboxTableViewController = [[InboxTableViewController alloc]init];
+    UIViewController *dummyVC2 = [[UIViewController alloc]init];
     AddressViewController *addressViewController = [[AddressViewController alloc]init];
     ReviewSubmitViewController *reviewController = [[ReviewSubmitViewController alloc]init];
     UIViewController *dummyVC = [[UIViewController alloc]init];
@@ -109,41 +108,37 @@ typedef enum: NSInteger {
     UIImage *inboxImageSelected = [UIImage imageNamed:@"inbox_selected.png"];
     inboxImage = [inboxImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     inboxImageSelected = [inboxImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    inboxTableViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Messages" image:inboxImage selectedImage:inboxImageSelected];
+    addressViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Messages" image:inboxImage selectedImage:inboxImageSelected];
     
     UIImage *settingsImage = [UIImage imageNamed:@"user.png"];
     UIImage *settingsImageSelected = [UIImage imageNamed:@"user_selected.png"];
     settingsImage = [settingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     settingsImageSelected = [settingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    addressViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage selectedImage:settingsImageSelected];
+    dummyVC2.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage selectedImage:settingsImageSelected];
     
     
-    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.mylistingsViewController];
-    UINavigationController *navigationController2 = [[UINavigationController alloc] initWithRootViewController:publicListingViewController];
-    UINavigationController *navigationController3 = [[UINavigationController alloc] initWithRootViewController:inboxTableViewController];
-    UINavigationController *navigationController4 = [[UINavigationController alloc] initWithRootViewController:addressViewController];
+    UINavigationController *myListingsNavigationController = [[UINavigationController alloc] initWithRootViewController:self.mylistingsViewController];
+    UINavigationController *publicListingsNavigationController = [[UINavigationController alloc] initWithRootViewController:publicListingViewController];
+    UINavigationController *addressViewNavigationController = [[UINavigationController alloc] initWithRootViewController:addressViewController];
     
-    navigationController1.view.tag = MyListingView;
-    navigationController2.view.tag = PublicListingView;
-    navigationController3.view.tag = InboxTableView;
-    navigationController4.view.tag = AddressView;
+    myListingsNavigationController.view.tag = MyListingView;
+    publicListingsNavigationController.view.tag = PublicListingView;
+    addressViewNavigationController.view.tag = addressViewTag;
+    dummyVC2.view.tag = slideOutViewTag;
     
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                [UIColor whiteColor],NSForegroundColorAttributeName,
                                                nil];
-    navigationController1.navigationBar.barTintColor = [UIColor blackColor];//#007AFF
-    navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-    //navigationController1.toolbar.translucent = YES ;
-    navigationController2.navigationBar.barTintColor = [UIColor blackColor];//#007AFF
-    navigationController2.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-    navigationController3.navigationBar.barTintColor = [UIColor blackColor];//#007AFF
-    navigationController3.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-    navigationController4.navigationBar.barTintColor = [UIColor blackColor];//#007AFF
-    navigationController4.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    myListingsNavigationController.navigationBar.barTintColor = [UIColor blackColor];//#007AFF
+    myListingsNavigationController.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    publicListingsNavigationController.navigationBar.barTintColor = [UIColor blackColor];//#007AFF
+    publicListingsNavigationController.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+    addressViewNavigationController.navigationBar.barTintColor = [UIColor blackColor];//#007AFF
+    addressViewNavigationController.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
     
     NSArray *myViewControllers = [[NSArray alloc] initWithObjects:
-                                  navigationController1,
-                                  navigationController2,dummyVC,inboxTableViewController,navigationController4, nil];
+                                  myListingsNavigationController,
+                                  publicListingsNavigationController,dummyVC,addressViewNavigationController,dummyVC2, nil];
     
     
     [self.tabBarController setViewControllers:myViewControllers animated:YES];
@@ -174,7 +169,7 @@ typedef enum: NSInteger {
         return NO;
     }
     
-    else if (viewController.view.tag == AddressView)
+    else if (viewController.view.tag == slideOutViewTag)
     {
         [self addBackgroundOverlay];
         [self slideInPanelFromRight];
@@ -215,30 +210,6 @@ typedef enum: NSInteger {
     
 }
 
-//- (void)newViewController:(NewViewController *)viewController deleteItem:(id<ServeListingProtocol>)item {
-//    [self.managedObjectContext performBlockAndWait:^{
-//        if ([[item objectId] isEqualToString:@""] || [item objectId] == nil) {
-//            [self.managedObjectContext deleteObject:item];
-//        } else {
-//            [item setSyncStatus:[NSNumber numberWithInt:ServeObjectDeleted]];
-//        }
-//        NSError *error = nil;
-//        BOOL saved = [self.managedObjectContext save:&error];
-//        if (!saved) {
-//            NSLog(@"Error saving main context: %@", error);
-//        }
-//        [[ServeCoreDataController sharedInstance] saveMasterContext];
-//        
-//    }];
-//    
-//    //[self.homeTable reloadData];
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//    
-//    [self.tabBarController setSelectedIndex:0];
-//    [[ServeSyncEngine sharedEngine] startUpSync];
-//    
-//}
-
 - (void)newViewController:(NewViewController *)viewController didCancelItemEdit:(id<ServeListingProtocol>)item inMode:(NSInteger)mode {
     [self dismissViewControllerAnimated:YES completion:nil];
     if(mode==CreateMode)
@@ -254,24 +225,26 @@ typedef enum: NSInteger {
 #pragma mark ProfileViewController Manager Methods
 
 - (UIView *)getSlideInViewRight {
-    if (_settingsViewController == nil) {
-        //        self.settingsViewController = [[SettingsViewController alloc] init];
-        self.settingsViewController = [[InboxTableViewController alloc] init];
+    if (_slideViewController == nil) {
+  
+        self.slideViewController = [[SlideoutViewController alloc] init];
         
-        [self.view addSubview:self.settingsViewController.view];
+        [self.view addSubview:self.slideViewController.view];
         
-        [self addChildViewController:self.settingsViewController];
-        [_settingsViewController didMoveToParentViewController:self];
+        [self addChildViewController:self.slideViewController];
+        [_slideViewController didMoveToParentViewController:self];
         
-        _settingsViewController.view.frame = CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height);
+        _slideViewController.view.frame = CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height);
     }
     self.showingSlideInView = YES;
     
-    UIView *view = self.settingsViewController.view;
+    UIView *view = self.slideViewController.view;
     return view;
 }
 
 - (void)slideInPanelFromRight {
+    
+    
     UIView *childView = [self getSlideInViewRight];
     [self.view bringSubviewToFront:childView];
     
@@ -279,7 +252,7 @@ typedef enum: NSInteger {
                           delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         _settingsViewController.view.frame = CGRectMake(0 + self.view.frame.size.width/3, 0, self.view.frame.size.width, self.view.frame.size.height);
+                         _slideViewController.view.frame = CGRectMake(0 + self.view.frame.size.width/3, 0, self.view.frame.size.width, self.view.frame.size.height);
                      }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -287,6 +260,7 @@ typedef enum: NSInteger {
                          }
                      }
      ];
+    
 }
 
 - (void)slideOutPanelToRight {
@@ -295,7 +269,7 @@ typedef enum: NSInteger {
                           delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         _settingsViewController.view.frame = CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height);
+                         _slideViewController.view.frame = CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height);
                      }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -431,6 +405,11 @@ typedef enum: NSInteger {
         //        
         //        _preVelocity = velocity;
     }
+}
+
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
 }
 
 @end

@@ -517,7 +517,9 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 }
 
 
-
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
 
 @end
 
