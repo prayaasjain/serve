@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlideoutViewController.h"
 
 @interface ServeRootViewController : UIViewController<UITabBarControllerDelegate>
 

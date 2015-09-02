@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SlideoutViewControllerDelegate <NSObject>
+
+- (void)didPressLogout;
+
+@end
+
 @interface SlideoutViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
+@property (weak, nonatomic) id<SlideoutViewControllerDelegate> delegate;
 
 @end
