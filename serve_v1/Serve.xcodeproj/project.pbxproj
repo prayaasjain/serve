@@ -17,6 +17,7 @@
 		202389281B96C62F00B60B04 /* loginBG4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 202389241B96C62F00B60B04 /* loginBG4.jpg */; };
 		202389291B96C62F00B60B04 /* loginBG1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 202389251B96C62F00B60B04 /* loginBG1.jpg */; };
 		2023892A1B96C62F00B60B04 /* loginBG2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 202389261B96C62F00B60B04 /* loginBG2.jpg */; };
+		2023892C1B96D6BA00B60B04 /* facebook-connect-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2023892B1B96D6BA00B60B04 /* facebook-connect-button.png */; };
 		202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202AF3731B1AF12600531369 /* ListingItemDetailCell.m */; };
 		202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */; };
 		2031AE9F1B3CE3890000CF40 /* PublicListingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */; };
@@ -160,6 +161,7 @@
 		202389241B96C62F00B60B04 /* loginBG4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginBG4.jpg; sourceTree = "<group>"; };
 		202389251B96C62F00B60B04 /* loginBG1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginBG1.jpg; sourceTree = "<group>"; };
 		202389261B96C62F00B60B04 /* loginBG2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginBG2.jpg; sourceTree = "<group>"; };
+		2023892B1B96D6BA00B60B04 /* facebook-connect-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-connect-button.png"; sourceTree = "<group>"; };
 		202AF3721B1AF12600531369 /* ListingItemDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingItemDetailCell.h; sourceTree = "<group>"; };
 		202AF3731B1AF12600531369 /* ListingItemDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingItemDetailCell.m; sourceTree = "<group>"; };
 		202CBF101B05AC49007DFB30 /* ReviewSubmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewSubmitViewController.h; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 		20F3E2221B523880003B2D7D /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				2023892B1B96D6BA00B60B04 /* facebook-connect-button.png */,
 				202389231B96C62F00B60B04 /* loginBG3.jpg */,
 				202389241B96C62F00B60B04 /* loginBG4.jpg */,
 				202389251B96C62F00B60B04 /* loginBG1.jpg */,
@@ -797,6 +800,7 @@
 				20AFA2431B254B4A00635B51 /* message1.png in Resources */,
 				20F3E2501B5245C3003B2D7D /* TwitterDown.png in Resources */,
 				201B33051B075890000930F7 /* food1.jpg in Resources */,
+				2023892C1B96D6BA00B60B04 /* facebook-connect-button.png in Resources */,
 				20AFA2471B254C6400635B51 /* plus.png in Resources */,
 				2023892A1B96C62F00B60B04 /* loginBG2.jpg in Resources */,
 				204BD3761B4607390059A517 /* bg@2x.png in Resources */,

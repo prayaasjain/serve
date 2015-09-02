@@ -19,8 +19,8 @@ typedef enum : NSInteger
     
 } Tags;
 
-static NSString * const emailPlaceholder = @"Email address";
-static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)";
+static NSString * const emailPlaceholder = @"Email Address";
+static NSString * const passwordPlaceholder = @"Password";
 
 @interface NewLoginViewController () {
     UIImageView *backgroundView;
@@ -69,6 +69,7 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
     backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [backgroundView setBackgroundColor:[UIColor clearColor]];
     [backgroundView setImage:[UIImage imageNamed:[backgroundImages objectAtIndex:imageIndex]]];
+    [backgroundView setContentMode:UIViewContentModeScaleAspectFill];
     [backgroundView setAlpha:0.75];
     [self.view addSubview:backgroundView];
     
@@ -76,6 +77,7 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
     [backgroundView2 setBackgroundColor:[UIColor clearColor]];
     [backgroundView2 setImage:[UIImage imageNamed:[backgroundImages objectAtIndex:imageIndex]]];
     [backgroundView2 setAlpha:0.00];
+    [backgroundView2 setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:backgroundView2];
     
     currentView = backgroundView;
@@ -114,6 +116,9 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
 
 - (void)setupLoginVC
 {
+    UIView *loginView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    [loginView setBackgroundColor:[[UIColor clearColor] colorWithAlphaComponent:0.5]];
+    
     self.view.backgroundColor = [UIColor blackColor];
     self.navigationItem.hidesBackButton = YES;
     
@@ -122,32 +127,46 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
     self.promptLabel.textColor = [UIColor greenColor];
     self.promptLabel.hidden = YES;
     
-    self.emailInput = [[UITextField alloc]initWithFrame:CGRectMake(20, 100, 320, 50)];
+    self.termsLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 620, 350, 50)];
+    self.termsLabel.text = @"By signing up, I agree to Serve's Terms & Conditions.";
+    self.termsLabel.textColor = [UIColor whiteColor];
+    self.termsLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12.0];
+    
+    self.appTitleLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+    self.appTitleLabel.frame = CGRectMake(150, 55, self.view.bounds.size.width-32, self.view.bounds.size.height *0.08);
+    self.appTitleLabel.text = @"Serve";
+    self.appTitleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:25.0];
+    self.appTitleLabel.textColor = [UIColor whiteColor];
+    
+    self.emailInput = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width-32, self.view.bounds.size.height *0.08)];
+    [self.emailInput setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), 120+50)];
     self.emailInput.backgroundColor = [UIColor whiteColor];
     self.emailInput.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.emailInput.layer.borderWidth = 0.2;
     self.emailInput.layer.cornerRadius = 5;
     self.emailInput.text = emailPlaceholder;
     self.emailInput.textColor = [UIColor servetextLabelGrayColor];
-    self.emailInput.font = [UIFont systemFontOfSize:11.0f];
+    self.emailInput.font = [UIFont fontWithName:@"Helvetica" size:13.0];
     self.emailInput.textAlignment = NSTextAlignmentCenter;
     self.emailInput.delegate =self;
     self.emailInput.tag = EmailInputTag;
+
     
-    self.passInput= [[UITextField alloc]initWithFrame:CGRectMake(20, 170, 320, 50)];
+    self.passInput = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width-32, self.view.bounds.size.height *0.08)];
+    [self.passInput setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), 190+50)];
     self.passInput.backgroundColor = [UIColor whiteColor];
     self.passInput.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.passInput.layer.borderWidth = 0.2;
     self.passInput.layer.cornerRadius = 5;
     self.passInput.text = passwordPlaceholder;
     self.passInput.textColor = [UIColor servetextLabelGrayColor];
-    self.passInput.font = [UIFont systemFontOfSize:11.0f];
+    self.passInput.font = [UIFont fontWithName:@"Helvetica" size:13.0];;
     self.passInput.textAlignment = NSTextAlignmentCenter;
     self.passInput.delegate =self;
     self.passInput.tag = PasswordInputTag;
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(60, 245, 110, 48);
+    button.frame = CGRectMake(60, 255+50, 110, 48);
     button.backgroundColor = [UIColor serveTransparentColor];
     button.layer.cornerRadius = 5;
     [button setTitle:@"LOGIN" forState:UIControlStateNormal];
@@ -157,7 +176,7 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
     [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
     
     UIButton *signupButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    signupButton.frame = CGRectMake(200, 245, 110, 48);
+    signupButton.frame = CGRectMake(200, 255+50, 110, 48);
     signupButton.backgroundColor = [UIColor serveTransparentColor];
     [signupButton setTitle:@"SIGNUP" forState:UIControlStateNormal];
     signupButton.layer.cornerRadius = 5;
@@ -167,42 +186,58 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
     [signupButton addTarget:self action:@selector(signup:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *passResetButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    passResetButton.frame = CGRectMake(215, 170, 140, 38);
+    passResetButton.frame = CGRectMake(218, 210, 140, 38);
     [passResetButton setTitle:@"Forgot your password ?" forState:UIControlStateNormal];
     [passResetButton.titleLabel setTextColor:[UIColor redColor]];
-    [passResetButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:9.0]];
+    [passResetButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12.0]];
     [passResetButton addTarget:self action:@selector(passwordReset:) forControlEvents:UIControlEventTouchUpInside];
     passResetButton.titleLabel.textColor = [UIColor redColor];
     
     
     UIButton *fbsignupButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    fbsignupButton.frame = CGRectMake(170, 300, 80, 38);
-    fbsignupButton.layer.borderColor = [UIColor whiteColor].CGColor;
-    fbsignupButton.layer.borderWidth = .2f;
-    fbsignupButton.layer.cornerRadius = 5;
-    [fbsignupButton setTitle:@"Facebook" forState:UIControlStateNormal];
-    [fbsignupButton.titleLabel setTextColor:[UIColor blueColor]];
-    [fbsignupButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:12.0]];
-    [fbsignupButton addTarget:self action:@selector(loginWithFacebook:) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *btnImage = [UIImage imageNamed:@"facebook-connect-button.png"];
+    [fbsignupButton setImage:btnImage forState:UIControlStateNormal];
+    fbsignupButton.frame = CGRectMake(0, 0, 240, 48);
+    [fbsignupButton setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), 360+50)];
+    [fbsignupButton setAlpha:0.8];
+    //[fbsignupButton addTarget:self action:@selector(loginWithFacebook:) forControlEvents:UIControlEventTouchUpInside];
+
+    self.orLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
+    [self.orLabel setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), 320+50)];
+    self.orLabel.text = @"OR";
+    self.orLabel.textColor = [UIColor serveWhiteTranslucentColor];
+    self.orLabel.font = [UIFont fontWithName:@"Helvetica" size:12.0];
     
-    //    FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
-    //    loginButton.center = self.view.center;
-    //    [self.view addSubview:loginButton];
+//    [self.view addSubview:button];
+//    [self.view addSubview:signupButton];
+//    [self.view addSubview:passResetButton];
+//    [self.view addSubview:self.passInput];
+//    [self.view addSubview:self.emailInput];
+//    [self.view addSubview:self.promptLabel];
+//    [self.view addSubview:fbsignupButton];
+//    [self.view addSubview:self.termsLabel];
+//    [self.view addSubview:self.orLabel];
     
-    [self.view addSubview:button];
-    [self.view addSubview:signupButton];
-    [self.view addSubview:passResetButton];
-    [self.view addSubview:self.passInput];
-    [self.view addSubview:self.emailInput];
-    [self.view addSubview:self.promptLabel];
-    //[self.view addSubview:fbsignupButton];
     
+    [loginView addSubview:button];
+    [loginView addSubview:signupButton];
+    [loginView addSubview:passResetButton];
+    [loginView addSubview:self.passInput];
+    [loginView addSubview:self.emailInput];
+    [loginView addSubview:self.promptLabel];
+    [loginView addSubview:fbsignupButton];
+    [loginView addSubview:self.termsLabel];
+    [loginView addSubview:self.orLabel];
+    [loginView addSubview:self.appTitleLabel];
     
     // Tab the view to dismiss keyboard
     UITapGestureRecognizer *tapViewGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnView)];
-    [self.view addGestureRecognizer:tapViewGR];
+    [loginView addGestureRecognizer:tapViewGR];
+    
+    [self.view addSubview:loginView];
 
 }
+
 
 - (void)setupLoginButtons {
     

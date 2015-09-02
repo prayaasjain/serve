@@ -11,9 +11,12 @@
 
 @interface NewLoginViewController : UIViewController<UITextFieldDelegate>
 
+@property (nonatomic, strong) UILabel *appTitleLabel;
 @property (nonatomic, strong) UITextField *emailInput;
 @property (nonatomic, strong) UITextField *passInput;
 @property (nonatomic, strong) UILabel *promptLabel;
+@property (nonatomic, strong) UILabel *termsLabel;
+@property (nonatomic, strong) UILabel *orLabel;
 //@property (strong, nonatomic) MyListingsViewController *myListingsViewController;
 @property (strong, nonatomic) ServeRootViewController *rootViewController;
 
