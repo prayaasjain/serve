@@ -39,6 +39,15 @@
     return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:0.4];
 }
 
++(id)serveWhiteTranslucentColor
+{
+    return [UIColor colorWithRed:1 green:1 blue:1 alpha:0.7];
+}
+
++(id)serveTransparentColor
+{
+    return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+}
 
 @end
 /*

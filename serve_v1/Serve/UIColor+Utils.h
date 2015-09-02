@@ -14,6 +14,8 @@
 + (id)serveBackgroundColor;
 + (id)servePrimaryColor;
 +(id)serveAppFontColor;
++(id)serveTransparentColor;
++(id)serveWhiteTranslucentColor;
 
 + (UIColor *)serveUIColorFromRGB:(NSUInteger)rgbValue;
 

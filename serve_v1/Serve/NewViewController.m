@@ -57,8 +57,7 @@ const int allowedNumberOfCharactersInTitle = 10;
 @property (nonatomic, strong) UITextField *titleInput;
 @property (nonatomic, strong) UIButton *deleteField;
 @property (nonatomic, strong) UITextView *addressInput;
-@property (nonatomic, strong) UIButton *addServeButton;
-@property (nonatomic, strong) UIButton *reduceServeButton;
+
 @property (nonatomic, strong) UITextView *descInput;
 @property (nonatomic, readwrite,assign) NSNumber *numberOfServes;
 @property (nonatomic, strong) UIPickerView *myPickerView;

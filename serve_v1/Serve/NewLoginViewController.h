@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ServeRootViewController.h"
 
-@interface NewLoginViewController : UIViewController
+@interface NewLoginViewController : UIViewController<UITextFieldDelegate>
+
+@property (nonatomic, strong) UITextField *emailInput;
+@property (nonatomic, strong) UITextField *passInput;
+@property (nonatomic, strong) UILabel *promptLabel;
+//@property (strong, nonatomic) MyListingsViewController *myListingsViewController;
+@property (strong, nonatomic) ServeRootViewController *rootViewController;
+
+- (IBAction)signup:(id)sender;
 
 @end
