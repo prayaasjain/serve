@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		200546FA1B8D98580040C7FF /* InboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200546F91B8D98580040C7FF /* InboxViewController.m */; };
 		2014A1FB1B16D2B800AA5351 /* food1-gray.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1F91B16D2B800AA5351 /* food1-gray.jpg */; };
 		2014A1FC1B16D2B800AA5351 /* camera-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2014A1FA1B16D2B800AA5351 /* camera-2.png */; };
 		201A14B41B69F02100E12C3A /* TypeField.m in Sources */ = {isa = PBXBuildFile; fileRef = 201A14B31B69F02100E12C3A /* TypeField.m */; };
 		201B33051B075890000930F7 /* food1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 201B33041B075890000930F7 /* food1.jpg */; };
+		202389221B96C60D00B60B04 /* NewLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202389201B96C60D00B60B04 /* NewLoginViewController.m */; };
+		202389271B96C62F00B60B04 /* loginBG3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 202389231B96C62F00B60B04 /* loginBG3.jpg */; };
+		202389281B96C62F00B60B04 /* loginBG4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 202389241B96C62F00B60B04 /* loginBG4.jpg */; };
+		202389291B96C62F00B60B04 /* loginBG1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 202389251B96C62F00B60B04 /* loginBG1.jpg */; };
+		2023892A1B96C62F00B60B04 /* loginBG2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 202389261B96C62F00B60B04 /* loginBG2.jpg */; };
 		202AF3741B1AF12600531369 /* ListingItemDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 202AF3731B1AF12600531369 /* ListingItemDetailCell.m */; };
 		202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 202CBF111B05AC49007DFB30 /* ReviewSubmitViewController.m */; };
 		2031AE9F1B3CE3890000CF40 /* PublicListingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2031AE9D1B3CE3890000CF40 /* PublicListingViewController.m */; };
@@ -141,11 +147,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		200546F81B8D98580040C7FF /* InboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxViewController.h; sourceTree = "<group>"; };
+		200546F91B8D98580040C7FF /* InboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxViewController.m; sourceTree = "<group>"; };
 		2014A1F91B16D2B800AA5351 /* food1-gray.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "food1-gray.jpg"; path = "Resources/food1-gray.jpg"; sourceTree = SOURCE_ROOT; };
 		2014A1FA1B16D2B800AA5351 /* camera-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-2.png"; path = "Resources/camera-2.png"; sourceTree = SOURCE_ROOT; };
 		201A14B21B69F02100E12C3A /* TypeField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeField.h; sourceTree = "<group>"; };
 		201A14B31B69F02100E12C3A /* TypeField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeField.m; sourceTree = "<group>"; };
 		201B33041B075890000930F7 /* food1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food1.jpg; sourceTree = "<group>"; };
+		202389201B96C60D00B60B04 /* NewLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewLoginViewController.m; sourceTree = "<group>"; };
+		202389211B96C60D00B60B04 /* NewLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLoginViewController.h; sourceTree = "<group>"; };
+		202389231B96C62F00B60B04 /* loginBG3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginBG3.jpg; sourceTree = "<group>"; };
+		202389241B96C62F00B60B04 /* loginBG4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginBG4.jpg; sourceTree = "<group>"; };
+		202389251B96C62F00B60B04 /* loginBG1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginBG1.jpg; sourceTree = "<group>"; };
+		202389261B96C62F00B60B04 /* loginBG2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginBG2.jpg; sourceTree = "<group>"; };
 		202AF3721B1AF12600531369 /* ListingItemDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListingItemDetailCell.h; sourceTree = "<group>"; };
 		202AF3731B1AF12600531369 /* ListingItemDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListingItemDetailCell.m; sourceTree = "<group>"; };
 		202CBF101B05AC49007DFB30 /* ReviewSubmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewSubmitViewController.h; sourceTree = "<group>"; };
@@ -384,6 +398,8 @@
 				20559AFB1B89AAF8000E8EDF /* ServeRootViewController.m */,
 				20E1A0ED1B8C24840059A4F9 /* SlideoutViewController.h */,
 				20E1A0EE1B8C24850059A4F9 /* SlideoutViewController.m */,
+				200546F81B8D98580040C7FF /* InboxViewController.h */,
+				200546F91B8D98580040C7FF /* InboxViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -629,6 +645,12 @@
 		20F3E2221B523880003B2D7D /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				202389231B96C62F00B60B04 /* loginBG3.jpg */,
+				202389241B96C62F00B60B04 /* loginBG4.jpg */,
+				202389251B96C62F00B60B04 /* loginBG1.jpg */,
+				202389261B96C62F00B60B04 /* loginBG2.jpg */,
+				202389201B96C60D00B60B04 /* NewLoginViewController.m */,
+				202389211B96C60D00B60B04 /* NewLoginViewController.h */,
 				20F3E2331B5245C3003B2D7D /* Default-568h@2x.png */,
 				20F3E2341B5245C3003B2D7D /* Default.png */,
 				20F3E2351B5245C3003B2D7D /* Default@2x.png */,
@@ -753,10 +775,13 @@
 				20D758191B4CBA1C00270A39 /* car_32.png in Resources */,
 				20F3E2461B5245C3003B2D7D /* ExitDown.png in Resources */,
 				20F3E24C1B5245C3003B2D7D /* SignUp.png in Resources */,
+				202389291B96C62F00B60B04 /* loginBG1.jpg in Resources */,
 				204BD37E1B4607390059A517 /* sliderlabel@2x.png in Resources */,
 				20AFA2411B254B1000635B51 /* message2.png in Resources */,
+				202389271B96C62F00B60B04 /* loginBG3.jpg in Resources */,
 				204BD37A1B4607390059A517 /* slider_minimum@2x.png in Resources */,
 				20913C371B1B0B8600EA4A10 /* edit.png in Resources */,
+				202389281B96C62F00B60B04 /* loginBG4.jpg in Resources */,
 				204BD37D1B4607390059A517 /* sliderlabel.png in Resources */,
 				20AFA2451B254BDA00635B51 /* listing.png in Resources */,
 				204BD3681B4553C50059A517 /* no-image.png in Resources */,
@@ -773,6 +798,7 @@
 				20F3E2501B5245C3003B2D7D /* TwitterDown.png in Resources */,
 				201B33051B075890000930F7 /* food1.jpg in Resources */,
 				20AFA2471B254C6400635B51 /* plus.png in Resources */,
+				2023892A1B96C62F00B60B04 /* loginBG2.jpg in Resources */,
 				204BD3761B4607390059A517 /* bg@2x.png in Resources */,
 				20F3E24F1B5245C3003B2D7D /* Twitter.png in Resources */,
 				20AFA23F1B2549E700635B51 /* person.png in Resources */,
@@ -818,6 +844,7 @@
 				20DE790D1B082AB000E3F101 /* MyListingsViewController.m in Sources */,
 				20D30E041B6E233600F9D17E /* ImageField.m in Sources */,
 				207873361B3B99BE00C3C86B /* AFNetworkActivityIndicatorManager.m in Sources */,
+				202389221B96C60D00B60B04 /* NewLoginViewController.m in Sources */,
 				202CBF121B05AC49007DFB30 /* ReviewSubmitViewController.m in Sources */,
 				20EE2B111B01502B00F80CAC /* main.m in Sources */,
 				207873411B3B9F2D00C3C86B /* ServeAFParseAPIClient.m in Sources */,
@@ -847,6 +874,7 @@
 				20D8E7521B1D4A9100AA5241 /* ServeCoreDataController.m in Sources */,
 				20559AF91B886863000E8EDF /* Listing.m in Sources */,
 				20E1A0EF1B8C24850059A4F9 /* SlideoutViewController.m in Sources */,
+				200546FA1B8D98580040C7FF /* InboxViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

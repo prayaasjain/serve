@@ -15,8 +15,6 @@
 @property (strong, nonatomic) UILabel *nonVegLabel;
 @property (strong, nonatomic) UIButton *button;
 @property (strong, nonatomic) UIView *horizontalSeparator;
-@property (nonatomic, assign) NSInteger selectedType;
-
 
 //@property (strong, nonatomic) UIImage *fullSelectedImage;
 
@@ -53,9 +51,9 @@
         self.imageTwo.translatesAutoresizingMaskIntoConstraints = NO;
         
         self.horizontalSeparator = [[UIView alloc]initWithFrame:CGRectZero];
-        //self.horizontalSeparator.backgroundColor = [UIColor lightGrayColor];
-        self.horizontalSeparator.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        self.horizontalSeparator.layer.borderWidth = 0.3f;
+        self.horizontalSeparator.backgroundColor = [UIColor lightGrayColor];
+        //self.horizontalSeparator.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        //self.horizontalSeparator.layer.borderWidth = 0.3f;
         self.horizontalSeparator.translatesAutoresizingMaskIntoConstraints = NO;
         
         self.vegLabel = [[UILabel alloc]init];
@@ -214,8 +212,8 @@
                                                       attribute:NSLayoutAttributeHeight multiplier:0.7 constant:0];
     NSLayoutConstraint *separatorCenterWidthConstraint = [NSLayoutConstraint
                                                            constraintWithItem:self.horizontalSeparator attribute:NSLayoutAttributeWidth
-                                                           relatedBy:NSLayoutRelationEqual toItem:self
-                                                           attribute:NSLayoutAttributeWidth multiplier:0.003 constant:0];
+                                                           relatedBy:NSLayoutRelationEqual toItem:nil
+                                                           attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.1];
     
     NSLayoutConstraint *vegLabelCenterXConstraint = [NSLayoutConstraint
                                                            constraintWithItem:self.vegLabel attribute:NSLayoutAttributeCenterX

@@ -73,10 +73,9 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     self.homeTable.dataSource = self;
     self.homeTable.separatorInset = UIEdgeInsetsMake(-10, 0, 0, 0);
     self.homeTable.separatorColor=[UIColor grayColor];
+    self.homeTable.tableFooterView = [UIView new];
     //[self.homeTable registerClass:[PublicListingCell class] forCellReuseIdentifier:publicListingCellIdentifier];
     [self.listView addSubview:self.homeTable];
-    [self.listView setBackgroundColor:[UIColor whiteColor]];
-    
     self.mapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     [self initializePins];
     [self.mapView addSubview:_map];
@@ -173,7 +172,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
 #pragma mark - Table View delegates
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 10.0f;
+    return 0.0f;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -221,6 +220,8 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
         //[self.map addAnnotation:item];
         
     }
+    
+    
         return cell1;
 }
 

@@ -26,6 +26,7 @@
 #import "UIColor+Utils.h"
 
 #import "ServeRootViewController.h"
+#import "NewLoginViewController.h"
 
 
 @interface AppDelegate ()
@@ -49,8 +50,8 @@
     [Parse setApplicationId:@"ZFpCdXKc9QoeUeTzFLtvK9JJ5rZd3CeF6FVzHTfW" clientKey:@"KvvKmvSkbajcQluKWEQDwiOpvwB05Ket60RwTBbH"];
     [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
 
-        //[PFUser logOut];////just for testing
-//        if (![PFUser currentUser]) {
+        [PFUser logOut];////just for testing
+        if (![PFUser currentUser]) {
 //    
 //            ServeLoginViewController *logInViewController = [[ServeLoginViewController alloc]init];
 //    
@@ -58,10 +59,19 @@
 //    
 //            navigationController = [[UINavigationController alloc]
 //                                    initWithRootViewController:logInViewController];
-//    
-//        }
-//
-//        else
+            
+            
+            NewLoginViewController *rvc = [[NewLoginViewController alloc]init];
+            
+            //ServeLoginViewController *rvc = [[ServeLoginViewController alloc]init];
+            
+            self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            [self.window setRootViewController:rvc];
+            [self.window makeKeyAndVisible];
+    
+        }
+
+        else
         {
             
             ServeRootViewController *rvc = [[ServeRootViewController alloc]init];

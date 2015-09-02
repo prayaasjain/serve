@@ -13,6 +13,7 @@
 #import "PublicListingViewController.h"
 #import "AddressViewController.h"
 
+#import "InboxViewController.h"
 #import "NewViewController.h"
 #import "SlideoutViewController.h"
 #import "Listing.h"
@@ -65,7 +66,7 @@ typedef enum: NSInteger {
 - (void)initTabController {
     self.tabBarController = [[UITabBarController alloc] init];
 
-    [[UITabBar appearance] setBarTintColor:[UIColor serveBackgroundColor]];
+    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
     
     [[UITabBarItem appearance] setTitleTextAttributes:@{
                                                         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f],
@@ -80,18 +81,19 @@ typedef enum: NSInteger {
     self.mylistingsViewController = [[MyListingsViewController alloc]init];
     PublicListingViewController *publicListingViewController = [[PublicListingViewController alloc]init];
     UIViewController *dummyVC2 = [[UIViewController alloc]init];
-    AddressViewController *addressViewController = [[AddressViewController alloc]init];
+    InboxViewController *addressViewController = [[InboxViewController alloc]init];
+    
     ReviewSubmitViewController *reviewController = [[ReviewSubmitViewController alloc]init];
     UIViewController *dummyVC = [[UIViewController alloc]init];
     
-    UIImage *mylistingsImage = [UIImage imageNamed:@"home.png"];
-    UIImage *mylistingsImageSelected = [UIImage imageNamed:@"home_selected.png"];
+    UIImage *mylistingsImage = [UIImage imageNamed:@"home_solid.png"];
+    UIImage *mylistingsImageSelected = [UIImage imageNamed:@"home_solid_selected.png"];
     mylistingsImage = [mylistingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     mylistingsImageSelected = [mylistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.mylistingsViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"My Listings" image:mylistingsImage selectedImage:mylistingsImageSelected];
     
-    UIImage *publiclistingsImage = [UIImage imageNamed:@"search.png"];
-    UIImage *publiclistingsImageSelected = [UIImage imageNamed:@"search_selected.png"];
+    UIImage *publiclistingsImage = [UIImage imageNamed:@"search_solid.png"];
+    UIImage *publiclistingsImageSelected = [UIImage imageNamed:@"search_solid_selected.png"];
     publiclistingsImage = [publiclistingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     publiclistingsImageSelected = [publiclistingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     publicListingViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Search Food" image:publiclistingsImage selectedImage:publiclistingsImageSelected];
@@ -110,8 +112,8 @@ typedef enum: NSInteger {
     inboxImageSelected = [inboxImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     addressViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Messages" image:inboxImage selectedImage:inboxImageSelected];
     
-    UIImage *settingsImage = [UIImage imageNamed:@"user.png"];
-    UIImage *settingsImageSelected = [UIImage imageNamed:@"user_selected.png"];
+    UIImage *settingsImage = [UIImage imageNamed:@"user_solid.png"];
+    UIImage *settingsImageSelected = [UIImage imageNamed:@"user_solid_selected.png"];
     settingsImage = [settingsImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     settingsImageSelected = [settingsImageSelected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     dummyVC2.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:settingsImage selectedImage:settingsImageSelected];
@@ -406,7 +408,6 @@ typedef enum: NSInteger {
         //        _preVelocity = velocity;
     }
 }
-
 
 - (BOOL)prefersStatusBarHidden {
     return NO;

@@ -1,16 +1,15 @@
 //
-//  NewSlideoutViewController.m
+//  InboxViewController.m
 //  Serve
 //
-//  Created by Akhil Khemani on 8/24/15.
-//  Copyright © 2015 Akhil Khemani. All rights reserved.
+//  Created by Akhil Khemani on 8/25/15.
+//  Copyright (c) 2015 Akhil Khemani. All rights reserved.
 //
 
-#import "SlideoutViewController.h"
+#import "InboxViewController.h"
 #import "UIColor+Utils.h"
-#import "ServeLoginViewController.h"
 
-@interface SlideoutViewController ()
+@interface InboxViewController ()
 
 @property (nonatomic ,strong) UITableView* homeTable;
 @property (nonatomic, strong) NSArray *cellTitles;
@@ -18,10 +17,12 @@
 
 @end
 
-@implementation SlideoutViewController
+@implementation InboxViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.navigationItem setTitle:@"Messages"];
     
     self.homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
     self.homeTable.scrollsToTop = NO;
@@ -45,7 +46,7 @@
     
     //self.loginButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.loginButton addTarget:self action:@selector(logoutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
- 
+    
     self.cellTitles = @[@"Settings",@"Invite Friends",@"Help"];
     
     [self.view addSubview:self.homeTable];
@@ -55,7 +56,7 @@
     CGFloat tabBarHeight = dummyTabController.tabBar.frame.size.height;
     self.loginButton.frame = CGRectMake(0, self.view.frame.size.height-tabBarHeight, self.view.frame.size.width*2/3, tabBarHeight);
     dummyTabController = nil;
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,7 +89,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -109,55 +110,51 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    return @"Settings";
+    return @"    You have no requests to respond to right now.";
 }
 
 - (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section {
     
-    //CGRectMake(140, 70, 70, 70)
-    UIImageView *profileImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
-    [profileImageView setImage:[UIImage imageNamed:@"food1.jpg"]];
-    profileImageView.layer.cornerRadius = 35;
-    profileImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    profileImageView.layer.borderColor = [[UIColor blackColor] CGColor];
-    profileImageView.layer.borderWidth = .5;
-    profileImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [profileImageView setClipsToBounds:YES];
+//    //CGRectMake(140, 70, 70, 70)
+//    UIImageView *profileImageView = [[UIImageView alloc]initWithFrame:CGRectZero];
+//    [profileImageView setImage:[UIImage imageNamed:@"food1.jpg"]];
+//    profileImageView.layer.cornerRadius = 35;
+//    profileImageView.translatesAutoresizingMaskIntoConstraints = NO;
+//    profileImageView.layer.borderColor = [[UIColor blackColor] CGColor];
+//    profileImageView.layer.borderWidth = .5;
+//    profileImageView.contentMode = UIViewContentModeScaleAspectFill;
+//    [profileImageView setClipsToBounds:YES];
+//    
+//    
+//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectZero];
+//    headerView.backgroundColor = [UIColor serveBackgroundColor];
+//    [headerView addSubview:profileImageView];
+//    
+//    NSLayoutConstraint *profileImageCenterYConstraint = [NSLayoutConstraint
+//                                                         constraintWithItem:profileImageView attribute:NSLayoutAttributeCenterY
+//                                                         relatedBy:NSLayoutRelationEqual toItem:headerView
+//                                                         attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+//    
+//    NSLayoutConstraint *profileImageCenterXConstraint  = [NSLayoutConstraint
+//                                                          constraintWithItem:profileImageView attribute:NSLayoutAttributeCenterX
+//                                                          relatedBy:NSLayoutRelationEqual toItem:headerView
+//                                                          attribute:NSLayoutAttributeCenterX multiplier:0.67 constant:0];
+//    
+//    NSLayoutConstraint *profileImageWidthConstraint  = [NSLayoutConstraint
+//                                                        constraintWithItem:profileImageView attribute:NSLayoutAttributeWidth
+//                                                        relatedBy:NSLayoutRelationEqual toItem:nil
+//                                                        attribute:NSLayoutAttributeWidth multiplier:1 constant:70];
+//    NSLayoutConstraint *profileImageHeightConstraint  = [NSLayoutConstraint
+//                                                         constraintWithItem:profileImageView attribute:NSLayoutAttributeHeight
+//                                                         relatedBy:NSLayoutRelationEqual toItem:profileImageView
+//                                                         attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
+//    
+//    
+//    [headerView addConstraints:@[profileImageCenterXConstraint,profileImageCenterYConstraint,profileImageWidthConstraint,profileImageHeightConstraint]];
     
-    
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectZero];
-    headerView.backgroundColor = [UIColor serveBackgroundColor];
-    [headerView addSubview:profileImageView];
-    
-    NSLayoutConstraint *profileImageCenterYConstraint = [NSLayoutConstraint
-                                                         constraintWithItem:profileImageView attribute:NSLayoutAttributeCenterY
-                                                         relatedBy:NSLayoutRelationEqual toItem:headerView
-                                                         attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
-    
-    NSLayoutConstraint *profileImageCenterXConstraint  = [NSLayoutConstraint
-                                                          constraintWithItem:profileImageView attribute:NSLayoutAttributeCenterX
-                                                          relatedBy:NSLayoutRelationEqual toItem:headerView
-                                                          attribute:NSLayoutAttributeCenterX multiplier:0.67 constant:0];
-    
-    NSLayoutConstraint *profileImageWidthConstraint  = [NSLayoutConstraint
-                                                        constraintWithItem:profileImageView attribute:NSLayoutAttributeWidth
-                                                        relatedBy:NSLayoutRelationEqual toItem:nil
-                                                        attribute:NSLayoutAttributeWidth multiplier:1 constant:70];
-    NSLayoutConstraint *profileImageHeightConstraint  = [NSLayoutConstraint
-                                                         constraintWithItem:profileImageView attribute:NSLayoutAttributeHeight
-                                                         relatedBy:NSLayoutRelationEqual toItem:profileImageView
-                                                         attribute:NSLayoutAttributeWidth multiplier:1 constant:0];
-    
-    
-    [headerView addConstraints:@[profileImageCenterXConstraint,profileImageCenterYConstraint,profileImageWidthConstraint,profileImageHeightConstraint]];
-    
-    return headerView;
+    return nil;
 }
 
-- (IBAction)logoutButtonPressed:(id)sender {
-    [PFUser logOut];
-    
-}
 
 - (BOOL)prefersStatusBarHidden {
     return YES;

@@ -9,24 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-//typedef NS_ENUM(NSUInteger, TaskListMode) {
-//    TaskListModeAllTasks,
-//    TaskListModeFlaggedEmail,
-//    TaskListModeTasks,
-//    TaskListModeCompleted
-//};
-//
-//typedef NS_ENUM(NSUInteger, WTTaskRepetationStates)
-//{
-//    never,
-//    everyDay,
-//    everyWeek,
-//    everyWeekDay,
-//    everyMonth,
-//    everyYear,
-//    custom
-//};
-
 @protocol ServeListingProtocol <NSObject>
 
 @property (nonatomic, strong) NSData * image;

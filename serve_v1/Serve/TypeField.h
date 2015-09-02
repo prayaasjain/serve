@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) UIImageView *imageOne;
 @property (strong, nonatomic) UIImageView *imageTwo;
+@property (nonatomic, assign) NSInteger selectedType;
 
 typedef enum {
     veg = 0,

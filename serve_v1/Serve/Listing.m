@@ -58,6 +58,7 @@
                                     self.serveCount, @"serveCount",
                                     self.author,@"author",
                                     //self.image,@"image",
+                                    self.type,@"type",
                                     nil];
     return jsonDictionary;
     

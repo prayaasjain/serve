@@ -728,6 +728,9 @@ const int allowedNumberOfCharactersInTitle = 10;
         [self.listingItem setDesc:self.descInput.text];
         [self.listingItem setAddress1:self.addressInput.text];
         
+        NSString *st = (self.typeField.selectedType == veg) ? @"VEG":@"NONVEG";
+        [self.listingItem setType:st];
+    
         NSUInteger imageCount = [self.imageArray count];
         
         if(imageCount>0)

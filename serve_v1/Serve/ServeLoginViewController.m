@@ -9,6 +9,8 @@
 #import "ServeLoginViewController.h"
 #import "MyListingsViewController.h"
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import "ServeRootViewController.h"
+#import "UIColor+Utils.h"
 
 typedef enum : NSInteger
 {
@@ -26,6 +28,7 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
 @property (nonatomic, strong) UITextField *passInput;
 @property (nonatomic, strong) UILabel *promptLabel;
 @property (strong, nonatomic) MyListingsViewController *myListingsViewController;
+@property (strong, nonatomic) ServeRootViewController *rootViewController;
 
 - (IBAction)signup:(id)sender;
 
@@ -36,7 +39,7 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor lightGrayColor];
     self.navigationItem.hidesBackButton = YES;
     
     self.promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 350, 190, 50)];
@@ -45,23 +48,24 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
     self.promptLabel.hidden = YES;
     
     self.emailInput = [[UITextField alloc]initWithFrame:CGRectMake(20, 100, 320, 35)];
+    self.emailInput.backgroundColor = [UIColor whiteColor];
     self.emailInput.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.emailInput.layer.borderWidth = 0.2;
     self.emailInput.layer.cornerRadius =9;
     self.emailInput.text = emailPlaceholder;
-    self.emailInput.textColor = [UIColor grayColor];
+    self.emailInput.textColor = [UIColor servetextLabelGrayColor];
     self.emailInput.font = [UIFont systemFontOfSize:11.0f];
     self.emailInput.textAlignment = NSTextAlignmentCenter;
     self.emailInput.delegate =self;
     self.emailInput.tag = EmailInputTag;
     
     self.passInput= [[UITextField alloc]initWithFrame:CGRectMake(20, 145, 320, 35)];
-    //self.passInput.backgroundColor = [UIColor blueColor];
+    self.passInput.backgroundColor = [UIColor whiteColor];
     self.passInput.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.passInput.layer.borderWidth = 0.2;
     self.passInput.layer.cornerRadius =5;
     self.passInput.text = passwordPlaceholder;
-    self.passInput.textColor = [UIColor grayColor];
+    self.passInput.textColor = [UIColor servetextLabelGrayColor];
     self.passInput.font = [UIFont systemFontOfSize:11.0f];
     self.passInput.textAlignment = NSTextAlignmentCenter;
     self.passInput.delegate =self;
@@ -157,12 +161,14 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
         } else if (user.isNew) {
             NSLog(@"User signed up and logged in through Facebook!");
-            self.myListingsViewController = [[MyListingsViewController alloc]init];
-            [self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
+            self.rootViewController = [[ServeRootViewController alloc]init];
+            //[self.navigationController pushViewController:self.rootViewController animated:YES];
+            [self presentViewController:self.rootViewController animated:YES completion:nil];
         } else {
             NSLog(@"User logged in through Facebook!");
-            self.myListingsViewController = [[MyListingsViewController alloc]init];
-            [self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
+            self.rootViewController = [[ServeRootViewController alloc]init];
+            [self presentViewController:self.rootViewController animated:YES completion:nil];
+            //[self.navigationController pushViewController:self.rootViewController animated:YES];
         }
         
         if (![PFFacebookUtils isLinkedWithUser:user]) {
@@ -247,8 +253,9 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
             weakSelf.promptLabel.text = @"Signup successful!";
             weakSelf.promptLabel.hidden = NO;
             
-            self.myListingsViewController = [[MyListingsViewController alloc]init];
-            [self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
+            self.rootViewController = [[ServeRootViewController alloc]init];
+            [self presentViewController:self.rootViewController animated:YES completion:nil];
+                                       //:self.rootViewController animated:YES];
             
         } else {
     
@@ -274,8 +281,9 @@ static NSString * const passwordPlaceholder = @"Password (Minimum 6 characters)"
              weakSelf.promptLabel.hidden = NO;
              //present the self.listing view controller
              
-             self.myListingsViewController = [[MyListingsViewController alloc]init];
-            [self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
+             self.rootViewController = [[ServeRootViewController alloc]init];
+            //[self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
+            [self presentViewController:self.rootViewController animated:YES completion:nil];
              
              
          } else {
