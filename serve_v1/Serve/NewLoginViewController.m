@@ -133,10 +133,12 @@ static NSString * const passwordPlaceholder = @"Password";
     self.termsLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12.0];
     
     self.appTitleLabel = [[UILabel alloc]initWithFrame:CGRectZero];
-    self.appTitleLabel.frame = CGRectMake(150, 55, self.view.bounds.size.width-32, self.view.bounds.size.height *0.08);
+    self.appTitleLabel.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height *0.08);
     self.appTitleLabel.text = @"Serve";
-    self.appTitleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:25.0];
+    self.appTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.appTitleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:40.0];
     self.appTitleLabel.textColor = [UIColor whiteColor];
+    self.appTitleLabel.alpha = 0.0;
     
     self.emailInput = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width-32, self.view.bounds.size.height *0.08)];
     [self.emailInput setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), 120+50)];
@@ -235,6 +237,8 @@ static NSString * const passwordPlaceholder = @"Password";
     [loginView addGestureRecognizer:tapViewGR];
     
     [self.view addSubview:loginView];
+    
+    [self animateAppTitle];
 
 }
 
@@ -261,6 +265,19 @@ static NSString * const passwordPlaceholder = @"Password";
     loginButton.frame = CGRectMake(397.75, 547.5, 228.5, 54.5);
     [self.view addSubview:loginButton];
     
+}
+
+- (void)animateAppTitle {
+    
+    CGRect newFrame = CGRectMake(0, 55, self.view.bounds.size.width, self.view.bounds.size.height *0.08);
+    
+    [UIView animateWithDuration:2.0
+                     animations:^(void) {
+                         [self.appTitleLabel setFrame:newFrame];
+                         [self.appTitleLabel setAlpha:1.0];
+                     }completion:^(BOOL finished) {
+                         
+                     }];
 }
 
 - (IBAction)createAccountButtonPressed:(id)sender {
