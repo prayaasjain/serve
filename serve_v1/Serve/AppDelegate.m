@@ -25,7 +25,6 @@
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "UIColor+Utils.h"
 
-#import "ServeRootViewController.h"
 #import "NewLoginViewController.h"
 
 
@@ -43,46 +42,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
     ///google maps
     //[GMSServices provideAPIKey:@"AIzaSyDHdTN_gkC_RqUdUQs_CNiaLUK7VDLGbh4"];
     [[ServeSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Listing class]];
     
     [Parse setApplicationId:@"ZFpCdXKc9QoeUeTzFLtvK9JJ5rZd3CeF6FVzHTfW" clientKey:@"KvvKmvSkbajcQluKWEQDwiOpvwB05Ket60RwTBbH"];
-    [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
-
-        [PFUser logOut];////just for testing
-        if (![PFUser currentUser]) {
-//    
-//            ServeLoginViewController *logInViewController = [[ServeLoginViewController alloc]init];
-//    
-//            self.window.rootViewController = logInViewController;
-//    
-//            navigationController = [[UINavigationController alloc]
-//                                    initWithRootViewController:logInViewController];
-            
-            
-            NewLoginViewController *rvc = [[NewLoginViewController alloc]init];
-            
-            //ServeLoginViewController *rvc = [[ServeLoginViewController alloc]init];
-            
-            self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-            [self.window setRootViewController:rvc];
-            [self.window makeKeyAndVisible];
     
-        }
-
-        else
-        {
-            
-            ServeRootViewController *rvc = [[ServeRootViewController alloc]init];
-            self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-            [self.window setRootViewController:rvc];
-            [self.window makeKeyAndVisible];
-            
-            
-        }
-    
-
+    [self initApplication];
     return YES;
 }
 
@@ -230,5 +197,35 @@
         }
     }
 }
+
+
+-(void)logOutFlow
+{
+    [self initApplication];
+}
+
+
+-(void)initApplication
+{
+    if (![PFUser currentUser]) {
+        NewLoginViewController *loginVc = [[NewLoginViewController alloc]init];
+        //ServeLoginViewController *loginVc = [[ServeLoginViewController alloc]init];
+        
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        [self.window setRootViewController:loginVc];
+        [self.window makeKeyAndVisible];
+    }
+    
+    else
+    {
+        ServeRootViewController *rvc = [[ServeRootViewController alloc]init];
+        rvc.delegate = self;
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        [self.window setRootViewController:rvc];
+        [self.window makeKeyAndVisible];
+    }
+    
+}
+
 
 @end

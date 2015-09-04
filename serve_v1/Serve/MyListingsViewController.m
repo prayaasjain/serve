@@ -71,6 +71,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
     self.homeTable.tableFooterView = [UIView new];
     //self.homeTable.bounces = NO;
     //self.homeTable.editing = YES;
+    self.homeTable.backgroundColor = [UIColor serveBackgroundColor];
     [self.view addSubview:self.homeTable];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
@@ -118,22 +119,35 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 #pragma mark - TableViewController stuff
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    if(section==0)
+    {
+        return 1;
+    }
     
     return [self.selfListings count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    if(indexPath.section == 0)
+    {
+        return 60.0f;
+    }
     return 100.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-
+    UITableViewCell *addListingCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"abc"];
+    addListingCell.textLabel.text = @"Post an Ad";
+    addListingCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    [addListingCell setImage:[UIImage imageNamed:@"edit.png"]];
+    
     PublicListingCell *cell1 = (PublicListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
 
     Listing *item  = [self.selfListings objectAtIndex:indexPath.row];
@@ -153,47 +167,62 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
     cell1.titleLabel.text = [item name];
     cell1.addressLabel.text = @"1235,Wildwood Ave,Sunnyvale";//[item address1];
     
+    
+    if(indexPath.section==0)
+    {
+        return addListingCell;
+    }
+    
     return cell1;
 
 }
 
 - (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
-    return 70.0;
+    return 15.0;//70
 }
 
 
 - (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section {
     self.addListingHeaderButton = [UIButton buttonWithType:UIButtonTypeCustom];
     //self.addListingHeaderButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [self.addListingHeaderButton setTitle:@"ADD NEW LISTING" forState:UIControlStateNormal];
-    [self.addListingHeaderButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.addListingHeaderButton setTitle:@"+ ADD NEW LISTING" forState:UIControlStateNormal];
+    [self.addListingHeaderButton setTitleColor:[UIColor servetextLabelGrayColor] forState:UIControlStateNormal];
     [self.addListingHeaderButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-    [self.addListingHeaderButton setBackgroundColor:[UIColor lightGrayColor]];
+    [self.addListingHeaderButton setBackgroundColor:[UIColor whiteColor]];
     [self.addListingHeaderButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:16.0]];
     [self.addListingHeaderButton addTarget:self action:@selector(addNewListingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
-    [self.addListingHeaderButton setImage: [UIImage imageNamed:@"edit.png"] forState:UIControlStateNormal];
-    [self.addListingHeaderButton setImage: [UIImage imageNamed:@"edit_selected.png"] forState:UIControlStateSelected];
+    //[self.addListingHeaderButton setImage: [UIImage imageNamed:@"edit.png"] forState:UIControlStateNormal];
+    //[self.addListingHeaderButton setImage: [UIImage imageNamed:@"edit_selected.png"] forState:UIControlStateSelected];
     [self.addListingHeaderButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 20, 0, 0)];
     [self.addListingHeaderButton setTag:addlistingheaderbuttonTag];
     
-    return self.addListingHeaderButton;
+    //return self.addListingHeaderButton;
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    id<ServeListingProtocol> listing = [self.selfListings objectAtIndex:indexPath.row];
-    self.inputViewController= [[NewViewController alloc] initWithExistingItem:listing];
-    self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
-    self.inputViewController.delegate = self;
-    UINavigationController *navigationController1 = nil;
-    navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
-    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
-                                               nil];
-    navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
-    navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
-    [self presentViewController:navigationController1 animated:YES completion:nil];
+    if(indexPath.section == 0)
+    {
+        [self addNewListingButtonPressed:nil];
+    }
+    
+    else
+    {
+        id<ServeListingProtocol> listing = [self.selfListings objectAtIndex:indexPath.row];
+        self.inputViewController= [[NewViewController alloc] initWithExistingItem:listing];
+        self.inputViewController.view.backgroundColor = [UIColor lightGrayColor];
+        self.inputViewController.delegate = self;
+        UINavigationController *navigationController1 = nil;
+        navigationController1 = [[UINavigationController alloc] initWithRootViewController:self.inputViewController];
+        NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [UIColor servetextLabelGrayColor],NSForegroundColorAttributeName,
+                                                   nil];
+        navigationController1.navigationBar.barTintColor = [UIColor serveBackgroundColor];//#007AFF
+        navigationController1.navigationBar.titleTextAttributes = navbarTitleTextAttributes;
+        [self presentViewController:navigationController1 animated:YES completion:nil];
+    }
 }
 
 
@@ -257,7 +286,7 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 }
 
 
-- (IBAction)addNewListingButtonPressed:(id)sender {
+- (void)addNewListingButtonPressed:(id)sender {
     
     if([sender tag] == addlistingheaderbuttonTag)
     {

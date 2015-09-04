@@ -9,9 +9,10 @@
 #import <Parse/Parse.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "ServeRootViewController.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,UITabBarControllerDelegate>//,PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,ServeRootViewControllerDelegate>//,PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *navigationController;

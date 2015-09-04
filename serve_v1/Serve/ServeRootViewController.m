@@ -226,8 +226,9 @@ typedef enum: NSInteger {
 
 - (void)didPressLogout
 {
-    NSLog(@"Reached Here HAHAH");
     [self slideOutPanelToRight];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate logOutFlow];
 }
 
 #pragma mark -

@@ -53,6 +53,7 @@ static NSString * const passwordPlaceholder = @"Password";
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    self.promptLabel.hidden = YES;
 }
 
 #pragma mark -
@@ -122,7 +123,7 @@ static NSString * const passwordPlaceholder = @"Password";
     self.view.backgroundColor = [UIColor blackColor];
     self.navigationItem.hidesBackButton = YES;
     
-    self.promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 350, 190, 50)];
+    self.promptLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 600, 190, 50)];
     self.promptLabel.text = @"Successful signup";
     self.promptLabel.textColor = [UIColor greenColor];
     self.promptLabel.hidden = YES;
@@ -200,7 +201,7 @@ static NSString * const passwordPlaceholder = @"Password";
     fbsignupButton.frame = CGRectMake(0, 0, 240, 48);
     [fbsignupButton setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), 360+50)];
     [fbsignupButton setAlpha:0.8];
-    //[fbsignupButton addTarget:self action:@selector(loginWithFacebook:) forControlEvents:UIControlEventTouchUpInside];
+    [fbsignupButton addTarget:self action:@selector(loginWithFacebook:) forControlEvents:UIControlEventTouchUpInside];
 
     self.orLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
     [self.orLabel setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), 320+50)];
@@ -224,7 +225,7 @@ static NSString * const passwordPlaceholder = @"Password";
     [loginView addSubview:passResetButton];
     [loginView addSubview:self.passInput];
     [loginView addSubview:self.emailInput];
-    [loginView addSubview:self.promptLabel];
+    //[loginView addSubview:self.promptLabel];
     [loginView addSubview:fbsignupButton];
     [loginView addSubview:self.termsLabel];
     [loginView addSubview:self.orLabel];
@@ -279,53 +280,53 @@ static NSString * const passwordPlaceholder = @"Password";
 
 #pragma mark - Complete LOGIN control
 
-//- (IBAction)loginWithFacebook:(id)sender {
-//    //NSArray *permissions;
-//    NSArray *permissions = @[ @"public_profile",@"email",@"user_friends"];
-//    [PFFacebookUtils logInInBackgroundWithReadPermissions:permissions block:^(PFUser *user, NSError *error) {
-//        
-//        //        [PFFacebookUtils unlinkUserInBackground:user block:^(BOOL succeeded, NSError *error) {
-//        //            if (succeeded) {
-//        //                NSLog(@"The user is no longer associated with their Facebook account.");
-//        //            }
-//        //        }];
-//        
-//        
-//        if (!user) {
-//            NSLog(@"Uh oh. The user cancelled the Facebook login.");
-//        } else if (user.isNew) {
-//            NSLog(@"User signed up and logged in through Facebook!");
-//            self.rootViewController = [[ServeRootViewController alloc]init];
-//            //[self.navigationController pushViewController:self.rootViewController animated:YES];
-//            [self presentViewController:self.rootViewController animated:YES completion:nil];
-//        } else {
-//            NSLog(@"User logged in through Facebook!");
-//            self.rootViewController = [[ServeRootViewController alloc]init];
-//            [self presentViewController:self.rootViewController animated:YES completion:nil];
-//            //[self.navigationController pushViewController:self.rootViewController animated:YES];
-//        }
-//        
-//        if (![PFFacebookUtils isLinkedWithUser:user]) {
-//            [PFFacebookUtils linkUserInBackground:user withReadPermissions:permissions block:^(BOOL succeeded, NSError *error) {
-//                if (succeeded) {
-//                    NSLog(@"Woohoo, user is linked with Facebook!");
-//                }
-//            }];
-//        }
-//        
-//    }];
-//    
-//}
-//- (IBAction)logoutWithFacebook:(id)sender {
-//    
-//    [PFUser logOut];
-//    
-//    //    [PFFacebookUtils unlinkUserInBackground:user block:^(BOOL succeeded, NSError *error) {
-//    //        if (succeeded) {
-//    //            NSLog(@"The user is no longer associated with their Facebook account.");
-//    //        }
-//    //    }];
-//}
+- (IBAction)loginWithFacebook:(id)sender {
+    //NSArray *permissions;
+    NSArray *permissions = @[ @"public_profile",@"email",@"user_friends"];
+    [PFFacebookUtils logInInBackgroundWithReadPermissions:permissions block:^(PFUser *user, NSError *error) {
+        
+        //        [PFFacebookUtils unlinkUserInBackground:user block:^(BOOL succeeded, NSError *error) {
+        //            if (succeeded) {
+        //                NSLog(@"The user is no longer associated with their Facebook account.");
+        //            }
+        //        }];
+        
+        
+        if (!user) {
+            NSLog(@"Uh oh. The user cancelled the Facebook login.");
+        } else if (user.isNew) {
+            NSLog(@"User signed up and logged in through Facebook!");
+            self.rootViewController = [[ServeRootViewController alloc]init];
+            //[self.navigationController pushViewController:self.rootViewController animated:YES];
+            [self presentViewController:self.rootViewController animated:YES completion:nil];
+        } else {
+            NSLog(@"User logged in through Facebook!");
+            self.rootViewController = [[ServeRootViewController alloc]init];
+            [self presentViewController:self.rootViewController animated:YES completion:nil];
+            //[self.navigationController pushViewController:self.rootViewController animated:YES];
+        }
+        
+        if (![PFFacebookUtils isLinkedWithUser:user]) {
+            [PFFacebookUtils linkUserInBackground:user withReadPermissions:permissions block:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    NSLog(@"Woohoo, user is linked with Facebook!");
+                }
+            }];
+        }
+        
+    }];
+    
+}
+- (IBAction)logoutWithFacebook:(id)sender {
+    
+    [PFUser logOut];
+    
+    //    [PFFacebookUtils unlinkUserInBackground:user block:^(BOOL succeeded, NSError *error) {
+    //        if (succeeded) {
+    //            NSLog(@"The user is no longer associated with their Facebook account.");
+    //        }
+    //    }];
+}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if([textField.text isEqualToString:emailPlaceholder]||[textField.text isEqualToString:passwordPlaceholder])
