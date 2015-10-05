@@ -73,6 +73,15 @@ static NSString * const passwordPlaceholder = @"Password";
     [backgroundView setAlpha:0.75];
     [self.view addSubview:backgroundView];
     
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    [blurView setFrame:backgroundView.bounds];
+    [backgroundView addSubview:blurView];
+    
+    UIVibrancyEffect *vibrancyEffect = [UIVibrancyEffect effectForBlurEffect:blurEffect];
+    UIVisualEffectView *vibrancyView = [[UIVisualEffectView alloc] initWithEffect:vibrancyEffect];
+    [vibrancyView setFrame:backgroundView.bounds];
+    
     backgroundView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [backgroundView2 setBackgroundColor:[UIColor clearColor]];
     [backgroundView2 setImage:[UIImage imageNamed:[backgroundImages objectAtIndex:imageIndex]]];
