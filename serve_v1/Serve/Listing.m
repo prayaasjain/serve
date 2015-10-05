@@ -59,6 +59,7 @@
                                     self.author,@"author",
                                     //self.image,@"image",
                                     self.type,@"type",
+                                    self.desc,@"desc",
                                     nil];
     return jsonDictionary;
     

@@ -85,6 +85,7 @@ static NSString * const publicListingCellIdentifier = @"publicListingCellIdentif
     [self.refresh addTarget:self action:@selector(refresh:)
       forControlEvents:UIControlEventValueChanged];
     [self.homeTable addSubview:self.refresh];
+    self.homeTable.backgroundColor = [UIColor serveBackgroundColor];
     
     self.view = self.listView;
     

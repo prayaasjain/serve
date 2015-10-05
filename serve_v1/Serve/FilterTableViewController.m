@@ -58,7 +58,7 @@ NSMutableIndexSet *expandedSections;
         expandedSections = [[NSMutableIndexSet alloc] init];
     }
     
-    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.backgroundColor = [UIColor serveBackgroundColor];
 
 }
 
@@ -163,7 +163,7 @@ NSMutableIndexSet *expandedSections;
         {
             // first row
             cell.textLabel.text =[localSectionOptionArray objectAtIndex:[localSectionOption integerValue]] ;
-            cell.textLabel.textColor = [UIColor blackColor];
+            cell.textLabel.textColor = [UIColor servetextLabelGrayColor];
             
             if ([expandedSections containsIndex:indexPath.section])
             {
@@ -174,14 +174,14 @@ NSMutableIndexSet *expandedSections;
                 {
                     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     cell.accessoryView = [self checkMarkView];
-                    cell.textLabel.textColor = [UIColor whiteColor];
+                    cell.textLabel.textColor = [UIColor servetextLabelGrayColor];
                 }
             }
             
             else
             {
-                cell.accessoryView = [CustomAccessory accessoryWithColor:[UIColor whiteColor] type:DTCustomColoredAccessoryTypeDown];
-                cell.textLabel.textColor = [UIColor whiteColor];//stays
+                cell.accessoryView = [CustomAccessory accessoryWithColor:[UIColor servetextLabelGrayColor] type:DTCustomColoredAccessoryTypeDown];
+                cell.textLabel.textColor = [UIColor servetextLabelGrayColor];//stays
 
             }
         }
@@ -194,7 +194,7 @@ NSMutableIndexSet *expandedSections;
             {
                 //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 cell.accessoryView = [self checkMarkView];
-                cell.textLabel.textColor = [UIColor whiteColor];//stays
+                cell.textLabel.textColor = [UIColor servetextLabelGrayColor];//stays
             }
             
         }
@@ -212,11 +212,11 @@ NSMutableIndexSet *expandedSections;
     else
     {
         cell.textLabel.text = @"Veg\t\t|\t\tNon Veg\t\t|\t\tAll";
-        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.textColor = [UIColor servetextLabelGrayColor];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.backgroundColor = [UIColor lightGrayColor];
+    cell.backgroundColor = [UIColor whiteColor];
     return cell;
 }
 

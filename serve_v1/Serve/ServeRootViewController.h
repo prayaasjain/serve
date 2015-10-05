@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlideoutViewController.h"
+
+@protocol ServeRootViewControllerDelegate <NSObject>
+
+- (void)logOutFlow;
+
+@end
 
 @interface ServeRootViewController : UIViewController<UITabBarControllerDelegate>
+
+@property (weak, nonatomic) id<ServeRootViewControllerDelegate> delegate;
 
 @end

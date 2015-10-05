@@ -157,6 +157,7 @@
 - (IBAction)logoutButtonPressed:(id)sender {
     [PFUser logOut];
     
+    [self.delegate didPressLogout];
 }
 
 - (BOOL)prefersStatusBarHidden {

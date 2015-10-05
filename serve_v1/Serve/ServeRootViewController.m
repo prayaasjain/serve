@@ -20,6 +20,7 @@
 #import "ServeSyncEngine.h"
 #import "ServeCoreDataController.h"
 #import "UIColor+Utils.h"
+//#import "NewLoginViewController.h"
 
 
 #define SLIDE_TIMING .25
@@ -35,7 +36,7 @@ typedef enum: NSInteger {
     
 } viewTags;
 
-@interface ServeRootViewController ()<NewViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface ServeRootViewController ()<NewViewControllerDelegate,SlideoutViewControllerDelegate,UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UITabBarController *tabBarController;
 @property (strong, nonatomic) NewViewController *addnewListingVC;
@@ -223,6 +224,13 @@ typedef enum: NSInteger {
     //[self.tabBarController setSelectedIndex:0];
 }
 
+- (void)didPressLogout
+{
+    [self slideOutPanelToRight];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate logOutFlow];
+}
+
 #pragma mark -
 #pragma mark ProfileViewController Manager Methods
 
@@ -230,6 +238,7 @@ typedef enum: NSInteger {
     if (_slideViewController == nil) {
   
         self.slideViewController = [[SlideoutViewController alloc] init];
+        self.slideViewController.delegate = self;
         
         [self.view addSubview:self.slideViewController.view];
         
