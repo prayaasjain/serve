@@ -143,38 +143,47 @@ static NSString * const selfListingCellIdentifier = @"publicListingCellIdentifie
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UITableViewCell *addListingCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"abc"];
-    addListingCell.textLabel.text = @"Post an Ad";
-    addListingCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [addListingCell setImage:[UIImage imageNamed:@"edit.png"]];
-    
-    PublicListingCell *cell1 = (PublicListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
 
-    Listing *item  = [self.selfListings objectAtIndex:indexPath.row];
-    
-    if (cell1 == nil) {
-    cell1 = [[PublicListingCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier withListing:item];
-    }
-    if(item.image)
-    {
-        cell1.imageView.image = [UIImage imageWithData:item.image];
-    }
-    else
-    {
-        cell1.imageView.image = [UIImage imageNamed:@"no-image.png"];
-    }
-    cell1.serveCountLabel.text = [[item serveCount] stringValue];
-    cell1.titleLabel.text = [item name];
-    cell1.addressLabel.text = @"1235,Wildwood Ave,Sunnyvale";//[item address1];
-    
-    
     if(indexPath.section==0)
     {
+        UITableViewCell *addListingCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"abc"];
+        addListingCell.textLabel.text = @"Post an Ad";
+        addListingCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [addListingCell setImage:[UIImage imageNamed:@"edit.png"]];
+        
         return addListingCell;
     }
     
-    return cell1;
+    
+    else
+    {
 
+        PublicListingCell *cell1 = (PublicListingCell *)[self.homeTable dequeueReusableCellWithIdentifier:selfListingCellIdentifier];
+        
+        if(self.selfListings.count)
+        {
+            Listing *item  = [self.selfListings objectAtIndex:indexPath.row];
+            
+            if (cell1 == nil) {
+                cell1 = [[PublicListingCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selfListingCellIdentifier withListing:item];
+            }
+            if(item.image)
+            {
+                cell1.imageView.image = [UIImage imageWithData:item.image];
+            }
+            else
+            {
+                cell1.imageView.image = [UIImage imageNamed:@"no-image.png"];
+            }
+            cell1.serveCountLabel.text = [[item serveCount] stringValue];
+            cell1.titleLabel.text = [item name];
+            cell1.addressLabel.text = @"1235,Wildwood Ave,Sunnyvale";//[item address1];
+        }
+        
+        return cell1;
+    }
+    
+    
 }
 
 - (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {

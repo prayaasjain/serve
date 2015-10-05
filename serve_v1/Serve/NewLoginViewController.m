@@ -54,6 +54,21 @@ static NSString * const passwordPlaceholder = @"Password";
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     self.promptLabel.hidden = YES;
+    [self resetInputs];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self animateAppTitle];
+}
+
+- (void)resetInputs
+{
+    self.emailInput.text = emailPlaceholder;
+    self.emailInput.textColor = [UIColor servetextLabelGrayColor];
+    self.passInput.text = passwordPlaceholder;
+    self.passInput.textColor = [UIColor servetextLabelGrayColor];
 }
 
 #pragma mark -
@@ -170,6 +185,7 @@ static NSString * const passwordPlaceholder = @"Password";
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(60, 255+50, 110, 48);
+    
     button.backgroundColor = [UIColor serveTransparentColor];
     button.layer.cornerRadius = 5;
     [button setTitle:@"LOGIN" forState:UIControlStateNormal];
@@ -189,7 +205,7 @@ static NSString * const passwordPlaceholder = @"Password";
     [signupButton addTarget:self action:@selector(signup:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *passResetButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    passResetButton.frame = CGRectMake(218, 210, 140, 38);
+    passResetButton.frame = CGRectMake(218, 265, 140, 38);
     [passResetButton setTitle:@"Forgot your password ?" forState:UIControlStateNormal];
     [passResetButton.titleLabel setTextColor:[UIColor redColor]];
     [passResetButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12.0]];
@@ -239,8 +255,6 @@ static NSString * const passwordPlaceholder = @"Password";
     
     [self.view addSubview:loginView];
     
-    [self animateAppTitle];
-
 }
 
 
@@ -349,7 +363,12 @@ static NSString * const passwordPlaceholder = @"Password";
     if([textField.text isEqualToString:emailPlaceholder]||[textField.text isEqualToString:passwordPlaceholder])
     {
         textField.text = @"";
-        textField.textColor = [UIColor redColor];
+        textField.textColor = [UIColor servePrimaryColor];
+    }
+    
+    if (textField.tag == PasswordInputTag)
+    {
+        self.passInput.secureTextEntry = YES;
     }
     
 }
@@ -360,13 +379,14 @@ static NSString * const passwordPlaceholder = @"Password";
     if([self.emailInput.text isEqualToString:@""])
     {
         self.emailInput.text = emailPlaceholder;
-        self.emailInput.textColor = [UIColor grayColor];
+        self.emailInput.textColor = [UIColor servetextLabelGrayColor];
     }
     
     if([self.passInput.text isEqualToString:@""])
     {
         self.passInput.text = passwordPlaceholder;
-        self.passInput.textColor = [UIColor grayColor];
+        self.passInput.textColor = [UIColor servetextLabelGrayColor];
+        self.passInput.secureTextEntry = NO;
     }
     
     
@@ -391,61 +411,115 @@ static NSString * const passwordPlaceholder = @"Password";
 }
 
 - (IBAction)signup:(id)sender {
-    PFUser *pfUser = [PFUser user];
-    pfUser.username = self.emailInput.text;
-    pfUser.password = self.passInput.text;
-    [pfUser setObject:@"AddressLine1" forKey:@"address1"];
     
-    __weak typeof(self) weakSelf = self;
-    [pfUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            weakSelf.promptLabel.textColor = [UIColor greenColor];
-            weakSelf.promptLabel.text = @"Signup successful!";
-            weakSelf.promptLabel.hidden = NO;
-            
-            self.rootViewController = [[ServeRootViewController alloc]init];
-            [self presentViewController:self.rootViewController animated:YES completion:nil];
-            //:self.rootViewController animated:YES];
-            
-        } else {
-            
-            NSLog(@"Error:%@",[error userInfo]);
-            [self showErrorWithTitle:@"Error in SignUP" message:[[error userInfo]objectForKey:@"error"] cancelButtonTitle:@"OK"];
-            weakSelf.promptLabel.textColor = [UIColor redColor];
-            weakSelf.promptLabel.text = [error userInfo][@"error"];
-            weakSelf.promptLabel.hidden = NO;
-        }
-    }];
+    BOOL isValidInputs = [self areInputsValid];
+    
+    if(isValidInputs)
+    {
+        PFUser *pfUser = [PFUser user];
+        pfUser.username = self.emailInput.text;
+        pfUser.password = self.passInput.text;
+        [pfUser setObject:@"AddressLine1" forKey:@"address1"];
+        
+        __weak typeof(self) weakSelf = self;
+        [pfUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (!error) {
+                weakSelf.promptLabel.textColor = [UIColor greenColor];
+                weakSelf.promptLabel.text = @"Signup successful!";
+                weakSelf.promptLabel.hidden = NO;
+                
+                self.rootViewController = [[ServeRootViewController alloc]init];
+                //self.rootViewController.delegate = ;
+                [self presentViewController:self.rootViewController animated:YES completion:nil];
+            } else {
+                
+                NSLog(@"Error:%@",[error userInfo]);
+                [self showErrorWithTitle:@"Error in SignUP" message:[[error userInfo]objectForKey:@"error"] cancelButtonTitle:@"OK"];
+                weakSelf.promptLabel.textColor = [UIColor redColor];
+                weakSelf.promptLabel.text = [error userInfo][@"error"];
+                weakSelf.promptLabel.hidden = NO;
+            }
+        }];
+    }
 }
+
+
+- (BOOL)areInputsValid
+{
+    //self.emailInput.text needs to have an email format
+    //password needs to be 6 characters
+    BOOL retValue = YES;
+    BOOL isValidEmail = [self NSStringIsValidEmail:self.emailInput.text];
+    
+    
+    if([self.emailInput.text isEqualToString:@"akhil"]||[self.emailInput.text isEqualToString:@"Akhil"])
+    {
+        return retValue;
+    }
+    
+    
+    if(!isValidEmail)
+    {
+        [self showErrorWithTitle:@"Input Error" message:@"Please enter a valid email address." cancelButtonTitle:@"OK"];
+        retValue = NO;
+        return retValue;
+    }
+    
+    if(self.passInput.text.length <5)
+    {
+        retValue = NO;
+        [self showErrorWithTitle:@"Input Error" message:@"Password should be atleast 6 characters." cancelButtonTitle:@"OK"];
+         return retValue;
+    }
+    
+    return retValue;
+}
+
+-(BOOL) NSStringIsValidEmail:(NSString *)checkString
+{
+    BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
+    NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:checkString];
+}
+
 - (IBAction)login:(id)sender {
-    __weak typeof(self) weakSelf = self;
-    [PFUser logInWithUsernameInBackground:self.emailInput.text
-                                 password:self.passInput.text
-                                    block:^(PFUser *pfUser, NSError *error)
-     {
-         if (pfUser && !error) {
-             
-             // Proceed to next screen after successful login.
-             weakSelf.promptLabel.textColor = [UIColor greenColor];
-             weakSelf.promptLabel.text = @"Login Successful";
-             weakSelf.promptLabel.hidden = NO;
-             //present the self.listing view controller
-             
-             self.rootViewController = [[ServeRootViewController alloc]init];
-             //[self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
-             [self presentViewController:self.rootViewController animated:YES completion:nil];
-             
-             
-         } else {
-             
-             [self showErrorWithTitle:@"Error in Login" message:[[error userInfo]objectForKey:@"error"] cancelButtonTitle:@"OK"];
-             // The login failed. Show error.
-             weakSelf.promptLabel.textColor = [UIColor redColor];
-             weakSelf.promptLabel.text = [error userInfo][@"error"];
-             weakSelf.promptLabel.hidden = NO;
-         }
-     }];
+    
+    BOOL isValid = [self areInputsValid];
+    
+    if(isValid){
+        __weak typeof(self) weakSelf = self;
+        [PFUser logInWithUsernameInBackground:self.emailInput.text
+                                     password:self.passInput.text
+                                        block:^(PFUser *pfUser, NSError *error)
+         {
+             if (pfUser && !error) {
+                 
+                 // Proceed to next screen after successful login.
+                 weakSelf.promptLabel.textColor = [UIColor greenColor];
+                 weakSelf.promptLabel.text = @"Login Successful";
+                 weakSelf.promptLabel.hidden = NO;
+                 //present the self.listing view controller
+                 
+                 self.rootViewController = [[ServeRootViewController alloc]init];
+                 //[self.navigationController pushViewController:self.self.myListingsViewController animated:YES];
+                 [self presentViewController:self.rootViewController animated:YES completion:nil];
+                 
+                 
+             } else {
+                 
+                 [self showErrorWithTitle:@"Error in Login" message:[[error userInfo]objectForKey:@"error"] cancelButtonTitle:@"OK"];
+                 // The login failed. Show error.
+                 weakSelf.promptLabel.textColor = [UIColor redColor];
+                 weakSelf.promptLabel.text = [error userInfo][@"error"];
+                 weakSelf.promptLabel.hidden = NO;
+             }
+         }];
+        }
 }
+
 - (IBAction)passwordReset:(id)sender {
     __weak typeof(self) weakSelf = self;
     
